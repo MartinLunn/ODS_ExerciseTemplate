@@ -64,9 +64,20 @@ class Question {
   setDiv(div)
   {
     var temp = this.div;
-    this.div = div;+
+    this.div = div;
     return temp;
   }
+
+  getModel() { return this.model; }
+
+  setModel(model)
+  {
+    var temp = this.model;
+    this.model = model;
+    return temp;
+  }
+
+
 
   display(div)
   {

@@ -9,7 +9,7 @@ class Add extends Question {
   computeAnswerData(prevAnswer)
   {
     if (prevAnswer) {
-      this.answer.setData(prevAnswer.getData.copy());
+      this.answer.setData(prevAnswer.getData().copy());
     }
 
     this.answer.getData().add(this.parameters);

@@ -3,6 +3,7 @@
 class Uset extends Model {
   constructor()
   {
+    super();
     this.set = { };
     this.n = 0;
   }
@@ -79,7 +80,7 @@ class Uset extends Model {
     {
       copy.add(element);
     }
-    
+
     return copy;
   }
 }
