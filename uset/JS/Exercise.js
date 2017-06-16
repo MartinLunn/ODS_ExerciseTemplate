@@ -36,9 +36,10 @@ class Exercise {
 
     for (var index in questionTypesClassNames)
     {
-      this.questionTypes.push(new questionTypesClassNames[index](questionData[index]), numberOfQuestionsRequired[index]);
+      this.questionTypes.push(new questionTypesClassNames[index](questionData[index]), numberOfQuestionsRequired[index], answerTypesClassNames[index]);
     }
 
+    //if desired, scramble
 
   }
 }

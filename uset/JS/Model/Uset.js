@@ -68,4 +68,18 @@ class Uset extends Model {
 
     return true;
   }
+
+  copy()
+  {
+    var copy = new Uset();
+
+    copy.n = this.n;
+
+    for (var element in this.set)
+    {
+      copy.add(element);
+    }
+    
+    return copy;
+  }
 }

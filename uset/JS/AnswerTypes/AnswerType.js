@@ -3,7 +3,7 @@
 class AnswerType {
   constructor()
   {
-    this.data = null;
+    this.data = undefined;
   }
 
   setData(data)
@@ -17,15 +17,16 @@ class AnswerType {
 
   //display answer?
 
-  check(data)
+  check(userAnswer)
   {
     if (this.data.equals)   //if equals exists
     {
-      return this.data.equals(data);
+      return this.data.equals(userAnswer);
     }
 
-    else {
-      return this.data === data;
+    else
+    {
+      return this.data === userAnswer;
     }
   }
 }

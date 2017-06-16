@@ -2,13 +2,23 @@
 
 class Question {
 
-  constructor(questionData)
+  constructor(questionData, answerTypesClassName)
   {
-    this.parameters = questionData.parameters || { };
-    this.instructions = questionData.instruction ? new Instructions(questionData.instruction) : null;
+    questionData = questionData || { };
+    this.parameters = this.constructor.generateParameters() || { };
+    this.instructions = !!questionData.instruction ? new Instructions(questionData.instruction) : null;     //!! converts truthy to true
     this.id = questionData.id || Question.nextId++;
     this.div = null;
-    this.answer = new AnswerType();
+
+    if (answerTypesClassName)
+    {
+      this.answer = new answerTypesClassName();
+    }
+
+    if (typeof(__MODULENAME__) !== "undefined" && __MODULENAME__)
+    {
+      this.model = new __MODULENAME__();
+    }
   }
 
   getInstructions()
@@ -27,8 +37,8 @@ class Question {
     this.parameters = param;
     return temp;
   }
-    return this.id;
-  }
+
+  getId() { return this.id; }
 
   static getNextId()
   {
@@ -76,7 +86,17 @@ class Question {
     this.answer.display(this.div);
   }
 
-  //check
+  generateAnswer(prevAnswer)
+  {
+    return this.computeAnswerData(prevAnswer);
+  }
+
+  check(userAnswer)
+  {
+    return this.answer.check(userAnswer);
+  }
+
+  //static generateParameters()
 }
 
 Question.nextId = 0;

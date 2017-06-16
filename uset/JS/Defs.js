@@ -15,16 +15,26 @@ var __MODULENAME__questionTypesClassNames = [];
 var __MODULENAME__numberOfQuestionsRequired = [ ];
 */
 
+var __MODULENAME__ = Uset;
+
 var questionTypesClassNames = [Operations];
 
-  var questionData = [
-    [{class : Add, instructionsText : "Illustrate the evolution of the collection given the following add method." , parameters : {randomNumber : ODSRandom.getRandomIntInclusive(1,8)}} ,
-    {class : Find, instructionsText : "Illustrate the evolution of the collection given the following find method." , parameters : {randomNumber : ODSRandom.getRandomIntInclusive(1,15)}} ,
-    {class : Remove, instructionsText : "Illustrate the evolution of the collection given the following remove method." , parameters : {randomNumber : ODSRandom.getRandomIntInclusive(1,8)}}] ];
-  //modeladd
-  var __MODULENAME__ = Uset;
+var answerTypesClassNames = [OperationAnswer];
 
 var numberOfQuestionsRequired = [[10,4,10]];
+
+  var questionData = [
+    [{class : Add, instructionsText : "Illustrate the evolution of the collection given the following add method."},
+    {class : Find, instructionsText : "Illustrate the evolution of the collection given the following find method."} ,
+    {class : Remove, instructionsText : "Illustrate the evolution of the collection given the following remove method."}]
+                      ];
+
+var __addMinParam__ = 1;
+var __addMaxParam__ = 8;
+var __findMinParam__ = 0;
+var __findMaxParam__ = 16;
+var __removeMinParam__ = 1;
+var __removeMaxParam__ = 8;
 
 /*load order:
 MUST BE LOADED AFTER QUESTIONS AND QUESTIONTYPES AND RANDOM
