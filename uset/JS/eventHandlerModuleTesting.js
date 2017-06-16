@@ -89,6 +89,6 @@ class CustomEventHandler {
 
 
 var myCustomEventHandler = new CustomEventHandler();
-myCustomEventHandler.bind("myCustomEvent", function(elem, event) {console.log(elem, "\n", event)});
+myCustomEventHandler.bind("myCustomEvent", function(elem, event) {console.log(elem, "\n", event);});
 
 DOMEventHandler.registerEventHandler(myCustomEventHandler);

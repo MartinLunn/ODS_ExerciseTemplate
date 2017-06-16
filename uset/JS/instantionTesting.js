@@ -57,8 +57,8 @@ class Instructions {
   display(i)
   {
     var instructionElement = $("#" + instructionsId + i);
-    instructionElement.text(    instructionElement.text()
-                              + this.getData()              );
+    instructionElement.text(    instructionElement.text() +
+                                this.getData()              );
   }
 
 }

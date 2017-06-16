@@ -30,7 +30,7 @@ class QuestionType {
     var thisQuestion = null;
     for (var index in questionData)
     {
-        for (var i = 0; i < numQuestionsArr[index]; i++)
+        for (let i = 0; i < numQuestionsArr[index]; i++)
         {
           thisQuestion = questionData[index];
           this.questions.push(new thisQuestion.class(thisQuestion, answerTypesClassName));
@@ -39,9 +39,9 @@ class QuestionType {
 
     //would scramble here if desired using scramble question order
 
-    var x = undefined;
+    var x;
 
-    for (var i = 0; i < questions.length; i++)
+    for (let i = 0; i < questions.length; i++)
     {
       x = questions[i].generateAnswer(x);   //x gets used first, and then assigned to
     }

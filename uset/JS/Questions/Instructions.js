@@ -21,6 +21,6 @@ class Instructions {
   //associates instruction data with html element id
   display(div)
   {
-    $(.instructions, div).text(this.getData());
+    $(".instructions", div).text(this.getData());
   }
 }

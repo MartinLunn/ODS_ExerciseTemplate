@@ -25,7 +25,17 @@
       "Find" : true,
       "Operations" : true,
       "DEBUG" : true,
-      "eventHandler": true
+      "eventHandler": true,
+      "Exercise": true,
+      "OperationAnswer": true,
+      "answerTypesClassNames": true,
+      "AnswerType": true,
+       "__addMinParam__" : true,
+       "__addMaxParam__" : true,
+       "__findMinParam__" : true,
+       "__findMaxParam__" : true,
+       "__removeMinParam__" : true,
+       "__removeMaxParam__" : true
   },
   "strict": "global"
 }

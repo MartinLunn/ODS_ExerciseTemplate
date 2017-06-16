@@ -64,7 +64,7 @@ class Question {
   setDiv(div)
   {
     var temp = this.div;
-    this.div = div;
+    this.div = div;+
     return temp;
   }
 
