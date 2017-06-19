@@ -131,7 +131,7 @@ class Uset extends Model {
       return false;
     }
     this.set[x] = x;
-    this.n++;
+    this.n = this.n + 1;
     return true;
   }
 
@@ -143,7 +143,7 @@ class Uset extends Model {
     }
     var toReturn = this.set[x];
     this.set[x] = undefined;
-    this.n--;
+    this.n = this.n - 1;
     return toReturn;
   }
 
@@ -185,11 +185,16 @@ class Uset extends Model {
   {
     var copy = new Uset();
 
-    copy.n = this.n;
+    if (DEBUG)
+      console.log("copying...");
 
     for (var element in this.set)
     {
-      copy.add(element);
+      if (DEBUG) {
+        console.log("element", parseInt(element));    //TODO remove DEBUG
+        console.log("typeof element", typeof(parseInt(element)));
+      }
+      copy.add(parseInt(element));
     }
 
     return copy;
@@ -329,6 +334,9 @@ class QuestionType {
       if (i) {      // 0 is fasly, skips 0
         this.questions[i].setModel(x.getData().copy());
       }
+
+      if (DEBUG)
+        console.log("x: ", x);    //TODO DEBUG REMOVE
 
       x = this.questions[i].generateAnswer(x);   //x gets used first, and then assigned to
     }
@@ -692,8 +700,6 @@ class Exercise {
   {
     //array of question types
     this.questionTypes = [ ];
-    this.correctModel = new __MODULENAME__();
-    this.userModel = new __MODULENAME__();
   }
 
   getQuestionTypes()

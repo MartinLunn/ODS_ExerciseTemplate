@@ -39,12 +39,12 @@ class QuestionType {
 
     //would scramble here if desired using scramble question order
 
-    var x;
+    var x;  //used to hold prev answer
 
     for (let i = 0; i < this.questions.length; i++)
     {
       if (i) {      // 0 is fasly, skips 0
-        this.questions[i].setModel(x.copy());
+        this.questions[i].setModel(x.copy());     //prev answer
       }
 
       x = this.questions[i].generateAnswer(x);   //x gets used first, and then assigned to

@@ -20,7 +20,7 @@ class Uset extends Model {
       return false;
     }
     this.set[x] = x;
-    this.n++;
+    this.n = this.n + 1;
     return true;
   }
 
@@ -32,7 +32,7 @@ class Uset extends Model {
     }
     var toReturn = this.set[x];
     this.set[x] = undefined;
-    this.n--;
+    this.n = this.n - 1;
     return toReturn;
   }
 
@@ -73,8 +73,6 @@ class Uset extends Model {
   copy()
   {
     var copy = new Uset();
-
-    copy.n = this.n;
 
     for (var element in this.set)
     {

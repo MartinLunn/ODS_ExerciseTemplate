@@ -5,8 +5,8 @@ class Exercise {
   {
     //array of question types
     this.questionTypes = [ ];
-    this.correctModel = new __MODULENAME__();
-    this.userModel = new __MODULENAME__();
+    this.correctModel = new __MODULENAME__();     //TODO remove - each questions has a correct model and a user model
+    this.userModel = new __MODULENAME__();        //TODO remove - each questions has a correct model and a user model 
   }
 
   getQuestionTypes()
