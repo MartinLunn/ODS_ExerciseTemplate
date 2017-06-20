@@ -55,17 +55,11 @@ class QuestionType {
   //randomizeOrder = null
 
   scrambleQuestionOrder() {
-    var array = this.question;
-    for (var i = array.length - 1; i > 0; i--) {
-        var j = ODSRandom.getRandomIntInclusive(0, i);
-        var temp = array[i];
-        array[i] = array[j];
-        array[j] = temp;
-    }
-    return array;
-}
+    this.question = ODSRandom.scramble (this.question);
+  }
 
 
   //draw = null;
 
 }
+
