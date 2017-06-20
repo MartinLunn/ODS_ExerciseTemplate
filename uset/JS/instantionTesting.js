@@ -13,6 +13,29 @@ if(!h.Defaults.DoNotThrowErrors)throw{msg:"jsPlumb: unknown anchor type '"+a+"'"
 
 
 
+/*
+  May want to change this but anyway
+  Adds some static methods to the Array class:
+    scramble (arr)
+      Scrambles array arr so that the elements will be in some random order.
+        Does this by the ODSRandom class. Note this creates a new Array
+        with the scrambled elements
+    swap (arr, i, j)
+      Swaps array elements at i & j. Note it does this in the same array,
+      does not have a return value
+*/
+
+Array.swap = function (arr, i, j) {
+  var temp = arr [i];
+  arr [i]  = arr [j];
+  arr [j]  = temp;
+}
+
+Array.scramble = function (arr) {
+  return ODSRandom.scramble (arr);
+}
+
+
 
 
 
@@ -82,12 +105,29 @@ class ODSRandom {
     return ODSRandom.getRandomFromArray(this.savedRNGs);
   }
 
+  static scramble (array) {
+    // should we clone the array, then randomize? or randomize same array?
+    // since we're returning, let's clone first.
+    // NOTE: https://stackoverflow.com/questions/3978492/javascript-fastest-way-to-duplicate-an-array-slice-vs-for-loop
+    // Different speeds based on method chosen, which then depends on browser ... blahblahblah. Using slice for now.
+    array = array.slice (0);
+
+    // loop over & randomize each position
+    for (var i = array.length - 1; i > 0; i--) {
+      var j = this.getRandomIntInclusive(0, i);
+      Array.swap (array, i, j);
+    }
+
+    return array;
+  }
+
   addToSavedRNGs(i)
   {
     this.savedRNGs.push(i);
     return i;
   }
 }
+
 
 
 
@@ -256,7 +296,33 @@ class AnswerType {
 
 /*jshint esversion: 6 */ 'use strict';
 
-class OperationAnswer extends AnswerType {
+class AddAnswer extends AnswerType {
+  constructor()
+  {
+    super();
+    this.data = new __MODULENAME__();
+  }
+
+}
+
+
+
+/*jshint esversion: 6 */ 'use strict';
+
+class FindAnswer extends AnswerType {
+  constructor()
+  {
+    super();
+    this.data = new __MODULENAME__();
+  }
+
+}
+
+
+
+/*jshint esversion: 6 */ 'use strict';
+
+class RemoveAnswer extends AnswerType {
   constructor()
   {
     super();
@@ -314,7 +380,7 @@ class QuestionType {
         for (let i = 0; i < numQuestionsArr[index]; i++)
         {
           thisQuestion = questionData[index];
-          this.questions.push(new thisQuestion.class(thisQuestion, answerTypesClassName));
+          this.questions.push(new thisQuestion.class(thisQuestion, answerTypesClassName[index]));
         }
     }
 
@@ -623,8 +689,6 @@ class Find extends Question {
 
 
 
-
-
 /*jshint esversion: 6 */ 'use strict';
 
 var DEBUG = true;
@@ -643,13 +707,16 @@ var __MODULENAME__numberOfQuestionsRequired = [ ];
 */
 
 var __MODULENAME__ = Uset;
-/*jshint esversion: 6 */ 'use strict';
 
 var questionTypesClassNames = [Operations];
 
-var answerTypesClassNames = [OperationAnswer];
+var answerTypesClassNames = [[AddAnswer, FindAnswer, RemoveAnswer]];
 
-var numberOfQuestionsRequired = [[10,4,10]];
+var numAddQuestions = 10;
+var numFindQuestions = 4;
+var numRemoveQuestions = 10;
+
+var numberOfQuestionsRequired = [[numAddQuestions, numFindQuestions, numRemoveQuestions]];
 
   var questionData = [
     [{class : Add, instructionsText : "Illustrate the evolution of the collection given the following add method."},
@@ -668,6 +735,8 @@ var __removeMaxParam__ = 8;
 MUST BE LOADED AFTER QUESTIONS AND QUESTIONTYPES AND RANDOM
 AND BEFORE EXERCISE
 */
+
+
 
 
 

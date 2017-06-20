@@ -76,7 +76,7 @@ class Uset extends Model {
 
     for (var element in this.set)
     {
-      copy.add(element);
+      copy.add(parseInt(element));
     }
 
     return copy;

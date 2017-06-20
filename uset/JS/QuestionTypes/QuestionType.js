@@ -33,7 +33,7 @@ class QuestionType {
         for (let i = 0; i < numQuestionsArr[index]; i++)
         {
           thisQuestion = questionData[index];
-          this.questions.push(new thisQuestion.class(thisQuestion, answerTypesClassName));
+          this.questions.push(new thisQuestion.class(thisQuestion, answerTypesClassName[index]));
         }
     }
 
@@ -62,4 +62,3 @@ class QuestionType {
   //draw = null;
 
 }
-
