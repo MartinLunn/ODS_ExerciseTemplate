@@ -40,6 +40,29 @@
 
 
 
+  /*
+    May want to change this but anyway
+    Adds some static methods to the Array class:
+      scramble (arr)
+        Scrambles array arr so that the elements will be in some random order.
+          Does this by the ODSRandom class. Note this creates a new Array
+          with the scrambled elements
+      swap (arr, i, j)
+        Swaps array elements at i & j. Note it does this in the same array,
+        does not have a return value
+  */
+
+  Array.swap = function (arr, i, j) {
+    var temp = arr [i];
+    arr [i]  = arr [j];
+    arr [j]  = temp;
+  }
+
+  Array.scramble = function (arr) {
+    return ODSRandom.scramble (arr);
+  }
+
+
 
 
 
@@ -109,12 +132,29 @@
       return ODSRandom.getRandomFromArray(this.savedRNGs);
     }
 
+    static scramble (array) {
+      // should we clone the array, then randomize? or randomize same array?
+      // since we're returning, let's clone first.
+      // NOTE: https://stackoverflow.com/questions/3978492/javascript-fastest-way-to-duplicate-an-array-slice-vs-for-loop
+      // Different speeds based on method chosen, which then depends on browser ... blahblahblah. Using slice for now.
+      array = array.slice (0);
+
+      // loop over & randomize each position
+      for (var i = array.length - 1; i > 0; i--) {
+        var j = this.getRandomIntInclusive(0, i);
+        Array.swap (array, i, j);
+      }
+
+      return array;
+    }
+
     addToSavedRNGs(i)
     {
       this.savedRNGs.push(i);
       return i;
     }
   }
+
 
 
 
@@ -169,7 +209,7 @@
         return null;
       }
       var toReturn = this.set[x];
-      this.set[x] = undefined;
+      delete this.set [x];
       this.n = this.n - 1;
       return toReturn;
     }
@@ -247,6 +287,13 @@
 
     getData() { return this.data; }
 
+    getModel(){ return this.model; }
+    setModel(m) {
+      var temp = this.model;
+      this.model = m;
+      return temp;
+    }
+
     //display answer?
 
     check(userAnswer)
@@ -281,16 +328,63 @@
 
 
 
+
   /*jshint esversion: 6 */ 'use strict';
 
-  class OperationAnswer extends AnswerType {
+  class AddAnswer extends AnswerType {
     constructor()
     {
       super();
-      this.data = new __MODULENAME__();
+      this.data = false;
+      this.model = new __MODULENAME__();
     }
 
+    check (userAnswer)
+    {
+      return this.model.equals (userAnswer);
+    }
   }
+
+
+
+
+
+  /*jshint esversion: 6 */ 'use strict';
+
+  class FindAnswer extends AnswerType {
+    constructor()
+    {
+      super();
+      this.data = null;
+      this.model = new __MODULENAME__();
+    }
+
+    check (userAnswer) {
+      return this.data === userAnswer;
+    }
+  }
+
+
+
+
+
+  /*jshint esversion: 6 */ 'use strict';
+
+  class RemoveAnswer extends AnswerType {
+    constructor()
+    {
+      super();
+      this.data = null;
+      this.model = new __MODULENAME__();
+    }
+
+    check (userAnswer)
+    {
+      return this.model.equals (userAnswer);
+    }
+  }
+
+
 
 
 
@@ -341,20 +435,16 @@
           for (let i = 0; i < numQuestionsArr[index]; i++)
           {
             thisQuestion = questionData[index];
-            this.questions.push(new thisQuestion.class(thisQuestion, answerTypesClassName));
+            this.questions.push(new thisQuestion.class(thisQuestion, answerTypesClassName[index]));
           }
       }
 
       //would scramble here if desired using scramble question order
 
-      var x;
+      var x;  //used to hold prev answer
 
       for (let i = 0; i < this.questions.length; i++)
       {
-        if (i) {      // 0 is fasly, skips 0
-          this.questions[i].setModel(x.getData().copy());
-        }
-
         x = this.questions[i].generateAnswer(x);   //x gets used first, and then assigned to
       }
 
@@ -363,15 +453,8 @@
     //randomizeOrder = null
 
     scrambleQuestionOrder() {
-      var array = this.question;
-      for (var i = array.length - 1; i > 0; i--) {
-          var j = ODSRandom.getRandomIntInclusive(0, i);
-          var temp = array[i];
-          array[i] = array[j];
-          array[j] = temp;
-      }
-      return array;
-  }
+      this.questions = ODSRandom.scramble (this.questions);
+    }
 
 
     //draw = null;
@@ -525,7 +608,18 @@
 
     generateAnswer(prevAnswer)
     {
-      return this.computeAnswerData(prevAnswer);
+      // NOTE: Optimizing this. All implementations seem to have ...
+      //        1) Set model to the previous answer's model
+      //        2) Set data to something.
+      //        3) Return the answer.
+      // Can all be done here ....
+      var answer = this.answer;
+      if (prevAnswer)
+        answer.setModel (prevAnswer.getModel ().copy ());
+
+      answer.setData (this.computeAnswerData ());
+
+      return answer;
     }
 
     check(userAnswer)
@@ -548,6 +642,7 @@
 
 
 
+
   /*jshint esversion: 6 */ 'use strict';
 
   class Add extends Question {
@@ -556,17 +651,14 @@
       return ODSRandom.getRandomIntInclusive(__addMinParam__, __addMaxParam__);
     }
 
-    computeAnswerData(prevAnswer)
+    computeAnswerData()
     {
-      if (prevAnswer) {
-        this.answer.setData(prevAnswer.getData().copy());
-      }
-
-      this.answer.getData().add(this.parameters);
-
-      return this.answer;
+      return this.answer.getModel().add(this.parameters);
     }
   }
+
+
+
 
 
 
@@ -584,15 +676,11 @@
 
     computeAnswerData(prevAnswer)
     {
-      if (prevAnswer) {
-        this.answer.setData(prevAnswer.getData().copy());
-      }
-
-      this.answer.getData().remove(this.parameters);
-
-      return this.answer;
+      return this.answer.getModel().remove(this.parameters);
     }
   }
+
+
 
 
 
@@ -617,19 +705,11 @@
       return ODSRandom.getRandomIntInclusive(__findMinParam__, __findMaxParam__);
     }
 
-    computeAnswerData(prevAnswer)
+    computeAnswerData()
     {
-      if (prevAnswer) {
-        this.answer.setData(prevAnswer.getData().copy());
-      }
-
-      this.answer.getData().find(this.parameters);
-
-      return this.answer;
+      return this.answer.getModel().find(this.parameters);
     }
   }
-
-
 
 
 
@@ -670,13 +750,16 @@
   */
 
   var __MODULENAME__ = Uset;
-  /*jshint esversion: 6 */ 'use strict';
 
   var questionTypesClassNames = [Operations];
 
-  var answerTypesClassNames = [OperationAnswer];
+  var answerTypesClassNames = [[AddAnswer, FindAnswer, RemoveAnswer]];
 
-  var numberOfQuestionsRequired = [[10,4,10]];
+  var numAddQuestions = 10;
+  var numFindQuestions = 4;
+  var numRemoveQuestions = 10;
+
+  var numberOfQuestionsRequired = [[numAddQuestions, numFindQuestions, numRemoveQuestions]];
 
     var questionData = [
       [{class : Add, instructionsText : "Illustrate the evolution of the collection given the following add method."},
@@ -695,6 +778,8 @@
   MUST BE LOADED AFTER QUESTIONS AND QUESTIONTYPES AND RANDOM
   AND BEFORE EXERCISE
   */
+
+
 
 
 
@@ -892,7 +977,6 @@
     onMouseOverON(domElement){  }
     onMouseOverOFF(domElement){  }
   }
-
   </script>
 
   <link href="css/Uset.css" rel="stylesheet" type="text/css">
@@ -910,7 +994,7 @@
   <p> exercise </p>
 
   <div class="question">
-    question
+    <span class="questionSpan"> question </span>
     <div class=instructions>
       instructions
     </div>
@@ -919,7 +1003,7 @@
     </div>
   </div>
 
-  <div class="questionDiv">
+  <div class="question">
     <span class="questionSpan"> question </span>
     <div class=instructions>
       instructions

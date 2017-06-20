@@ -1,3 +1,4 @@
+/*jshint esversion: 6 */ 'use strict';
 /*
   May want to change this but anyway
   Adds some static methods to the Array class:
@@ -14,8 +15,8 @@ Array.swap = function (arr, i, j) {
   var temp = arr [i];
   arr [i]  = arr [j];
   arr [j]  = temp;
-}
+};
 
 Array.scramble = function (arr) {
   return ODSRandom.scramble (arr);
-}
+};
