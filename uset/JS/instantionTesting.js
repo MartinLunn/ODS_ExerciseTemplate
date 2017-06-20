@@ -588,7 +588,18 @@ class Question {
 
   generateAnswer(prevAnswer)
   {
-    return this.computeAnswerData(prevAnswer);
+    // NOTE: Optimizing this. All implementations seem to have ...
+    //        1) Set model to the previous answer's model
+    //        2) Set data to something.
+    //        3) Return the answer.
+    // Can all be done here ....
+    var answer = this.answer;
+    if (prevAnswer)
+      answer.setModel (prevAnswer.getModel ().copy ());
+
+    answer.setData (this.computeAnswerData ());
+
+    return answer;
   }
 
   check(userAnswer)
@@ -611,6 +622,7 @@ Question.nextId = 0;
 
 
 
+
 /*jshint esversion: 6 */ 'use strict';
 
 class Add extends Question {
@@ -619,19 +631,12 @@ class Add extends Question {
     return ODSRandom.getRandomIntInclusive(__addMinParam__, __addMaxParam__);
   }
 
-  computeAnswerData(prevAnswer)
+  computeAnswerData()
   {
-    var answer = this.answer;
-
-    if (prevAnswer) {
-      answer.setModel(prevAnswer.getModel().copy());
-    }
-
-    answer.setData (answer.getModel().add(this.parameters));
-
-    return answer;
+    return this.answer.getModel().add(this.parameters);
   }
 }
+
 
 
 
@@ -651,17 +656,10 @@ class Remove extends Question {
 
   computeAnswerData(prevAnswer)
   {
-    var answer = this.answer;
-
-    if (prevAnswer) {
-      answer.setModel(prevAnswer.getModel().copy());
-    }
-
-    answer.setData (answer.getModel().remove(this.parameters));
-
-    return answer;
+    return this.answer.getModel().remove(this.parameters);
   }
 }
+
 
 
 
@@ -687,19 +685,12 @@ class Find extends Question {
     return ODSRandom.getRandomIntInclusive(__findMinParam__, __findMaxParam__);
   }
 
-  computeAnswerData(prevAnswer)
+  computeAnswerData()
   {
-    var answer = this.answer;
-
-    if (prevAnswer) {
-      answer.setModel(prevAnswer.getModel().copy());
-    }
-
-    answer.setData (answer.getModel().find(this.parameters));
-
-    return answer;
+    return this.answer.getModel().find(this.parameters);
   }
 }
+
 
 
 
