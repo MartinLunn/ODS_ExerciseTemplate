@@ -10,7 +10,11 @@ https://storage.googleapis.com/supplemental_media/udacityu/2872198569/mock3-port
 
   text-align: center;
 
-  padding: 50;
+  margin: 0 auto;
+}
+
+* {
+  max-width: 960px;
 }
 
 * {
@@ -26,7 +30,7 @@ https://storage.googleapis.com/supplemental_media/udacityu/2872198569/mock3-port
 
 .row {
   width: 100%;
-  max-width: 960;
+  max-width: 960px;
   display: flex;
   flex-wrap: wrap;
 }
