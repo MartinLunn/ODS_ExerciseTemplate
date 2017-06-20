@@ -1,4 +1,4 @@
-/*jshint esversion: 6 */
+/*jshint esversion: 6 */ 'use strict';
 
 class CustomEventHandler {
   constructor()
@@ -10,7 +10,7 @@ class CustomEventHandler {
   {
     if (!this.customEvent[odsEvent])      //if this,events doesn't contain event
     {
-      this.customEvent[odsEvent] = []
+      this.customEvent[odsEvent] = [];
     }
     this.customEvent[odsEvent].push(handlingFunction);
   }
@@ -22,7 +22,7 @@ class CustomEventHandler {
 
   trigger(event)
   {
-    var doThis = this.customEvent[event]
+    var doThis = this.customEvent[event];
     if (doThis)
     {
       for (var i = 0; i < doThis.length; i++) {

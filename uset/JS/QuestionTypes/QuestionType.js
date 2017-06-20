@@ -1,11 +1,10 @@
-/*jshint esversion: 6 */
+/*jshint esversion: 6 */ 'use strict';
 
 class QuestionType {
-  constructor(questionData)
+  constructor(questionData, numQuestionsArr, answerTypesClassName)
   {
     this.questions = [ ];
-    this.numQuestionsRequired = 0;
-    this.setup(questionData);
+    this.setup(questionData, numQuestionsArr, answerTypesClassName);
   }
 
   getQuestions()
@@ -20,7 +19,8 @@ class QuestionType {
     return temp;
   }
 
-  setup(questionData)
+  //if you want to modify this behavior, for example to scramble question order, override this method in the subclass, copying it, except add scramble or whatever extra functionality
+  setup(questionData, numQuestionsArr, answerTypesClassName)
   {
     if (!questionData) {      //param checking
       if (DEBUG) { console.error("From inside QuestionType.setup(), falsy param."); }
@@ -28,15 +28,44 @@ class QuestionType {
     }
 
     var thisQuestion = null;
-    for (index in questionData)
+    for (var index in questionData)
     {
-      thisQuestion = questionData[index];
-      this.questions.push(new thisQuestion.class(thisQuestion));
+        for (let i = 0; i < numQuestionsArr[index]; i++)
+        {
+          thisQuestion = questionData[index];
+          this.questions.push(new thisQuestion.class(thisQuestion, answerTypesClassName));
+        }
     }
+
+    //would scramble here if desired using scramble question order
+
+    var x;  //used to hold prev answer
+
+    for (let i = 0; i < this.questions.length; i++)
+    {
+      if (i) {      // 0 is fasly, skips 0
+        this.questions[i].setModel(x.copy());     //prev answer
+      }
+
+      x = this.questions[i].generateAnswer(x);   //x gets used first, and then assigned to
+    }
+
   }
 
-  //draw = null;
+  //randomizeOrder = null
 
-  //check = null;
+  scrambleQuestionOrder() {
+    var array = this.question;
+    for (var i = array.length - 1; i > 0; i--) {
+        var j = ODSRandom.getRandomIntInclusive(0, i);
+        var temp = array[i];
+        array[i] = array[j];
+        array[j] = temp;
+    }
+    return array;
+}
+
+
+  //draw = null;
 
 }

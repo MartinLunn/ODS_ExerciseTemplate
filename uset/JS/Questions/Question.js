@@ -1,35 +1,29 @@
-/*jshint esversion: 6 */
+/*jshint esversion: 6 */ 'use strict';
 
 class Question {
 
-  constructor(questionData)
+  constructor(questionData, answerTypesClassName)
   {
-    this.answer = questionData.answer || undefined;
-    this.parameters = questionData.parameters || { };
-    this.instructions = questionData.instruction ? new Instructions(questionData.instruction) : null;
-    this.id = id || Question.nextId++;
-  }
+    questionData = questionData || { };
+    this.parameters = this.constructor.generateParameters() || { };
+    this.instructions = !!questionData.instruction ? new Instructions(questionData.instruction) : null;     //!! converts truthy to true
+    this.id = questionData.id || Question.nextId++;
+    this.div = null;
 
-  getAnswer()
-  {
-    return this.answer;
-  }
+    if (answerTypesClassName)
+    {
+      this.answer = new answerTypesClassName();
+    }
 
-  setAnswer(answer)
-  {
-    var temp = this.answer;
-    this.answer = answer;
-    return temp;
+    if (typeof(__MODULENAME__) !== "undefined" && __MODULENAME__)
+    {
+      this.model = new __MODULENAME__();
+    }
   }
 
   getInstructions()
   {
     return this.instructions;
-  }
-
-  displayInstructions()
-  {
-    this.getInstructions().display();
   }
 
   getParameters()
@@ -44,10 +38,7 @@ class Question {
     return temp;
   }
 
-  getId()
-  {
-    return this.id;
-  }
+  getId() { return this.id; }
 
   static getNextId()
   {
@@ -67,6 +58,56 @@ class Question {
     this.id = i;
     return temp;
   }
+
+  getDiv() { return this.div; }
+
+  setDiv(div)
+  {
+    var temp = this.div;
+    this.div = div;
+    return temp;
+  }
+
+  getModel() { return this.model; }
+
+  setModel(model)
+  {
+    var temp = this.model;
+    this.model = model;
+    return temp;
+  }
+
+
+
+  display(div)
+  {
+    this.setDiv(div);
+
+    var questionText = this.constructor.name;
+
+    questionText = questionText.charAt(0).toLowerCase() + questionText.substring(1);
+
+    $(".questionSpan",div).text(questionText);
+
+    this.instructions.display(div);
+  }
+
+  displayAnswer()
+  {
+    this.answer.display(this.div);
+  }
+
+  generateAnswer(prevAnswer)
+  {
+    return this.computeAnswerData(prevAnswer);
+  }
+
+  check(userAnswer)
+  {
+    return this.answer.check(userAnswer);
+  }
+
+  //static generateParameters()
 }
 
 Question.nextId = 0;

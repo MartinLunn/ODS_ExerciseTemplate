@@ -1,10 +1,12 @@
-/*jshint esversion: 6 */
+/*jshint esversion: 6 */ 'use strict';
 
 class Exercise {
   constructor()
   {
     //array of question types
     this.questionTypes = [ ];
+    this.correctModel = new __MODULENAME__();     //TODO remove - each questions has a correct model and a user model
+    this.userModel = new __MODULENAME__();        //TODO remove - each questions has a correct model and a user model 
   }
 
   getQuestionTypes()
@@ -34,9 +36,10 @@ class Exercise {
 
     for (var index in questionTypesClassNames)
     {
-      this.questionTypes.push(new questionTypesClassNames[index](questionData[index]));
+      this.questionTypes.push(new questionTypesClassNames[index](questionData[index], numberOfQuestionsRequired[index], answerTypesClassNames[index]));
     }
 
+    //if desired, scramble
 
   }
 }

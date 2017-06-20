@@ -1,4 +1,4 @@
-/*jshint esversion: 6 */
+/*jshint esversion: 6 */ 'use strict';
 
 class Instructions {
   constructor(instructions)
@@ -19,11 +19,8 @@ class Instructions {
   }
 
   //associates instruction data with html element id
-  display(i)
+  display(div)
   {
-    var instructionElement = $("#" + instructionsId + i);
-    instructionElement.text(    instructionElement.text()
-                              + this.getData()              );
+    $(".instructions", div).text(this.getData());
   }
-
 }

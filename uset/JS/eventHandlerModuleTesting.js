@@ -1,4 +1,4 @@
-/*jshint esversion: 6 */
+/*jshint esversion: 6 */ 'use strict';
 
 class DOMEventHandler {
   static registerEventHandler (h) {
@@ -49,7 +49,7 @@ class DOMEventHandler {
 DOMEventHandler.customEventHandlers = [ ];
 
 
-var myArray = new Array();
+var myArray = [ ];
 myArray.push(($("#myId"))[0]);
 var myDOMEventHandler = new DOMEventHandler (myArray, {"click": "myCustomEvent"});
 
@@ -63,7 +63,7 @@ class CustomEventHandler {
   {
     if (!this.customEvent[odsEvent])      //if this,events doesn't contain event
     {
-      this.customEvent[odsEvent] = []
+      this.customEvent[odsEvent] = [];
     }
     this.customEvent[odsEvent].push(handlingFunction);
   }
@@ -75,7 +75,7 @@ class CustomEventHandler {
 
   trigger(event)
   {
-    var doThis = this.customEvent[event]
+    var doThis = this.customEvent[event];
     if (doThis)
     {
       for (var i = 0; i < doThis.length; i++) {
@@ -89,6 +89,6 @@ class CustomEventHandler {
 
 
 var myCustomEventHandler = new CustomEventHandler();
-myCustomEventHandler.bind("myCustomEvent", function(elem, event) {console.log(elem, "\n", event)});
+myCustomEventHandler.bind("myCustomEvent", function(elem, event) {console.log(elem, "\n", event);});
 
 DOMEventHandler.registerEventHandler(myCustomEventHandler);
