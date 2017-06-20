@@ -8,12 +8,14 @@ class Find extends Question {
 
   computeAnswerData(prevAnswer)
   {
+    var answer = this.answer;
+
     if (prevAnswer) {
-      this.answer.setData(prevAnswer.getData().copy());
+      answer.setModel(prevAnswer.getModel().copy());
     }
 
-    this.answer.getData().find(this.parameters);
+    answer.setData (answer.getModel().find(this.parameters));
 
-    return this.answer;
+    return answer;
   }
 }

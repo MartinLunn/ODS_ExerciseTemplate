@@ -5,6 +5,7 @@ class AddAnswer extends AnswerType {
   {
     super();
     this.data = new __MODULENAME__();
+    this.model = new __MODULENAME__();
   }
 
 }

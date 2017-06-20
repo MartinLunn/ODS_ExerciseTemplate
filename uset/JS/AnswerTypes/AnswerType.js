@@ -15,6 +15,13 @@ class AnswerType {
 
   getData() { return this.data; }
 
+  getModel(){ return this.model; }
+  setModel(m) {
+    var temp = this.model;
+    this.model = m;
+    return temp;
+  }
+  
   //display answer?
 
   check(userAnswer)

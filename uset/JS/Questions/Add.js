@@ -8,12 +8,14 @@ class Add extends Question {
 
   computeAnswerData(prevAnswer)
   {
+    var answer = this.answer;
+
     if (prevAnswer) {
-      this.answer.setData(prevAnswer.getData().copy());
+      answer.setModel(prevAnswer.getModel().copy());
     }
 
-    this.answer.getData().add(this.parameters);
+    answer.setData (answer.getModel().add(this.parameters));
 
-    return this.answer;
+    return answer;
   }
 }

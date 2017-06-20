@@ -40,6 +40,29 @@
 
 
 
+  /*
+    May want to change this but anyway
+    Adds some static methods to the Array class:
+      scramble (arr)
+        Scrambles array arr so that the elements will be in some random order.
+          Does this by the ODSRandom class. Note this creates a new Array
+          with the scrambled elements
+      swap (arr, i, j)
+        Swaps array elements at i & j. Note it does this in the same array,
+        does not have a return value
+  */
+
+  Array.swap = function (arr, i, j) {
+    var temp = arr [i];
+    arr [i]  = arr [j];
+    arr [j]  = temp;
+  }
+
+  Array.scramble = function (arr) {
+    return ODSRandom.scramble (arr);
+  }
+
+
 
 
 
@@ -109,12 +132,29 @@
       return ODSRandom.getRandomFromArray(this.savedRNGs);
     }
 
+    static scramble (array) {
+      // should we clone the array, then randomize? or randomize same array?
+      // since we're returning, let's clone first.
+      // NOTE: https://stackoverflow.com/questions/3978492/javascript-fastest-way-to-duplicate-an-array-slice-vs-for-loop
+      // Different speeds based on method chosen, which then depends on browser ... blahblahblah. Using slice for now.
+      array = array.slice (0);
+
+      // loop over & randomize each position
+      for (var i = array.length - 1; i > 0; i--) {
+        var j = this.getRandomIntInclusive(0, i);
+        Array.swap (array, i, j);
+      }
+
+      return array;
+    }
+
     addToSavedRNGs(i)
     {
       this.savedRNGs.push(i);
       return i;
     }
   }
+
 
 
 
@@ -247,6 +287,13 @@
 
     getData() { return this.data; }
 
+    getModel(){ return this.model; }
+    setModel(m) {
+      var temp = this.model;
+      this.model = m;
+      return temp;
+    }
+
     //display answer?
 
     check(userAnswer)
@@ -281,16 +328,49 @@
 
 
 
+
   /*jshint esversion: 6 */ 'use strict';
 
-  class OperationAnswer extends AnswerType {
+  class AddAnswer extends AnswerType {
     constructor()
     {
       super();
       this.data = new __MODULENAME__();
+      this.model = new __MODULENAME__();
     }
 
   }
+
+
+
+
+  /*jshint esversion: 6 */ 'use strict';
+
+  class FindAnswer extends AnswerType {
+    constructor()
+    {
+      super();
+      this.data = null;
+      this.model = new __MODULENAME__();
+    }
+
+  }
+
+
+
+
+  /*jshint esversion: 6 */ 'use strict';
+
+  class RemoveAnswer extends AnswerType {
+    constructor()
+    {
+      super();
+      this.data = new __MODULENAME__();
+      this.model = new __MODULENAME__();
+    }
+
+  }
+
 
 
 
@@ -341,7 +421,7 @@
           for (let i = 0; i < numQuestionsArr[index]; i++)
           {
             thisQuestion = questionData[index];
-            this.questions.push(new thisQuestion.class(thisQuestion, answerTypesClassName));
+            this.questions.push(new thisQuestion.class(thisQuestion, answerTypesClassName[index]));
           }
       }
 
@@ -351,10 +431,6 @@
 
       for (let i = 0; i < this.questions.length; i++)
       {
-        if (i) {      // 0 is fasly, skips 0
-          this.questions[i].setModel(x.getData().copy());
-        }
-
         x = this.questions[i].generateAnswer(x);   //x gets used first, and then assigned to
       }
 
@@ -558,15 +634,19 @@
 
     computeAnswerData(prevAnswer)
     {
+      var answer = this.answer;
+
       if (prevAnswer) {
-        this.answer.setData(prevAnswer.getData().copy());
+        answer.setModel(prevAnswer.getModel().copy());
       }
 
-      this.answer.getData().add(this.parameters);
+      answer.setData (answer.getModel().add(this.parameters));
 
-      return this.answer;
+      return answer;
     }
   }
+
+
 
 
 
@@ -584,15 +664,18 @@
 
     computeAnswerData(prevAnswer)
     {
+      var answer = this.answer;
+
       if (prevAnswer) {
-        this.answer.setData(prevAnswer.getData().copy());
+        answer.setModel(prevAnswer.getModel().copy());
       }
 
-      this.answer.getData().remove(this.parameters);
+      answer.setData (answer.getModel().remove(this.parameters));
 
-      return this.answer;
+      return answer;
     }
   }
+
 
 
 
@@ -619,18 +702,17 @@
 
     computeAnswerData(prevAnswer)
     {
+      var answer = this.answer;
+
       if (prevAnswer) {
-        this.answer.setData(prevAnswer.getData().copy());
+        answer.setModel(prevAnswer.getModel().copy());
       }
 
-      this.answer.getData().find(this.parameters);
+      answer.setData (answer.getModel().find(this.parameters));
 
-      return this.answer;
+      return answer;
     }
   }
-
-
-
 
 
 
@@ -670,13 +752,16 @@
   */
 
   var __MODULENAME__ = Uset;
-  /*jshint esversion: 6 */ 'use strict';
 
   var questionTypesClassNames = [Operations];
 
-  var answerTypesClassNames = [OperationAnswer];
+  var answerTypesClassNames = [[AddAnswer, FindAnswer, RemoveAnswer]];
 
-  var numberOfQuestionsRequired = [[10,4,10]];
+  var numAddQuestions = 10;
+  var numFindQuestions = 4;
+  var numRemoveQuestions = 10;
+
+  var numberOfQuestionsRequired = [[numAddQuestions, numFindQuestions, numRemoveQuestions]];
 
     var questionData = [
       [{class : Add, instructionsText : "Illustrate the evolution of the collection given the following add method."},
@@ -695,6 +780,8 @@
   MUST BE LOADED AFTER QUESTIONS AND QUESTIONTYPES AND RANDOM
   AND BEFORE EXERCISE
   */
+
+
 
 
 
@@ -892,7 +979,6 @@
     onMouseOverON(domElement){  }
     onMouseOverOFF(domElement){  }
   }
-
   </script>
 
   <link href="css/Uset.css" rel="stylesheet" type="text/css">

@@ -260,6 +260,13 @@ class AnswerType {
 
   getData() { return this.data; }
 
+  getModel(){ return this.model; }
+  setModel(m) {
+    var temp = this.model;
+    this.model = m;
+    return temp;
+  }
+
   //display answer?
 
   check(userAnswer)
@@ -294,6 +301,7 @@ class AnswerType {
 
 
 
+
 /*jshint esversion: 6 */ 'use strict';
 
 class AddAnswer extends AnswerType {
@@ -301,9 +309,11 @@ class AddAnswer extends AnswerType {
   {
     super();
     this.data = new __MODULENAME__();
+    this.model = new __MODULENAME__();
   }
 
 }
+
 
 
 
@@ -313,10 +323,12 @@ class FindAnswer extends AnswerType {
   constructor()
   {
     super();
-    this.data = new __MODULENAME__();
+    this.data = null;
+    this.model = new __MODULENAME__();
   }
 
 }
+
 
 
 
@@ -327,9 +339,11 @@ class RemoveAnswer extends AnswerType {
   {
     super();
     this.data = new __MODULENAME__();
+    this.model = new __MODULENAME__();
   }
 
 }
+
 
 
 
@@ -593,15 +607,19 @@ class Add extends Question {
 
   computeAnswerData(prevAnswer)
   {
+    var answer = this.answer;
+
     if (prevAnswer) {
-      this.answer.setData(prevAnswer.getData().copy());
+      answer.setModel(prevAnswer.getModel().copy());
     }
 
-    this.answer.getData().add(this.parameters);
+    answer.setData (answer.getModel().add(this.parameters));
 
-    return this.answer;
+    return answer;
   }
 }
+
+
 
 
 
@@ -619,15 +637,18 @@ class Remove extends Question {
 
   computeAnswerData(prevAnswer)
   {
+    var answer = this.answer;
+
     if (prevAnswer) {
-      this.answer.setData(prevAnswer.getData().copy());
+      answer.setModel(prevAnswer.getModel().copy());
     }
 
-    this.answer.getData().remove(this.parameters);
+    answer.setData (answer.getModel().remove(this.parameters));
 
-    return this.answer;
+    return answer;
   }
 }
+
 
 
 
@@ -654,16 +675,17 @@ class Find extends Question {
 
   computeAnswerData(prevAnswer)
   {
+    var answer = this.answer;
+
     if (prevAnswer) {
-      this.answer.setData(prevAnswer.getData().copy());
+      answer.setModel(prevAnswer.getModel().copy());
     }
 
-    this.answer.getData().find(this.parameters);
+    answer.setData (answer.getModel().find(this.parameters));
 
-    return this.answer;
+    return answer;
   }
 }
-
 
 
 
