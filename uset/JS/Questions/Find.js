@@ -6,14 +6,8 @@ class Find extends Question {
     return ODSRandom.getRandomIntInclusive(__findMinParam__, __findMaxParam__);
   }
 
-  computeAnswerData(prevAnswer)
+  computeAnswerData()
   {
-    if (prevAnswer) {
-      this.answer.setData(prevAnswer.getData().copy());
-    }
-
-    this.answer.getData().find(this.parameters);
-
-    return this.answer;
+    return this.answer.getModel().find(this.parameters);
   }
 }

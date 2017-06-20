@@ -260,6 +260,13 @@ class AnswerType {
 
   getData() { return this.data; }
 
+  getModel(){ return this.model; }
+  setModel(m) {
+    var temp = this.model;
+    this.model = m;
+    return temp;
+  }
+
   //display answer?
 
   check(userAnswer)
@@ -294,16 +301,24 @@ class AnswerType {
 
 
 
+
 /*jshint esversion: 6 */ 'use strict';
 
 class AddAnswer extends AnswerType {
   constructor()
   {
     super();
-    this.data = new __MODULENAME__();
+    this.data = false;
+    this.model = new __MODULENAME__();
   }
 
+  check (userAnswer)
+  {
+    return this.model.equals (userAnswer);
+  }
 }
+
+
 
 
 
@@ -313,10 +328,16 @@ class FindAnswer extends AnswerType {
   constructor()
   {
     super();
-    this.data = new __MODULENAME__();
+    this.data = null;
+    this.model = new __MODULENAME__();
   }
 
+  check (userAnswer) {
+    return this.data === userAnswer;
+  }
 }
+
+
 
 
 
@@ -326,10 +347,17 @@ class RemoveAnswer extends AnswerType {
   constructor()
   {
     super();
-    this.data = new __MODULENAME__();
+    this.data = null;
+    this.model = new __MODULENAME__();
   }
 
+  check (userAnswer)
+  {
+    return this.model.equals (userAnswer);
+  }
 }
+
+
 
 
 
@@ -390,10 +418,6 @@ class QuestionType {
 
     for (let i = 0; i < this.questions.length; i++)
     {
-      if (i) {      // 0 is fasly, skips 0
-        this.questions[i].setModel(x.getData().copy());
-      }
-
       x = this.questions[i].generateAnswer(x);   //x gets used first, and then assigned to
     }
 
@@ -564,7 +588,18 @@ class Question {
 
   generateAnswer(prevAnswer)
   {
-    return this.computeAnswerData(prevAnswer);
+    // NOTE: Optimizing this. All implementations seem to have ...
+    //        1) Set model to the previous answer's model
+    //        2) Set data to something.
+    //        3) Return the answer.
+    // Can all be done here ....
+    var answer = this.answer;
+    if (prevAnswer)
+      answer.setModel (prevAnswer.getModel ().copy ());
+
+    answer.setData (this.computeAnswerData ());
+
+    return answer;
   }
 
   check(userAnswer)
@@ -587,6 +622,7 @@ Question.nextId = 0;
 
 
 
+
 /*jshint esversion: 6 */ 'use strict';
 
 class Add extends Question {
@@ -595,17 +631,14 @@ class Add extends Question {
     return ODSRandom.getRandomIntInclusive(__addMinParam__, __addMaxParam__);
   }
 
-  computeAnswerData(prevAnswer)
+  computeAnswerData()
   {
-    if (prevAnswer) {
-      this.answer.setData(prevAnswer.getData().copy());
-    }
-
-    this.answer.getData().add(this.parameters);
-
-    return this.answer;
+    return this.answer.getModel().add(this.parameters);
   }
 }
+
+
+
 
 
 
@@ -623,15 +656,11 @@ class Remove extends Question {
 
   computeAnswerData(prevAnswer)
   {
-    if (prevAnswer) {
-      this.answer.setData(prevAnswer.getData().copy());
-    }
-
-    this.answer.getData().remove(this.parameters);
-
-    return this.answer;
+    return this.answer.getModel().remove(this.parameters);
   }
 }
+
+
 
 
 
@@ -656,15 +685,9 @@ class Find extends Question {
     return ODSRandom.getRandomIntInclusive(__findMinParam__, __findMaxParam__);
   }
 
-  computeAnswerData(prevAnswer)
+  computeAnswerData()
   {
-    if (prevAnswer) {
-      this.answer.setData(prevAnswer.getData().copy());
-    }
-
-    this.answer.getData().find(this.parameters);
-
-    return this.answer;
+    return this.answer.getModel().find(this.parameters);
   }
 }
 

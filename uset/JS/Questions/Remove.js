@@ -8,12 +8,6 @@ class Remove extends Question {
 
   computeAnswerData(prevAnswer)
   {
-    if (prevAnswer) {
-      this.answer.setData(prevAnswer.getData().copy());
-    }
-
-    this.answer.getData().remove(this.parameters);
-
-    return this.answer;
+    return this.answer.getModel().remove(this.parameters);
   }
 }

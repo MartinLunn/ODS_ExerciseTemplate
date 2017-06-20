@@ -31,8 +31,10 @@ class Uset extends Model {
       return null;
     }
     var toReturn = this.set[x];
-    this.set[x] = undefined;
+
+    delete this.set [x];    // NOTE: delete actually deletes it. setting to undefined causes issues later
     this.n = this.n - 1;
+    
     return toReturn;
   }
 
