@@ -308,11 +308,16 @@ class AddAnswer extends AnswerType {
   constructor()
   {
     super();
-    this.data = new __MODULENAME__();
+    this.data = false;
     this.model = new __MODULENAME__();
   }
 
+  check (userAnswer)
+  {
+    return this.model.equals (userAnswer);
+  }
 }
+
 
 
 
@@ -327,7 +332,11 @@ class FindAnswer extends AnswerType {
     this.model = new __MODULENAME__();
   }
 
+  check (userAnswer) {
+    return this.data === userAnswer;
+  }
 }
+
 
 
 
@@ -338,11 +347,16 @@ class RemoveAnswer extends AnswerType {
   constructor()
   {
     super();
-    this.data = new __MODULENAME__();
+    this.data = null;
     this.model = new __MODULENAME__();
   }
 
+  check (userAnswer)
+  {
+    return this.model.equals (userAnswer);
+  }
 }
+
 
 
 
