@@ -8,4 +8,7 @@ class FindAnswer extends AnswerType {
     this.model = new __MODULENAME__();
   }
 
+  check (userAnswer) {
+    return this.data === userAnswer;
+  }
 }
