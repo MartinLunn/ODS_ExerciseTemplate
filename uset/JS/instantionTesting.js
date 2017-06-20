@@ -495,7 +495,7 @@ class Question {
   {
     questionData = questionData || { };
     this.parameters = this.constructor.generateParameters() || { };
-    this.instructions = !!questionData.instruction ? new Instructions(questionData.instruction) : null;     //!! converts truthy to true
+    this.instructions = !!questionData.instructionsText ? new Instructions(questionData.instructionsText) : null;     //!! converts truthy to true
     this.id = questionData.id || Question.nextId++;
     this.div = null;
 
@@ -611,6 +611,7 @@ class Question {
 }
 
 Question.nextId = 0;
+
 
 
 

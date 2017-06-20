@@ -1,0 +1,28 @@
+{
+  "name": "ods_exercisetemplate",
+  "version": "0.0.0",
+  "description": "A template for interactive videos and exercises",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MartinLunn/ODS_ExerciseTemplate.git"
+  },
+  "keywords": [
+    "ODS"
+  ],
+  "author": "Martin Lunn Sean Hodges Gahen Thanabalasingham Pat Morin",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/MartinLunn/ODS_ExerciseTemplate/issues"
+  },
+  "homepage": "https://github.com/MartinLunn/ODS_ExerciseTemplate#readme",
+  "devDependencies": {
+    "jshint": "^2.9.4"
+  },
+  "dependencies": {
+    "express": "^4.15.3"
+  }
+}

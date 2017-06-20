@@ -332,33 +332,6 @@
   /*jshint esversion: 6 */ 'use strict';
 
   class AddAnswer extends AnswerType {
-<<<<<<< HEAD
-    constructor()
-    {
-      super();
-      this.data = new __MODULENAME__();
-    }
-
-  }
-
-
-
-  /*jshint esversion: 6 */ 'use strict';
-
-  class FindAnswer extends AnswerType {
-    constructor()
-    {
-      super();
-      this.data = new __MODULENAME__();
-    }
-
-  }
-
-
-
-  /*jshint esversion: 6 */ 'use strict';
-
-  class RemoveAnswer extends AnswerType {
     constructor()
     {
       super();
@@ -371,8 +344,6 @@
       return this.model.equals (userAnswer);
     }
   }
-
-
 
 
 
@@ -519,6 +490,32 @@
 
 
 
+  /*jshint esversion: 6 */ 'use strict';
+
+  class Instructions {
+    constructor(instructions)
+    {
+      this.data = instructions;
+    }
+
+    getData()
+    {
+      return this.data;
+    }
+
+    setData(newData)
+    {
+      var temp = this.data;
+      this.data = newData;
+      return temp;
+    }
+
+    //associates instruction data with html element id
+    display(div)
+    {
+      $(".instructions", div).text(this.getData());
+    }
+  }
 
 
 
@@ -542,7 +539,7 @@
     {
       questionData = questionData || { };
       this.parameters = this.constructor.generateParameters() || { };
-      this.instructions = !!questionData.instruction ? new Instructions(questionData.instruction) : null;     //!! converts truthy to true
+      this.instructions = !!questionData.instructionsText ? new Instructions(questionData.instructionsText) : null;     //!! converts truthy to true
       this.id = questionData.id || Question.nextId++;
       this.div = null;
 
@@ -658,6 +655,7 @@
   }
 
   Question.nextId = 0;
+
 
 
 
@@ -1024,9 +1022,9 @@
 
 
 
-  <div class="question">
+  <div class="question 0">
     <span class="questionSpan"> question </span>
-    <div class=instructions>
+    <div class="instructions">
       instructions
     </div>
     <div class="questionText">
@@ -1034,10 +1032,9 @@
     </div>
   </div>
 
-
-  <div class="question">
+  <div class="question 1">
     <span class="questionSpan"> question </span>
-    <div class=instructions>
+    <div class="instructions">
       instructions
     </div>
     <div class="questionText">
