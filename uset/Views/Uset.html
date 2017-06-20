@@ -209,7 +209,7 @@
         return null;
       }
       var toReturn = this.set[x];
-      this.set[x] = undefined;
+      delete this.set [x];
       this.n = this.n - 1;
       return toReturn;
     }
@@ -441,7 +441,7 @@
 
       //would scramble here if desired using scramble question order
 
-      var x;
+      var x;  //used to hold prev answer
 
       for (let i = 0; i < this.questions.length; i++)
       {
@@ -453,15 +453,8 @@
     //randomizeOrder = null
 
     scrambleQuestionOrder() {
-      var array = this.question;
-      for (var i = array.length - 1; i > 0; i--) {
-          var j = ODSRandom.getRandomIntInclusive(0, i);
-          var temp = array[i];
-          array[i] = array[j];
-          array[j] = temp;
-      }
-      return array;
-  }
+      this.questions = ODSRandom.scramble (this.questions);
+    }
 
 
     //draw = null;
