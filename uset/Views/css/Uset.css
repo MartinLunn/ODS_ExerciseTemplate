@@ -7,6 +7,10 @@ https://storage.googleapis.com/supplemental_media/udacityu/2872198569/mock3-port
 
 * {
   border: 1px solid red !important;
+
+  text-align: center;
+
+  padding: 50;
 }
 
 * {
@@ -32,6 +36,8 @@ https://storage.googleapis.com/supplemental_media/udacityu/2872198569/mock3-port
 /*
 NORMALIZE CSS: LINK IN HEAD
 https://github.com/necolas/normalize.css/
+
+use npm preferably?
 */
 
 /* overflow if necessary */

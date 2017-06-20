@@ -185,15 +185,8 @@ class Uset extends Model {
   {
     var copy = new Uset();
 
-    if (DEBUG)
-      console.log("copying...");
-
     for (var element in this.set)
     {
-      if (DEBUG) {
-        console.log("element", parseInt(element));    //TODO remove DEBUG
-        console.log("typeof element", typeof(parseInt(element)));
-      }
       copy.add(parseInt(element));
     }
 
@@ -334,9 +327,6 @@ class QuestionType {
       if (i) {      // 0 is fasly, skips 0
         this.questions[i].setModel(x.getData().copy());
       }
-
-      if (DEBUG)
-        console.log("x: ", x);    //TODO DEBUG REMOVE
 
       x = this.questions[i].generateAnswer(x);   //x gets used first, and then assigned to
     }
