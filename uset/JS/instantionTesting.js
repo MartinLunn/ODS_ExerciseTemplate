@@ -390,10 +390,6 @@ class QuestionType {
 
     for (let i = 0; i < this.questions.length; i++)
     {
-      if (i) {      // 0 is fasly, skips 0
-        this.questions[i].setModel(x.getData().copy());
-      }
-
       x = this.questions[i].generateAnswer(x);   //x gets used first, and then assigned to
     }
 
