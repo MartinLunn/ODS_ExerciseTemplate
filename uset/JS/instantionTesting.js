@@ -578,12 +578,20 @@ class Question {
 
     $(".questionSpan",div).text(questionText);
 
-    this.instructions.display(div);
+    this.displayAnswer();             //TODO for testing only, event handlers
+
+    this.displayInstructions();
+
   }
 
   displayAnswer()
   {
     this.answer.display(this.div);
+  }
+
+  displayInstructions()
+  {
+    this.instructions.display(this.div);
   }
 
   generateAnswer(prevAnswer)

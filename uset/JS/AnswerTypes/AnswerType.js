@@ -4,6 +4,7 @@ class AnswerType {
   constructor()
   {
     this.data = undefined;
+    this.model = undefined;
   }
 
   setData(data)
@@ -21,8 +22,11 @@ class AnswerType {
     this.model = m;
     return temp;
   }
-  
-  //display answer?
+
+  display(div)
+  {
+    this.model.display(div);
+  }
 
   check(userAnswer)
   {

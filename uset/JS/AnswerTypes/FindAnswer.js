@@ -11,4 +11,9 @@ class FindAnswer extends AnswerType {
   check (userAnswer) {
     return this.data === userAnswer;
   }
+
+  display(div)      //TODO replace with production version
+  {
+    $(".answer", div).text
+  }
 }

@@ -81,20 +81,33 @@ class Question {
 
   display(div)
   {
-    this.setDiv(div);
+    this.setDiv(div || $(".question." + String(this.id)))
+
+    if (!this.div && DEBUG)
+    {
+      console.log("Cannot find div from inside question.display."); ///TODO
+    }
 
     var questionText = this.constructor.name;
 
     questionText = questionText.charAt(0).toLowerCase() + questionText.substring(1);
 
-    $(".questionSpan",div).text(questionText);
+    $("span", this.div).text(questionText + "(" + this.getParametersString() + ")\n");
 
-    this.instructions.display(div);
+    this.displayAnswer();             //TODO for testing only, event handlers
+
+    this.displayInstructions();
+
   }
 
   displayAnswer()
   {
     this.answer.display(this.div);
+  }
+
+  displayInstructions()
+  {
+    this.instructions.display(this.div);
   }
 
   generateAnswer(prevAnswer)
@@ -111,6 +124,11 @@ class Question {
     answer.setData (this.computeAnswerData ());
 
     return answer;
+  }
+
+  getParametersString()       //must overload if parameters is an object
+  {
+    return String(this.parameters);
   }
 
   check(userAnswer)
