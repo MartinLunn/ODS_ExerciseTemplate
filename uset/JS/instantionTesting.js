@@ -964,7 +964,14 @@ class Exercise {
     //if desired, scramble
 
   }
+
+  start ()
+  {
+    // NOTE: start for now just starts the first question .....
+    this.refresh ();
+  }
 }
+
 
 
 
@@ -1135,6 +1142,10 @@ class Control {
     this.view.register (this.customEventHandler);
 
     this.setup();
+
+    $(()=>{
+      this.run ();
+    });
   }
 
   setup()
@@ -1145,6 +1156,7 @@ class Control {
 
   run()
   {
+    this.exercise.start ();
     //instantiate, scramble, generate answer
   }
 

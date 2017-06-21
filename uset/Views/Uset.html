@@ -991,7 +991,14 @@
       //if desired, scramble
 
     }
+
+    start ()
+    {
+      // NOTE: start for now just starts the first question .....
+      this.refresh ();
+    }
   }
+
 
 
 
@@ -1162,6 +1169,10 @@
       this.view.register (this.customEventHandler);
 
       this.setup();
+
+      $(()=>{
+        this.run ();
+      });
     }
 
     setup()
@@ -1172,6 +1183,7 @@
 
     run()
     {
+      this.exercise.start ();
       //instantiate, scramble, generate answer
     }
 
@@ -1203,6 +1215,7 @@
       console.log ("Let me help you with that. #WRONG");
     }
   }
+
 
 
 

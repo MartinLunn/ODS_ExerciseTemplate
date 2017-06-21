@@ -79,4 +79,10 @@ class Exercise {
     //if desired, scramble
 
   }
+
+  start ()
+  {
+    // NOTE: start for now just starts the first question .....
+    this.refresh ();
+  }
 }
