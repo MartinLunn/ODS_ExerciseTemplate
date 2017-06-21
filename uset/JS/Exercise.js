@@ -8,11 +8,10 @@ class Exercise {
     this.correctModel = new __MODULENAME__();     //TODO remove - each questions has a correct model and a user model
     this.userModel = new __MODULENAME__();        //TODO remove - each questions has a correct model and a user model
 
-    this.questionNum     = 0;
     this.questionTypeNum = 0;
   }
 
-  getCurrentQuestionType () { return this.questionTypes [this.questionTypeNum]; }
+  getActiveQuestionType () { return this.questionTypes [this.questionTypeNum]; }
   cycleQuestionTypes (inc)
   {
     var qNum = this.questionTypeNum;
@@ -23,25 +22,22 @@ class Exercise {
 
   next ()
   {
-    this.questionNum ++;
-    if (this.questionNum >= this.getCurrentQuestionType().size ()) {
-      // cycle! this is ugly. somebody fix it. i won't, obviously
+    var question = this.getActiveQuestionType ();
+    if (!question.moveToNext ()) {
       this.cycleQuestionTypes (1);
-      this.questionNum = 0;
-    }
-
-    console.log ("NOW ON ", this.questionNum, " OF ", this.questionTypeNum);
+      this.next (); // loop
+    } else
+      console.log (this.getActiveQuestionType ().getActiveQuestion ());
   }
 
   prev ()
   {
-    this.questionNum --;
-    if (this.questionNum < 0) {
+    var question = this.getActiveQuestionType ();
+    if (!question.moveToPrev ()) {
       this.cycleQuestionTypes (-1);
-      this.questionNum = this.getCurrentQuestionType ().size () - 1;
-    }
-
-    console.log ("NOW ON ", this.questionNum, " OF ", this.questionTypeNum);
+      this.prev (); // loop
+    } else
+      console.log (this.getActiveQuestionType ().getActiveQuestion ());
   }
 
   getQuestionTypes()

@@ -39,7 +39,6 @@ class Control {
   onMouseOverOFF(domElement){  }
 
   onNextBtn (elem, evt) {
-    console.log ("oh hi ");
     // move to the next exercise ...
     this.exercise.next ();
   };

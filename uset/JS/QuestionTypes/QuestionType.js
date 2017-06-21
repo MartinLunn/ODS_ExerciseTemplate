@@ -5,6 +5,8 @@ class QuestionType {
   {
     this.questions = [ ];
     this.setup(questionData, numQuestionsArr, answerTypesClassName);
+
+    this.curQuestion = 0;
   }
 
   getQuestions()
@@ -22,6 +24,34 @@ class QuestionType {
     var temp = this.numQuestionsRequired;
     this.numQuestionsRequired = n;
     return temp;
+  }
+
+  setCurQuestion (c) {
+    var temp = this.curQuestion ;
+    this.curQuestion = c;
+    return temp;
+  }
+  getActiveQuestion () { return this.questions [this.curQuestion]; }
+  moveToNext ()
+  {
+    this.curQuestion ++;
+    if (this.curQuestion >= this.size()){
+      this.curQuestion = -1;
+      return false;
+    }
+
+    return true;
+  }
+
+  moveToPrev ()
+  {
+    this.curQuestion --;
+    if (this.curQuestion < 0){
+      this.curQuestion = this.size();
+      return false;
+    }
+
+    return true;
   }
 
   //if you want to modify this behavior, for example to scramble question order, override this method in the subclass, copying it, except add scramble or whatever extra functionality
