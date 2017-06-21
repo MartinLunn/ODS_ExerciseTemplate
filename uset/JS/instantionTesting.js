@@ -182,7 +182,7 @@ class Uset extends Model {
       return null;
     }
     var toReturn = this.set[x];
-    this.set[x] = undefined;
+    delete this.set [x];
     this.n = this.n - 1;
     return toReturn;
   }
@@ -320,8 +320,6 @@ class AddAnswer extends AnswerType {
 
 
 
-
-
 /*jshint esversion: 6 */ 'use strict';
 
 class FindAnswer extends AnswerType {
@@ -414,7 +412,7 @@ class QuestionType {
 
     //would scramble here if desired using scramble question order
 
-    var x;
+    var x;  //used to hold prev answer
 
     for (let i = 0; i < this.questions.length; i++)
     {
@@ -426,15 +424,8 @@ class QuestionType {
   //randomizeOrder = null
 
   scrambleQuestionOrder() {
-    var array = this.question;
-    for (var i = array.length - 1; i > 0; i--) {
-        var j = ODSRandom.getRandomIntInclusive(0, i);
-        var temp = array[i];
-        array[i] = array[j];
-        array[j] = temp;
-    }
-    return array;
-}
+    this.questions = ODSRandom.scramble (this.questions);
+  }
 
 
   //draw = null;
@@ -472,6 +463,32 @@ class Operations extends QuestionType{
 
 
 
+/*jshint esversion: 6 */ 'use strict';
+
+class Instructions {
+  constructor(instructions)
+  {
+    this.data = instructions;
+  }
+
+  getData()
+  {
+    return this.data;
+  }
+
+  setData(newData)
+  {
+    var temp = this.data;
+    this.data = newData;
+    return temp;
+  }
+
+  //associates instruction data with html element id
+  display(div)
+  {
+    $(".instructions", div).text(this.getData());
+  }
+}
 
 
 
@@ -619,6 +636,7 @@ class Question {
 }
 
 Question.nextId = 0;
+
 
 
 
@@ -939,6 +957,35 @@ DOMEventHandler.customEventHandlers = [ ];
 
 
 
+/*jshint esversion: 6 */ 'use strict';
+/* Hey I'm back */
+
+class View {
+  constructor() {
+    this.eventHandlers = [ ];
+
+    $(()=>{
+      this.addEvents ();
+    })
+  }
+
+  register (eh) {
+    DOMEventHandler.registerEventHandler (eh);
+  }
+
+  addEvents () {
+    var nextArrow = $("#nextArrow");
+    var prevArrow = $("#prevArrow");
+
+    this.addEvent (nextArrow, {click: "nextExercise"});
+    this.addEvent (prevArrow, {click: "prevExercise"});
+  }
+
+  addEvent (elements, events) {
+    this.eventHandlers.push (new DOMEventHandler(elements, events));
+  }
+}
+
 
 
 /*jshint esversion: 6 */ 'use strict';
@@ -948,12 +995,18 @@ class Control {
   {
     this.exercise = new Exercise();
     this.customEventHandler = new CustomEventHandler();
+    this.events = [ ];
+
+    this.view = new View ();
+    this.view.register (this.customEventHandler);
+
     this.setup();
   }
 
   setup()
   {
     this.exercise.setup();
+    this.addEvents ();
   }
 
   run()
@@ -961,8 +1014,25 @@ class Control {
     //instantiate, scramble, generate answer
   }
 
+  addEvent (name, handling) {
+    this.customEventHandler.bind (name, handling);
+  }
+  addEvents ()
+  {
+    this.addEvent ("nextExercise", this.onNextBtn);
+    this.addEvent ("prevExercise", this.onPrevBtn);
+  }
+
   onLMBDOWN(domElement){  }
   onLMBUP(domElement){  }
   onMouseOverON(domElement){  }
   onMouseOverOFF(domElement){  }
+
+  onNextBtn (elem, evt) {
+    // move to the next exercise ...
+    console.log ("MOVE TO NEXT EXERCISE, OK? ANNIE?");
+  };
+  onPrevBtn (elem, evt) {
+    console.log ("You've been hit by... You've been struck by... The back button..");
+  }
 }

@@ -74,7 +74,7 @@ class ODSRandom {
     // loop over & randomize each position
     for (var i = array.length - 1; i > 0; i--) {
       var j = this.getRandomIntInclusive(0, i);
-      Array.swap (array, i, j);
+      swap (array, i, j);
     }
 
     return array;

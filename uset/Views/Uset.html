@@ -984,6 +984,35 @@
 
 
 
+  /*jshint esversion: 6 */ 'use strict';
+  /* Hey I'm back */
+
+  class View {
+    constructor() {
+      this.eventHandlers = [ ];
+
+      $(()=>{
+        this.addEvents ();
+      })
+    }
+
+    register (eh) {
+      DOMEventHandler.registerEventHandler (eh);
+    }
+
+    addEvents () {
+      var nextArrow = $("#nextArrow");
+      var prevArrow = $("#prevArrow");
+
+      this.addEvent (nextArrow, {click: "nextExercise"});
+      this.addEvent (prevArrow, {click: "prevExercise"});
+    }
+
+    addEvent (elements, events) {
+      this.eventHandlers.push (new DOMEventHandler(elements, events));
+    }
+  }
+
 
 
   /*jshint esversion: 6 */ 'use strict';
@@ -993,12 +1022,18 @@
     {
       this.exercise = new Exercise();
       this.customEventHandler = new CustomEventHandler();
+      this.events = [ ];
+
+      this.view = new View ();
+      this.view.register (this.customEventHandler);
+
       this.setup();
     }
 
     setup()
     {
       this.exercise.setup();
+      this.addEvents ();
     }
 
     run()
@@ -1006,11 +1041,29 @@
       //instantiate, scramble, generate answer
     }
 
+    addEvent (name, handling) {
+      this.customEventHandler.bind (name, handling);
+    }
+    addEvents ()
+    {
+      this.addEvent ("nextExercise", this.onNextBtn);
+      this.addEvent ("prevExercise", this.onPrevBtn);
+    }
+
     onLMBDOWN(domElement){  }
     onLMBUP(domElement){  }
     onMouseOverON(domElement){  }
     onMouseOverOFF(domElement){  }
+
+    onNextBtn (elem, evt) {
+      // move to the next exercise ...
+      console.log ("MOVE TO NEXT EXERCISE, OK? ANNIE?");
+    };
+    onPrevBtn (elem, evt) {
+      console.log ("You've been hit by... You've been struck by... The back button..");
+    }
   }
+
   </script>
 
   <link href="css/Uset.css" rel="stylesheet" type="text/css">
@@ -1084,8 +1137,8 @@
       </div>
 
       <div class="questionNavigation"> <!-- TODO rename this class -->
-        <a class="arrow" href="" onclick="return false;">&larr;</a> <!-- TODO set up event handlers and probably rename this class from arrow-->
-        <a class="arrow" href="" onclick="return false;">&rarr;</a> <!-- TODO set up event handlers -->
+        <a id="prevArrow" class="arrow" href="" onclick="return false;">&larr;</a> <!-- TODO set up event handlers and probably rename this class from arrow-->
+        <a id="nextArrow" class="arrow" href="" onclick="return false;">&rarr;</a> <!-- TODO set up event handlers -->
       </div>
 
     </div>
