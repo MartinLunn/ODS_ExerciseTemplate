@@ -412,6 +412,11 @@
       return this.questions;
     }
 
+    size ()
+    {
+      return this.questions.length;
+    }
+
     setNumQuestionRequired(n)
     {
       var temp = this.numQuestionsRequired;
@@ -443,6 +448,7 @@
 
       for (let i = 0; i < this.questions.length; i++)
       {
+
         x = this.questions[i].generateAnswer(x);   //x gets used first, and then assigned to
       }
 
@@ -458,6 +464,7 @@
     //draw = null;
 
   }
+
 
 
 
@@ -795,6 +802,8 @@
 
   var numberOfQuestionsRequired = [[numAddQuestions, numFindQuestions, numRemoveQuestions]];
 
+
+    console.log ("NOW ON ", this.questionNum, " OF ", this.questionTypeNum);
     var questionData = [
       [{class : Add, instructionsText : "Illustrate the evolution of the collection given the following add method."},
       {class : Find, instructionsText : "Illustrate the evolution of the collection given the following find method."} ,
@@ -836,6 +845,43 @@
     {
       //array of question types
       this.questionTypes = [ ];
+      this.correctModel = new __MODULENAME__();     //TODO remove - each questions has a correct model and a user model
+      this.userModel = new __MODULENAME__();        //TODO remove - each questions has a correct model and a user model
+
+      this.questionNum     = 0;
+      this.questionTypeNum = 0;
+    }
+
+    getCurrentQuestionType () { return this.questionTypes [this.questionTypeNum]; }
+    cycleQuestionTypes (inc)
+    {
+      var qNum = this.questionTypeNum;
+      qNum += inc;
+
+      this.questionTypeNum = Math.abs (qNum % this.questionTypes.length);
+    }
+
+    next ()
+    {
+      this.questionNum ++;
+      if (this.questionNum >= this.getCurrentQuestionType().size ()) {
+        // cycle! this is ugly. somebody fix it. i won't, obviously
+        this.cycleQuestionTypes (1);
+        this.questionNum = 0;
+      }
+
+      console.log ("NOW ON ", this.questionNum, " OF ", this.questionTypeNum);
+    }
+
+    prev ()
+    {
+      this.questionNum --;
+      if (this.questionNum < 0) {
+        this.cycleQuestionTypes (-1);
+        this.questionNum = this.getCurrentQuestionType ().size () - 1;
+      }
+
+      console.log ("NOW ON ", this.questionNum, " OF ", this.questionTypeNum);
     }
 
     getQuestionTypes()
@@ -890,6 +936,9 @@
 
 
 
+
+
+
   /*jshint esversion: 6 */ 'use strict';
 
   class CustomEventHandler {
@@ -898,13 +947,17 @@
       this.customEvent = { };
     }
 
-    bind(odsEvent, handlingFunction)
+    bind(odsEvent, handlingFunction, context)
     {
       if (!this.customEvent[odsEvent])      //if this,events doesn't contain event
       {
         this.customEvent[odsEvent] = [];
       }
-      this.customEvent[odsEvent].push(handlingFunction);
+
+      this.customEvent[odsEvent].push({
+        func: handlingFunction,
+        context: context
+      });
     }
 
     unbind(event)
@@ -919,11 +972,12 @@
       {
         for (var i = 0; i < doThis.length; i++) {
           Array.prototype.shift.apply(arguments);         //removing the first element of arguments, which is the event itself (original target)
-          doThis[i].apply(this, arguments);
+          doThis[i].func.apply(doThis[i].context, arguments);
         }
       }
     }
   }
+
 
 
 
@@ -1042,7 +1096,7 @@
     }
 
     addEvent (name, handling) {
-      this.customEventHandler.bind (name, handling);
+      this.customEventHandler.bind (name, handling, this);
     }
     addEvents ()
     {
@@ -1056,13 +1110,16 @@
     onMouseOverOFF(domElement){  }
 
     onNextBtn (elem, evt) {
+      console.log (this, elem, evt);
       // move to the next exercise ...
-      console.log ("MOVE TO NEXT EXERCISE, OK? ANNIE?");
+      this.exercise.next ();
     };
     onPrevBtn (elem, evt) {
-      console.log ("You've been hit by... You've been struck by... The back button..");
+      this.exercise.prev ();
     }
   }
+
+
 
   </script>
 

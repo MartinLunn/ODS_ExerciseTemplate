@@ -1030,9 +1030,9 @@ class Control {
 
   onNextBtn (elem, evt) {
     // move to the next exercise ...
-    console.log ("MOVE TO NEXT EXERCISE, OK? ANNIE?");
+    this.exercise.next ();
   };
   onPrevBtn (elem, evt) {
-    console.log ("You've been hit by... You've been struck by... The back button..");
+    this.exercise.prev ();
   }
 }

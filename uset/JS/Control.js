@@ -25,7 +25,7 @@ class Control {
   }
 
   addEvent (name, handling) {
-    this.customEventHandler.bind (name, handling);
+    this.customEventHandler.bind (name, handling, this);
   }
   addEvents ()
   {
@@ -39,10 +39,11 @@ class Control {
   onMouseOverOFF(domElement){  }
 
   onNextBtn (elem, evt) {
+    console.log ("oh hi ");
     // move to the next exercise ...
-    console.log ("MOVE TO NEXT EXERCISE, OK? ANNIE?");
+    this.exercise.next ();
   };
   onPrevBtn (elem, evt) {
-    console.log ("You've been hit by... You've been struck by... The back button..");
+    this.exercise.prev ();
   }
 }

@@ -71,6 +71,13 @@ class ODSRandom {
     // Different speeds based on method chosen, which then depends on browser ... blahblahblah. Using slice for now.
     array = array.slice (0);
 
+    // declared here but can be moved out later, if wanted
+    var swap = function (arr, i, j) {
+      var temp = arr [i];
+      arr [i]  = arr [j];
+      arr [j]  = temp;
+    }
+
     // loop over & randomize each position
     for (var i = array.length - 1; i > 0; i--) {
       var j = this.getRandomIntInclusive(0, i);

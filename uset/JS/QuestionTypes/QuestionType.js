@@ -12,6 +12,11 @@ class QuestionType {
     return this.questions;
   }
 
+  size ()
+  {
+    return this.questions.length;
+  }
+
   setNumQuestionRequired(n)
   {
     var temp = this.numQuestionsRequired;
