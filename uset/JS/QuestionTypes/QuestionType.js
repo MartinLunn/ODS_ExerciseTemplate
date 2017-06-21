@@ -26,17 +26,23 @@ class QuestionType {
     return temp;
   }
 
+  getActiveQuestion () { return this.questions [this.curQuestion]; }
+
   setCurQuestion (c) {
+    // NOTE: If c is less than 0, works as size - c
+    if (c < 0)
+      c = this.size () + c;
+
     var temp = this.curQuestion ;
     this.curQuestion = c;
     return temp;
   }
-  getActiveQuestion () { return this.questions [this.curQuestion]; }
+
   moveToNext ()
   {
     this.curQuestion ++;
     if (this.curQuestion >= this.size()){
-      this.curQuestion = -1;
+      this.curQuestion = 0;
       return false;
     }
 
@@ -47,7 +53,7 @@ class QuestionType {
   {
     this.curQuestion --;
     if (this.curQuestion < 0){
-      this.curQuestion = this.size();
+      this.curQuestion = this.size() - 1;
       return false;
     }
 

@@ -25,9 +25,10 @@ class Exercise {
     var question = this.getActiveQuestionType ();
     if (!question.moveToNext ()) {
       this.cycleQuestionTypes (1);
-      this.next (); // loop
-    } else
-      this.refresh ();
+      this.getActiveQuestionType ().setCurQuestion (0);
+    }
+
+    this.refresh ();
   }
 
   prev ()
@@ -35,9 +36,10 @@ class Exercise {
     var question = this.getActiveQuestionType ();
     if (!question.moveToPrev ()) {
       this.cycleQuestionTypes (-1);
-      this.prev (); // loop
-    } else
-      this.refresh ();
+      this.getActiveQuestionType ().setCurQuestion (-1);
+    }
+
+    this.refresh ();
   }
 
   getQuestionTypes()

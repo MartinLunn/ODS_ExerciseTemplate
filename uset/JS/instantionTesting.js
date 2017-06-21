@@ -399,17 +399,23 @@ class QuestionType {
     return temp;
   }
 
+  getActiveQuestion () { return this.questions [this.curQuestion]; }
+
   setCurQuestion (c) {
+    // NOTE: If c is less than 0, works as size - c
+    if (c < 0)
+      c = this.size () + c; // because c < 0, + c is actually -.
+
     var temp = this.curQuestion ;
     this.curQuestion = c;
     return temp;
   }
-  getActiveQuestion () { return this.questions [this.curQuestion]; }
+
   moveToNext ()
   {
     this.curQuestion ++;
     if (this.curQuestion >= this.size()){
-      this.curQuestion = -1;
+      this.curQuestion = 0;
       return false;
     }
 
@@ -420,7 +426,7 @@ class QuestionType {
   {
     this.curQuestion --;
     if (this.curQuestion < 0){
-      this.curQuestion = this.size();
+      this.curQuestion = this.size() - 1;
       return false;
     }
 
@@ -470,6 +476,7 @@ class QuestionType {
   }
 
 }
+
 
 
 
@@ -903,9 +910,10 @@ class Exercise {
     var question = this.getActiveQuestionType ();
     if (!question.moveToNext ()) {
       this.cycleQuestionTypes (1);
-      this.next (); // loop
-    } else
-      this.refresh ();
+      this.getActiveQuestionType ().setCurQuestion (0);
+    }
+
+    this.refresh ();
   }
 
   prev ()
@@ -913,9 +921,10 @@ class Exercise {
     var question = this.getActiveQuestionType ();
     if (!question.moveToPrev ()) {
       this.cycleQuestionTypes (-1);
-      this.prev (); // loop
-    } else
-      this.refresh ();
+      this.getActiveQuestionType ().setCurQuestion (-1);
+    }
+
+    this.refresh ();
   }
 
   getQuestionTypes()
@@ -956,6 +965,7 @@ class Exercise {
 
   }
 }
+
 
 
 
