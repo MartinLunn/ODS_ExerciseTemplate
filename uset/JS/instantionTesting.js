@@ -1097,15 +1097,18 @@ class View {
   addEvents () {
     var nextArrow = $("#nextArrow");
     var prevArrow = $("#prevArrow");
+    var checkBtn  = $("#checkBtn");
 
     this.addEvent (nextArrow, {click: "nextExercise"});
     this.addEvent (prevArrow, {click: "prevExercise"});
+    this.addEvent (checkBtn, {click: "check"});
   }
 
   addEvent (elements, events) {
     this.eventHandlers.push (new DOMEventHandler(elements, events));
   }
 }
+
 
 
 
@@ -1142,6 +1145,7 @@ class Control {
   {
     this.addEvent ("nextExercise", this.onNextBtn);
     this.addEvent ("prevExercise", this.onPrevBtn);
+    this.addEvent ("check", this.onCheckBtn);
   }
 
   onLMBDOWN(domElement){  }
@@ -1155,5 +1159,10 @@ class Control {
   };
   onPrevBtn (elem, evt) {
     this.exercise.prev ();
+  }
+
+  onCheckBtn (elem, evt) {
+    console.log ("So you want to check if your answer is correct?");
+    console.log ("Let me help you with that. #WRONG");
   }
 }

@@ -17,9 +17,11 @@ class View {
   addEvents () {
     var nextArrow = $("#nextArrow");
     var prevArrow = $("#prevArrow");
+    var checkBtn  = $("#checkBtn");
 
     this.addEvent (nextArrow, {click: "nextExercise"});
     this.addEvent (prevArrow, {click: "prevExercise"});
+    this.addEvent (checkBtn, {click: "check"});
   }
 
   addEvent (elements, events) {
