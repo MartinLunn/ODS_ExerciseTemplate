@@ -81,7 +81,13 @@ class Question {
 
   display(div)
   {
-    this.setDiv(div || $(".question." + String(this.id)))
+    var div = div || this.getDiv() || $(".questionBody") || null;
+
+    if (!div) { console.error("From question.display() div is null."); return; }
+
+    this.displayInstructions(div);
+
+    /*this.setDiv(div || $(".question." + String(this.id)))
 
     if (!this.div && DEBUG)
     {
@@ -96,18 +102,18 @@ class Question {
 
     this.displayAnswer();             //TODO for testing only, event handlers
 
-    this.displayInstructions();
+    this.displayInstructions();*/
 
   }
 
-  displayAnswer()
+  displayAnswer(div)
   {
-    this.answer.display(this.div);
+    this.answer.display(div);
   }
 
-  displayInstructions()
+  displayInstructions(div)
   {
-    this.instructions.display(this.div);
+    this.instructions.display(div);
   }
 
   generateAnswer(prevAnswer)
