@@ -91,6 +91,9 @@ class QuestionType {
   }
 
 
-  //draw = null;
+  draw ()
+  {
+    this.getActiveQuestion ().display ();
+  }
 
 }

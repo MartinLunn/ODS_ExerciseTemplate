@@ -27,7 +27,7 @@ class Exercise {
       this.cycleQuestionTypes (1);
       this.next (); // loop
     } else
-      console.log (this.getActiveQuestionType ().getActiveQuestion ());
+      this.refresh ();
   }
 
   prev ()
@@ -37,7 +37,7 @@ class Exercise {
       this.cycleQuestionTypes (-1);
       this.prev (); // loop
     } else
-      console.log (this.getActiveQuestionType ().getActiveQuestion ());
+      this.refresh ();
   }
 
   getQuestionTypes()
@@ -52,6 +52,10 @@ class Exercise {
     return temp;
   }
 
+  refresh ()
+  {
+    this.getActiveQuestionType ().draw ();
+  }
   clear()
   {
     this.questionTypes = [ ];

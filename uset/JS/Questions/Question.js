@@ -86,6 +86,7 @@ class Question {
     if (!div) { console.error("From question.display() div is null."); return; }
 
     this.displayInstructions(div);
+    this.displayParameters (div);
 
     /*this.setDiv(div || $(".question." + String(this.id)))
 
@@ -109,6 +110,13 @@ class Question {
   displayAnswer(div)
   {
     this.answer.display(div);
+  }
+
+  displayParameters (div)
+  {
+      var str = this.getParametersString ();
+      var p   = $(".parametersBody", div);
+      p.text (this.constructor.name.toLowerCase() + "(" + str + ")");
   }
 
   displayInstructions(div)
