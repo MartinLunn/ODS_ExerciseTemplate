@@ -26,4 +26,35 @@ Array.scramble = function (arr) {
 //(arr, currIdx1d, currIdx2d, targetIdx)
 //return {}
 //in calling function, parse object and store in properties
-Array.
+Array.navigate2dArray = function(arr, currIdx1d, currIdx2d, targetIdx)
+{
+  if (arr.constructor !== Array)
+  {
+    console.error("From inside navigate2dArray, array is not an array.");
+    return false;
+  }
+  for (var i = 0; i < arr.length; i++)
+  {
+    if (arr[i].constructor !== Array)
+    {
+      console.error("From inside navigate2dArray, array is not an array.");
+      return false;
+    }
+  }
+  //bounds check
+  var toReturn = { };
+
+  var current1dLength = -1;
+  for (var i = 0; i < arr.length; i++)
+  {
+
+    if ()
+    {
+      break;
+    }
+  }
+
+  var targetIdx1d = targetIdx1d;
+
+  var targetIdx2k
+}

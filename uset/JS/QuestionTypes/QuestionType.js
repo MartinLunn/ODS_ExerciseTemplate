@@ -6,7 +6,7 @@ class QuestionType {
     this.questions = [ ];
     this.setup(questionData, numQuestionsArr, answerTypesClassName);
 
-    this.curQuestion = 0;
+    this.currQuestion = 0;
   }
 
   getQuestions()
@@ -26,24 +26,32 @@ class QuestionType {
     return temp;
   }
 
-  getCurrentQuestion () { return this.questions [this.curQuestion]; }
+  getCurrentQuestion () { return this.questions [this.currQuestion]; }
 
-  setCurQuestion (curr) {
-    // NOTE: If c is less than 0, works as size - c
+  setCurrQuestion (curr) {
     if (curr < 0)
-      curr = this.size () + curr;
+    {
+      console.error("From inside setCurrQuestion, curr is negative.");
+      return false;
+    }
 
-    var temp = this.curQuestion ;
-    this.curQuestion = c;
+    if (curr >= this.questions.length)
+    {
+      console.error("From inside setCurrQuestion, curr is too high.")
+      return false;
+    }
+
+    var temp = this.currQuestion ;
+    this.currQuestion = curr;
     return temp;
   }
 
   //TODO
   moveToNext ()
   {
-    this.curQuestion ++;
-    if (this.curQuestion >= this.size()){
-      this.curQuestion = 0;
+    this.currQuestion ++;
+    if (this.currQuestion >= this.size()){
+      this.currQuestion = 0;
       return false;
     }
 
@@ -52,9 +60,9 @@ class QuestionType {
 
   moveToPrev ()
   {
-    this.curQuestion --;
-    if (this.curQuestion < 0){
-      this.curQuestion = this.size() - 1;
+    this.currQuestion --;
+    if (this.currQuestion < 0){
+      this.currQuestion = this.size() - 1;
       return false;
     }
 
@@ -97,6 +105,7 @@ class QuestionType {
     this.questions = ODSRandom.scramble (this.questions);
   }
 
+  containsQuestionNum(questionNumber) { return this.questions.length > questionNumber; }
 
   draw ()
   {
