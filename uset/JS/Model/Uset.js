@@ -34,7 +34,7 @@ class Uset extends Model {
 
     delete this.set [x];    // NOTE: delete actually deletes it. setting to undefined causes issues later
     this.n = this.n - 1;
-    
+
     return toReturn;
   }
 
@@ -82,5 +82,24 @@ class Uset extends Model {
     }
 
     return copy;
+  }
+
+
+
+  toString ()
+  {
+    var result = " ";
+    var set = this.set;
+    for (var key in set)
+      result += key + " ";
+
+    return result;
+  }
+
+  draw (div)
+  {
+    // TODO: This should be an actual thing.
+    var myText = this.toString ();
+    $(div).text (myText)
   }
 }

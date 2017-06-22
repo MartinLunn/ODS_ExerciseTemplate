@@ -79,6 +79,7 @@ class Question {
 
 
 
+
   display(div)
   {
     var div = div || this.getDiv() || $(".questionBody") || null;
@@ -87,6 +88,7 @@ class Question {
 
     this.displayInstructions(div);
     this.displayParameters (div);
+    this.displayModel (div);
 
     /*this.setDiv(div || $(".question." + String(this.id)))
 
@@ -109,7 +111,14 @@ class Question {
 
   displayAnswer(div)
   {
-    this.answer.display(div);
+    var answerDiv = $(".modelBody", div);
+    this.answer.display(answerDiv);
+  }
+
+  displayModel (div)
+  {
+    var modelDiv = $(".modelBody", div);
+    this.model.draw (modelDiv);
   }
 
   displayParameters (div)
@@ -121,16 +130,13 @@ class Question {
 
   displayInstructions(div)
   {
-    this.instructions.display(div);
+    var instructionsDiv = $(".instructionsBody", div);
+    this.instructions.display(instructionsDiv);
   }
 
   generateAnswer(prevAnswer)
   {
-    // NOTE: Optimizing this. All implementations seem to have ...
-    //        1) Set model to the previous answer's model
-    //        2) Set data to something.
-    //        3) Return the answer.
-    // Can all be done here ....
+    // NOTE: I'm sitting on this bar stool, talkin' like a dang fool...
     var answer = this.answer;
     if (prevAnswer)
       answer.setModel (prevAnswer.getModel ().copy ());
@@ -138,6 +144,15 @@ class Question {
     answer.setData (this.computeAnswerData ());
 
     return answer;
+  }
+
+  generateModel (prevAnswer)
+  {
+    // Is it any wonder I'm not crazy?
+    if (!prevAnswer) return;
+
+    // just set to the previous answer's model
+    this.setModel (prevAnswer.getModel ());
   }
 
   getParametersString()       //must overload if parameters is an object

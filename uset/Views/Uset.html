@@ -209,8 +209,10 @@
         return null;
       }
       var toReturn = this.set[x];
-      delete this.set [x];
+
+      delete this.set [x];    // NOTE: delete actually deletes it. setting to undefined causes issues later
       this.n = this.n - 1;
+
       return toReturn;
     }
 
@@ -259,7 +261,28 @@
 
       return copy;
     }
+
+
+
+    toString ()
+    {
+      var result = "";
+      var set = this.set;
+      for (var key in set)
+        result += key + " ";
+
+      return result;
+    }
+
+    draw (div)
+    {
+      // TODO: This should be an actual thing.
+      var myText = this.toString ();
+      if (myText === "") myText = "&nbsp;"
+      $(div).html (myText)
+    }
   }
+
 
 
 
@@ -276,6 +299,7 @@
     constructor()
     {
       this.data = undefined;
+      this.model = undefined;
     }
 
     setData(data)
@@ -294,7 +318,10 @@
       return temp;
     }
 
-    //display answer?
+    display(div)
+    {
+      this.model.draw(div);
+    }
 
     check(userAnswer)
     {
@@ -309,6 +336,7 @@
       }
     }
   }
+
 
 
 
@@ -431,7 +459,7 @@
     setCurQuestion (c) {
       // NOTE: If c is less than 0, works as size - c
       if (c < 0)
-        c = this.size () + c; // because c < 0, + c is actually -.
+        c = this.size () + c;
 
       var temp = this.curQuestion ;
       this.curQuestion = c;
@@ -484,7 +512,7 @@
 
       for (let i = 0; i < this.questions.length; i++)
       {
-
+        this.questions [i].generateModel (x);
         x = this.questions[i].generateAnswer(x);   //x gets used first, and then assigned to
       }
 
@@ -503,6 +531,7 @@
     }
 
   }
+
 
 
 
@@ -566,7 +595,7 @@
     //associates instruction data with html element id
     display(div)
     {
-      $(".instructionsBody", div).text (this.getData ());
+      $(div).text (this.getData ());
     }
   }
 
@@ -665,6 +694,7 @@
 
 
 
+
     display(div)
     {
       var div = div || this.getDiv() || $(".questionBody") || null;
@@ -673,6 +703,7 @@
 
       this.displayInstructions(div);
       this.displayParameters (div);
+      this.displayModel (div);
 
       /*this.setDiv(div || $(".question." + String(this.id)))
 
@@ -695,7 +726,14 @@
 
     displayAnswer(div)
     {
-      this.answer.display(div);
+      var answerDiv = $(".modelBody", div);
+      this.answer.display(answerDiv);
+    }
+
+    displayModel (div)
+    {
+      var modelDiv = $(".modelBody", div);
+      this.model.draw (modelDiv);
     }
 
     displayParameters (div)
@@ -707,16 +745,13 @@
 
     displayInstructions(div)
     {
-      this.instructions.display(div);
+      var instructionsDiv = $(".instructionsBody", div);
+      this.instructions.display(instructionsDiv);
     }
 
     generateAnswer(prevAnswer)
     {
-      // NOTE: Optimizing this. All implementations seem to have ...
-      //        1) Set model to the previous answer's model
-      //        2) Set data to something.
-      //        3) Return the answer.
-      // Can all be done here ....
+      // NOTE: I'm sitting on this bar stool, talkin' like a dang fool...
       var answer = this.answer;
       if (prevAnswer)
         answer.setModel (prevAnswer.getModel ().copy ());
@@ -724,6 +759,15 @@
       answer.setData (this.computeAnswerData ());
 
       return answer;
+    }
+
+    generateModel (prevAnswer)
+    {
+      // Is it any wonder I'm not crazy?
+      if (!prevAnswer) return;
+
+      // just set to the previous answer's model
+      this.setModel (prevAnswer.getModel ());
     }
 
     getParametersString()       //must overload if parameters is an object
@@ -740,6 +784,9 @@
   }
 
   Question.nextId = 0;
+
+
+
 
 
 
@@ -1291,7 +1338,9 @@
           <p> params </p>
         </div>
 
-        <p> bodybody</p>
+        <div class="modelBody">
+          <p> model </p>
+        </div>
       </div>
 
       <div class="questionNavigation"> <!-- TODO rename this class -->

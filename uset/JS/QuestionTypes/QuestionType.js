@@ -84,7 +84,7 @@ class QuestionType {
 
     for (let i = 0; i < this.questions.length; i++)
     {
-
+      this.questions [i].generateModel (x);
       x = this.questions[i].generateAnswer(x);   //x gets used first, and then assigned to
     }
 

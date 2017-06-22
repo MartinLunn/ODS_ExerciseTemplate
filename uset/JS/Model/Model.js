@@ -6,4 +6,5 @@ class Model {
   }
 
   //equals = null;
+  //draw = null;
 }
