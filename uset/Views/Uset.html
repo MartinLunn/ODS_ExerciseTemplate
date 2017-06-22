@@ -241,7 +241,7 @@
 
       for (var key in this.set)
       {
-        if (this.find(key) !== other.find(key))
+        if (this.find(key) != other.find(key)) /// NOTE: Changed for the purposes of comparing strings, ints. Change back?
         {
           return false;
         }
@@ -266,7 +266,7 @@
 
     toString ()
     {
-      var result = "";
+      var result = " ";
       var set = this.set;
       for (var key in set)
         result += key + " ";
@@ -278,10 +278,28 @@
     {
       // TODO: This should be an actual thing.
       var myText = this.toString ();
-      if (myText === "") myText = "&nbsp;"
-      $(div).html (myText)
+      var input  = $(".modelEntry", div);
+
+      $(input).val (myText)
+    }
+
+    // TODO: Remove this. This is bad.
+    static fromUserInput (div)
+    {
+      var newSet = new Uset ();
+      var input  = $(".modelEntry", div);
+      var user   = input.val ();
+
+      var values = user.match (/[^ ]+/g);
+      for (var i in values){
+        newSet.add (values[i]);
+      }
+
+      return newSet;
     }
   }
+
+
 
 
 
@@ -372,6 +390,7 @@
       return this.model.equals (userAnswer);
     }
   }
+
 
 
 
@@ -530,7 +549,14 @@
       this.getActiveQuestion ().display ();
     }
 
+
+    check (userAnswer)
+    {
+      var currentQuestion = this.getActiveQuestion ();
+      return currentQuestion.check (userAnswer);
+    }
   }
+
 
 
 
@@ -1036,7 +1062,13 @@
       }
 
       //if desired, scramble
+    }
 
+    check ()
+    {
+      var qType = this.getActiveQuestionType ();
+      var user  = Uset.fromUserInput (); // TODO: BAD
+      return qType.check (user);
     }
 
     start ()
@@ -1045,6 +1077,7 @@
       this.refresh ();
     }
   }
+
 
 
 
@@ -1258,10 +1291,16 @@
     }
 
     onCheckBtn (elem, evt) {
-      console.log ("So you want to check if your answer is correct?");
-      console.log ("Let me help you with that. #WRONG");
+      console.log ("Checking your answer .... ");
+      if (this.exercise.check ()) {
+        console.log ("Ha ha ha, hacker");
+        this.onNextBtn ();
+      } else {
+        console.log ("lol.... #wrong");
+      }
     }
   }
+
 
 
 
@@ -1339,7 +1378,7 @@
         </div>
 
         <div class="modelBody">
-          <p> model </p>
+          <input type="text" class="modelEntry col-12" placeholder="values here, space separated"></input>
         </div>
       </div>
 

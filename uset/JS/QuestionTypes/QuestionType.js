@@ -102,4 +102,10 @@ class QuestionType {
     this.getActiveQuestion ().display ();
   }
 
+
+  check (userAnswer)
+  {
+    var currentQuestion = this.getActiveQuestion ();
+    return currentQuestion.check (userAnswer);
+  }
 }

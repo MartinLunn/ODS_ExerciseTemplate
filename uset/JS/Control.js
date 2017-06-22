@@ -53,7 +53,12 @@ class Control {
   }
 
   onCheckBtn (elem, evt) {
-    console.log ("So you want to check if your answer is correct?");
-    console.log ("Let me help you with that. #WRONG");
+    console.log ("Checking your answer .... ");
+    if (this.exercise.check ()) {
+      console.log ("Ha ha ha, hacker");
+      this.onNextBtn ();
+    } else {
+      console.log ("lol.... #wrong");
+    }
   }
 }

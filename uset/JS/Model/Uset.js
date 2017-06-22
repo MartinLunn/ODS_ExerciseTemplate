@@ -100,6 +100,23 @@ class Uset extends Model {
   {
     // TODO: This should be an actual thing.
     var myText = this.toString ();
-    $(div).text (myText)
+    var input  = $(".modelEntry", div);
+
+    $(input).val (myText)
+  }
+
+  // TODO: Remove this. This is bad.
+  static fromUserInput (div)
+  {
+    var newSet = new Uset ();
+    var input  = $(".modelEntry", div);
+    var user   = input.val ();
+
+    var values = user.match (/[^ ]+/g);
+    for (var i in values){
+      newSet.add (values[i]);
+    }
+
+    return newSet;
   }
 }

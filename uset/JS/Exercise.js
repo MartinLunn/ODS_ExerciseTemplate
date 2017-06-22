@@ -77,7 +77,13 @@ class Exercise {
     }
 
     //if desired, scramble
+  }
 
+  check ()
+  {
+    var qType = this.getActiveQuestionType ();
+    var user  = Uset.fromUserInput (); // TODO: BAD
+    return qType.check (user);
   }
 
   start ()
