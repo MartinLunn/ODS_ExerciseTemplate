@@ -20,3 +20,10 @@ Array.swap = function (arr, i, j) {
 Array.scramble = function (arr) {
   return ODSRandom.scramble (arr);
 };
+
+//TODO
+//https://stackoverflow.com/questions/31104879/how-to-check-if-array-is-multidimensional-jquery
+//(arr, currIdx1d, currIdx2d, targetIdx)
+//return {}
+//in calling function, parse object and store in properties
+Array.

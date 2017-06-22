@@ -5,47 +5,12 @@ class Exercise {
   {
     //array of question types
     this.questionTypes = [ ];
-    this.correctModel = new __MODULENAME__();     //TODO remove - each questions has a correct model and a user model
-    this.userModel = new __MODULENAME__();        //TODO remove - each questions has a correct model and a user model
-
-    this.questionTypeNum = 0;
+    this.currentQuestionIndex = 0;   //index into questionTpes, representing the
   }
 
-  getActiveQuestionType () { return this.questionTypes [this.questionTypeNum]; }
-  cycleQuestionTypes (inc)
-  {
-    var qNum = this.questionTypeNum;
-    qNum += inc;
+  getCurrQuestionType () { return this.questionTypes [this.currentQuestionIndex]; }
 
-    this.questionTypeNum = Math.abs (qNum % this.questionTypes.length);
-  }
-
-  next ()
-  {
-    var question = this.getActiveQuestionType ();
-    if (!question.moveToNext ()) {
-      this.cycleQuestionTypes (1);
-      this.getActiveQuestionType ().setCurQuestion (0);
-    }
-
-    this.refresh ();
-  }
-
-  prev ()
-  {
-    var question = this.getActiveQuestionType ();
-    if (!question.moveToPrev ()) {
-      this.cycleQuestionTypes (-1);
-      this.getActiveQuestionType ().setCurQuestion (-1);
-    }
-
-    this.refresh ();
-  }
-
-  getQuestionTypes()
-  {
-    return this.questionTypes;
-  }
+  getQuestionTypes() { return this.questionTypes; }
 
   setQuestionTypes(toSet)
   {
@@ -54,10 +19,40 @@ class Exercise {
     return temp;
   }
 
-  refresh ()
+  //TODO refactor to goToQuestion(number? id?)
+
+  cycleQuestionTypes (increment)
   {
-    this.getActiveQuestionType ().draw ();
+    var questionNum = this.currentQuestionIndex;
+    questionNum += increment;
+
+    this.currentQuestionIndex = Math.abs (questionNum % this.questionTypes.length);
   }
+
+  next ()
+  {
+    var question = this.getCurrQuestionType ();
+    if (!question.moveToNext ()) {
+      this.cycleQuestionTypes (1);
+      this.getCurrQuestionType ().setCurQuestion (0);
+    }
+
+    this.refresh ();
+  }
+
+  prev ()
+  {
+    var question = this.getCurrQuestionType ();
+    if (!question.moveToPrev ()) {
+      this.cycleQuestionTypes (-1);
+      this.getCurrQuestionType ().setCurQuestion (-1);
+    }
+
+    this.refresh ();
+  }
+
+
+
   clear()
   {
     this.questionTypes = [ ];
@@ -81,7 +76,7 @@ class Exercise {
 
   check ()
   {
-    var qType = this.getActiveQuestionType ();
+    var qType = this.getCurrQuestionType ();
     var user  = Uset.fromUserInput (); // TODO: BAD
     return qType.check (user);
   }
@@ -90,5 +85,9 @@ class Exercise {
   {
     // NOTE: start for now just starts the first question .....
     this.refresh ();
+  }
+  refresh ()
+  {
+    this.getCurrQuestionType ().draw ();
   }
 }

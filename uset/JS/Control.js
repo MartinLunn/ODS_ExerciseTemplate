@@ -5,33 +5,22 @@ class Control {
   {
     this.exercise = new Exercise();
     this.customEventHandler = new CustomEventHandler();
-    this.events = [ ];
 
     this.view = new View ();
     this.view.register (this.customEventHandler);
 
-    this.setup();
-
-    $(()=>{
-      this.run ();
-    });
-  }
-
-  setup()
-  {
     this.exercise.setup();
     this.addEvents ();
-  }
 
-  run()
-  {
-    this.exercise.start ();
-    //instantiate, scramble, generate answer
+    $(()=>{
+      this.exercise.start ();     //TODO rename ?? maybe
+    });
   }
 
   addEvent (name, handling) {
     this.customEventHandler.bind (name, handling, this);
   }
+
   addEvents ()
   {
     this.addEvent ("nextExercise", this.onNextBtn);
@@ -52,6 +41,7 @@ class Control {
     this.exercise.prev ();
   }
 
+  //TODO
   onCheckBtn (elem, evt) {
     console.log ("Checking your answer .... ");
     if (this.exercise.check ()) {

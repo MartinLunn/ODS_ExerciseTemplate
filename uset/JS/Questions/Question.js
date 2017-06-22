@@ -89,24 +89,6 @@ class Question {
     this.displayInstructions(div);
     this.displayParameters (div);
     this.displayModel (div);
-
-    /*this.setDiv(div || $(".question." + String(this.id)))
-
-    if (!this.div && DEBUG)
-    {
-      console.log("Cannot find div from inside question.display."); ///TODO
-    }
-
-    var questionText = this.constructor.name;
-
-    questionText = questionText.charAt(0).toLowerCase() + questionText.substring(1);
-
-    $("span", this.div).text(questionText + "(" + this.getParametersString() + ")\n");
-
-    this.displayAnswer();             //TODO for testing only, event handlers
-
-    this.displayInstructions();*/
-
   }
 
   displayAnswer(div)

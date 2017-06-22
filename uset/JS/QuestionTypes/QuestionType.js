@@ -26,18 +26,19 @@ class QuestionType {
     return temp;
   }
 
-  getActiveQuestion () { return this.questions [this.curQuestion]; }
+  getCurrentQuestion () { return this.questions [this.curQuestion]; }
 
-  setCurQuestion (c) {
+  setCurQuestion (curr) {
     // NOTE: If c is less than 0, works as size - c
-    if (c < 0)
-      c = this.size () + c;
+    if (curr < 0)
+      curr = this.size () + curr;
 
     var temp = this.curQuestion ;
     this.curQuestion = c;
     return temp;
   }
 
+  //TODO
   moveToNext ()
   {
     this.curQuestion ++;
@@ -99,13 +100,13 @@ class QuestionType {
 
   draw ()
   {
-    this.getActiveQuestion ().display ();
+    this.getCurrentQuestion ().display ();
   }
 
 
   check (userAnswer)
   {
-    var currentQuestion = this.getActiveQuestion ();
+    var currentQuestion = this.getCurrentQuestion ();
     return currentQuestion.check (userAnswer);
   }
 }

@@ -473,18 +473,19 @@
       return temp;
     }
 
-    getActiveQuestion () { return this.questions [this.curQuestion]; }
+    getCurrentQuestion () { return this.questions [this.curQuestion]; }
 
-    setCurQuestion (c) {
+    setCurQuestion (curr) {
       // NOTE: If c is less than 0, works as size - c
-      if (c < 0)
-        c = this.size () + c;
+      if (curr < 0)
+        curr = this.size () + curr;
 
       var temp = this.curQuestion ;
       this.curQuestion = c;
       return temp;
     }
 
+    //TODO
     moveToNext ()
     {
       this.curQuestion ++;
@@ -546,13 +547,13 @@
 
     draw ()
     {
-      this.getActiveQuestion ().display ();
+      this.getCurrentQuestion ().display ();
     }
 
 
     check (userAnswer)
     {
-      var currentQuestion = this.getActiveQuestion ();
+      var currentQuestion = this.getCurrentQuestion ();
       return currentQuestion.check (userAnswer);
     }
   }
@@ -730,24 +731,6 @@
       this.displayInstructions(div);
       this.displayParameters (div);
       this.displayModel (div);
-
-      /*this.setDiv(div || $(".question." + String(this.id)))
-
-      if (!this.div && DEBUG)
-      {
-        console.log("Cannot find div from inside question.display."); ///TODO
-      }
-
-      var questionText = this.constructor.name;
-
-      questionText = questionText.charAt(0).toLowerCase() + questionText.substring(1);
-
-      $("span", this.div).text(questionText + "(" + this.getParametersString() + ")\n");
-
-      this.displayAnswer();             //TODO for testing only, event handlers
-
-      this.displayInstructions();*/
-
     }
 
     displayAnswer(div)
@@ -947,12 +930,10 @@
 
   var numberOfQuestionsRequired = [[numAddQuestions, numFindQuestions, numRemoveQuestions]];
 
-
-    console.log ("NOW ON ", this.questionNum, " OF ", this.questionTypeNum);
     var questionData = [
-      [{class : Add, instructionsText : "Illustrate the evolution of the collection given the following add method."},
-      {class : Find, instructionsText : "Illustrate the evolution of the collection given the following find method."} ,
-      {class : Remove, instructionsText : "Illustrate the evolution of the collection given the following remove method."}]
+      [{class : Add, instructionsText : "Illustrate the evolution of the collection given the following add method:"},
+      {class : Find, instructionsText : "Illustrate the evolution of the collection given the following find method:"} ,
+      {class : Remove, instructionsText : "Illustrate the evolution of the collection given the following remove method:"}]
                         ];
 
   var __addMinParam__ = 1;
@@ -990,47 +971,12 @@
     {
       //array of question types
       this.questionTypes = [ ];
-      this.correctModel = new __MODULENAME__();     //TODO remove - each questions has a correct model and a user model
-      this.userModel = new __MODULENAME__();        //TODO remove - each questions has a correct model and a user model
-
-      this.questionTypeNum = 0;
+      this.currentQuestionIndex = 0;   //index into questionTpes, representing the
     }
 
-    getActiveQuestionType () { return this.questionTypes [this.questionTypeNum]; }
-    cycleQuestionTypes (inc)
-    {
-      var qNum = this.questionTypeNum;
-      qNum += inc;
+    getCurrQuestionType () { return this.questionTypes [this.currentQuestionIndex]; }
 
-      this.questionTypeNum = Math.abs (qNum % this.questionTypes.length);
-    }
-
-    next ()
-    {
-      var question = this.getActiveQuestionType ();
-      if (!question.moveToNext ()) {
-        this.cycleQuestionTypes (1);
-        this.getActiveQuestionType ().setCurQuestion (0);
-      }
-
-      this.refresh ();
-    }
-
-    prev ()
-    {
-      var question = this.getActiveQuestionType ();
-      if (!question.moveToPrev ()) {
-        this.cycleQuestionTypes (-1);
-        this.getActiveQuestionType ().setCurQuestion (-1);
-      }
-
-      this.refresh ();
-    }
-
-    getQuestionTypes()
-    {
-      return this.questionTypes;
-    }
+    getQuestionTypes() { return this.questionTypes; }
 
     setQuestionTypes(toSet)
     {
@@ -1039,10 +985,40 @@
       return temp;
     }
 
-    refresh ()
+    //TODO refactor to goToQuestion(number? id?)
+
+    cycleQuestionTypes (increment)
     {
-      this.getActiveQuestionType ().draw ();
+      var questionNum = this.currentQuestionIndex;
+      questionNum += increment;
+
+      this.currentQuestionIndex = Math.abs (questionNum % this.questionTypes.length);
     }
+
+    next ()
+    {
+      var question = this.getCurrQuestionType ();
+      if (!question.moveToNext ()) {
+        this.cycleQuestionTypes (1);
+        this.getCurrQuestionType ().setCurQuestion (0);
+      }
+
+      this.refresh ();
+    }
+
+    prev ()
+    {
+      var question = this.getCurrQuestionType ();
+      if (!question.moveToPrev ()) {
+        this.cycleQuestionTypes (-1);
+        this.getCurrQuestionType ().setCurQuestion (-1);
+      }
+
+      this.refresh ();
+    }
+
+
+
     clear()
     {
       this.questionTypes = [ ];
@@ -1066,7 +1042,7 @@
 
     check ()
     {
-      var qType = this.getActiveQuestionType ();
+      var qType = this.getCurrQuestionType ();
       var user  = Uset.fromUserInput (); // TODO: BAD
       return qType.check (user);
     }
@@ -1075,6 +1051,10 @@
     {
       // NOTE: start for now just starts the first question .....
       this.refresh ();
+    }
+    refresh ()
+    {
+      this.getCurrQuestionType ().draw ();
     }
   }
 
@@ -1248,28 +1228,18 @@
       this.view = new View ();
       this.view.register (this.customEventHandler);
 
-      this.setup();
-
-      $(()=>{
-        this.run ();
-      });
-    }
-
-    setup()
-    {
       this.exercise.setup();
       this.addEvents ();
-    }
 
-    run()
-    {
-      this.exercise.start ();
-      //instantiate, scramble, generate answer
+      $(()=>{
+        this.exercise.start ();     //TODO rename ?? maybe
+      });
     }
 
     addEvent (name, handling) {
       this.customEventHandler.bind (name, handling, this);
     }
+
     addEvents ()
     {
       this.addEvent ("nextExercise", this.onNextBtn);
@@ -1290,6 +1260,7 @@
       this.exercise.prev ();
     }
 
+    //TODO
     onCheckBtn (elem, evt) {
       console.log ("Checking your answer .... ");
       if (this.exercise.check ()) {

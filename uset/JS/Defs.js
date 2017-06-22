@@ -28,9 +28,9 @@ var numRemoveQuestions = 10;
 var numberOfQuestionsRequired = [[numAddQuestions, numFindQuestions, numRemoveQuestions]];
 
   var questionData = [
-    [{class : Add, instructionsText : "Illustrate the evolution of the collection given the following add method."},
-    {class : Find, instructionsText : "Illustrate the evolution of the collection given the following find method."} ,
-    {class : Remove, instructionsText : "Illustrate the evolution of the collection given the following remove method."}]
+    [{class : Add, instructionsText : "Illustrate the evolution of the collection given the following add method:"},
+    {class : Find, instructionsText : "Illustrate the evolution of the collection given the following find method:"} ,
+    {class : Remove, instructionsText : "Illustrate the evolution of the collection given the following remove method:"}]
                       ];
 
 var __addMinParam__ = 1;
