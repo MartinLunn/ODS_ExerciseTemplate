@@ -25,7 +25,7 @@ class AnswerType {
 
   display(div)
   {
-    this.model.display(div);
+    this.model.draw(div);
   }
 
   check(userAnswer)

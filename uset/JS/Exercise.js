@@ -7,6 +7,39 @@ class Exercise {
     this.questionTypes = [ ];
     this.correctModel = new __MODULENAME__();     //TODO remove - each questions has a correct model and a user model
     this.userModel = new __MODULENAME__();        //TODO remove - each questions has a correct model and a user model
+
+    this.questionTypeNum = 0;
+  }
+
+  getActiveQuestionType () { return this.questionTypes [this.questionTypeNum]; }
+  cycleQuestionTypes (inc)
+  {
+    var qNum = this.questionTypeNum;
+    qNum += inc;
+
+    this.questionTypeNum = Math.abs (qNum % this.questionTypes.length);
+  }
+
+  next ()
+  {
+    var question = this.getActiveQuestionType ();
+    if (!question.moveToNext ()) {
+      this.cycleQuestionTypes (1);
+      this.getActiveQuestionType ().setCurQuestion (0);
+    }
+
+    this.refresh ();
+  }
+
+  prev ()
+  {
+    var question = this.getActiveQuestionType ();
+    if (!question.moveToPrev ()) {
+      this.cycleQuestionTypes (-1);
+      this.getActiveQuestionType ().setCurQuestion (-1);
+    }
+
+    this.refresh ();
   }
 
   getQuestionTypes()
@@ -21,6 +54,10 @@ class Exercise {
     return temp;
   }
 
+  refresh ()
+  {
+    this.getActiveQuestionType ().draw ();
+  }
   clear()
   {
     this.questionTypes = [ ];
@@ -40,6 +77,18 @@ class Exercise {
     }
 
     //if desired, scramble
+  }
 
+  check ()
+  {
+    var qType = this.getActiveQuestionType ();
+    var user  = Uset.fromUserInput (); // TODO: BAD
+    return qType.check (user);
+  }
+
+  start ()
+  {
+    // NOTE: start for now just starts the first question .....
+    this.refresh ();
   }
 }

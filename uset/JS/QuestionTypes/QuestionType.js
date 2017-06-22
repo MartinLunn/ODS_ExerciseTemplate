@@ -5,6 +5,8 @@ class QuestionType {
   {
     this.questions = [ ];
     this.setup(questionData, numQuestionsArr, answerTypesClassName);
+
+    this.curQuestion = 0;
   }
 
   getQuestions()
@@ -12,11 +14,50 @@ class QuestionType {
     return this.questions;
   }
 
+  size ()
+  {
+    return this.questions.length;
+  }
+
   setNumQuestionRequired(n)
   {
     var temp = this.numQuestionsRequired;
     this.numQuestionsRequired = n;
     return temp;
+  }
+
+  getActiveQuestion () { return this.questions [this.curQuestion]; }
+
+  setCurQuestion (c) {
+    // NOTE: If c is less than 0, works as size - c
+    if (c < 0)
+      c = this.size () + c;
+
+    var temp = this.curQuestion ;
+    this.curQuestion = c;
+    return temp;
+  }
+
+  moveToNext ()
+  {
+    this.curQuestion ++;
+    if (this.curQuestion >= this.size()){
+      this.curQuestion = 0;
+      return false;
+    }
+
+    return true;
+  }
+
+  moveToPrev ()
+  {
+    this.curQuestion --;
+    if (this.curQuestion < 0){
+      this.curQuestion = this.size() - 1;
+      return false;
+    }
+
+    return true;
   }
 
   //if you want to modify this behavior, for example to scramble question order, override this method in the subclass, copying it, except add scramble or whatever extra functionality
@@ -43,7 +84,7 @@ class QuestionType {
 
     for (let i = 0; i < this.questions.length; i++)
     {
-
+      this.questions [i].generateModel (x);
       x = this.questions[i].generateAnswer(x);   //x gets used first, and then assigned to
     }
 
@@ -56,6 +97,15 @@ class QuestionType {
   }
 
 
-  //draw = null;
+  draw ()
+  {
+    this.getActiveQuestion ().display ();
+  }
 
+
+  check (userAnswer)
+  {
+    var currentQuestion = this.getActiveQuestion ();
+    return currentQuestion.check (userAnswer);
+  }
 }

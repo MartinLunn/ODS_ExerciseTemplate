@@ -34,7 +34,7 @@ class Uset extends Model {
 
     delete this.set [x];    // NOTE: delete actually deletes it. setting to undefined causes issues later
     this.n = this.n - 1;
-    
+
     return toReturn;
   }
 
@@ -82,5 +82,41 @@ class Uset extends Model {
     }
 
     return copy;
+  }
+
+
+
+  toString ()
+  {
+    var result = " ";
+    var set = this.set;
+    for (var key in set)
+      result += key + " ";
+
+    return result;
+  }
+
+  draw (div)
+  {
+    // TODO: This should be an actual thing.
+    var myText = this.toString ();
+    var input  = $(".modelEntry", div);
+
+    $(input).val (myText)
+  }
+
+  // TODO: Remove this. This is bad.
+  static fromUserInput (div)
+  {
+    var newSet = new Uset ();
+    var input  = $(".modelEntry", div);
+    var user   = input.val ();
+
+    var values = user.match (/[^ ]+/g);
+    for (var i in values){
+      newSet.add (values[i]);
+    }
+
+    return newSet;
   }
 }

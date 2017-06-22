@@ -2,8 +2,9 @@
 
 class Operations extends QuestionType{
 
-  draw(a)
+/*  draw(a)
   {
     console.log(a, "I'm drawing1!!");
-  }
+    console.log (this);
+  }*/
 }

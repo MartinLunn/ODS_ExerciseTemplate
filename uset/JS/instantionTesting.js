@@ -182,7 +182,7 @@ class Uset extends Model {
       return null;
     }
     var toReturn = this.set[x];
-    this.set[x] = undefined;
+    delete this.set [x];
     this.n = this.n - 1;
     return toReturn;
   }
@@ -320,8 +320,6 @@ class AddAnswer extends AnswerType {
 
 
 
-
-
 /*jshint esversion: 6 */ 'use strict';
 
 class FindAnswer extends AnswerType {
@@ -380,6 +378,8 @@ class QuestionType {
   {
     this.questions = [ ];
     this.setup(questionData, numQuestionsArr, answerTypesClassName);
+
+    this.curQuestion = 0;
   }
 
   getQuestions()
@@ -387,11 +387,50 @@ class QuestionType {
     return this.questions;
   }
 
+  size ()
+  {
+    return this.questions.length;
+  }
+
   setNumQuestionRequired(n)
   {
     var temp = this.numQuestionsRequired;
     this.numQuestionsRequired = n;
     return temp;
+  }
+
+  getActiveQuestion () { return this.questions [this.curQuestion]; }
+
+  setCurQuestion (c) {
+    // NOTE: If c is less than 0, works as size - c
+    if (c < 0)
+      c = this.size () + c; // because c < 0, + c is actually -.
+
+    var temp = this.curQuestion ;
+    this.curQuestion = c;
+    return temp;
+  }
+
+  moveToNext ()
+  {
+    this.curQuestion ++;
+    if (this.curQuestion >= this.size()){
+      this.curQuestion = 0;
+      return false;
+    }
+
+    return true;
+  }
+
+  moveToPrev ()
+  {
+    this.curQuestion --;
+    if (this.curQuestion < 0){
+      this.curQuestion = this.size() - 1;
+      return false;
+    }
+
+    return true;
   }
 
   //if you want to modify this behavior, for example to scramble question order, override this method in the subclass, copying it, except add scramble or whatever extra functionality
@@ -414,10 +453,11 @@ class QuestionType {
 
     //would scramble here if desired using scramble question order
 
-    var x;
+    var x;  //used to hold prev answer
 
     for (let i = 0; i < this.questions.length; i++)
     {
+
       x = this.questions[i].generateAnswer(x);   //x gets used first, and then assigned to
     }
 
@@ -426,20 +466,21 @@ class QuestionType {
   //randomizeOrder = null
 
   scrambleQuestionOrder() {
-    var array = this.question;
-    for (var i = array.length - 1; i > 0; i--) {
-        var j = ODSRandom.getRandomIntInclusive(0, i);
-        var temp = array[i];
-        array[i] = array[j];
-        array[j] = temp;
-    }
-    return array;
-}
+    this.questions = ODSRandom.scramble (this.questions);
+  }
 
 
-  //draw = null;
+  draw ()
+  {
+    this.getActiveQuestion ().display ();
+  }
 
 }
+
+
+
+
+
 
 
 
@@ -454,10 +495,11 @@ class QuestionType {
 
 class Operations extends QuestionType{
 
-  draw(a)
+/*  draw(a)
   {
     console.log(a, "I'm drawing1!!");
-  }
+    console.log (this);
+  }*/
 }
 
 
@@ -472,6 +514,34 @@ class Operations extends QuestionType{
 
 
 
+
+
+/*jshint esversion: 6 */ 'use strict';
+
+class Instructions {
+  constructor(instructions)
+  {
+    this.data = instructions;
+  }
+
+  getData()
+  {
+    return this.data;
+  }
+
+  setData(newData)
+  {
+    var temp = this.data;
+    this.data = newData;
+    return temp;
+  }
+
+  //associates instruction data with html element id
+  display(div)
+  {
+    $(".instructionsBody", div).text (this.getData ());
+  }
+}
 
 
 
@@ -570,28 +640,47 @@ class Question {
 
   display(div)
   {
-    this.setDiv(div);
+    var div = div || this.getDiv() || $(".questionBody") || null;
+
+    if (!div) { console.error("From question.display() div is null."); return; }
+
+    this.displayInstructions(div);
+    this.displayParameters (div);
+
+    /*this.setDiv(div || $(".question." + String(this.id)))
+
+    if (!this.div && DEBUG)
+    {
+      console.log("Cannot find div from inside question.display."); ///TODO
+    }
 
     var questionText = this.constructor.name;
 
     questionText = questionText.charAt(0).toLowerCase() + questionText.substring(1);
 
-    $(".questionSpan",div).text(questionText);
+    $("span", this.div).text(questionText + "(" + this.getParametersString() + ")\n");
 
     this.displayAnswer();             //TODO for testing only, event handlers
 
-    this.displayInstructions();
+    this.displayInstructions();*/
 
   }
 
-  displayAnswer()
+  displayAnswer(div)
   {
-    this.answer.display(this.div);
+    this.answer.display(div);
   }
 
-  displayInstructions()
+  displayParameters (div)
   {
-    this.instructions.display(this.div);
+      var str = this.getParametersString ();
+      var p   = $(".parametersBody", div);
+      p.text (this.constructor.name.toLowerCase() + "(" + str + ")");
+  }
+
+  displayInstructions(div)
+  {
+    this.instructions.display(div);
   }
 
   generateAnswer(prevAnswer)
@@ -610,6 +699,11 @@ class Question {
     return answer;
   }
 
+  getParametersString()       //must overload if parameters is an object
+  {
+    return String(this.parameters);
+  }
+
   check(userAnswer)
   {
     return this.answer.check(userAnswer);
@@ -619,6 +713,9 @@ class Question {
 }
 
 Question.nextId = 0;
+
+
+
 
 
 
@@ -750,6 +847,8 @@ var numRemoveQuestions = 10;
 
 var numberOfQuestionsRequired = [[numAddQuestions, numFindQuestions, numRemoveQuestions]];
 
+
+  console.log ("NOW ON ", this.questionNum, " OF ", this.questionTypeNum);
   var questionData = [
     [{class : Add, instructionsText : "Illustrate the evolution of the collection given the following add method."},
     {class : Find, instructionsText : "Illustrate the evolution of the collection given the following find method."} ,
@@ -791,6 +890,41 @@ class Exercise {
   {
     //array of question types
     this.questionTypes = [ ];
+    this.correctModel = new __MODULENAME__();     //TODO remove - each questions has a correct model and a user model
+    this.userModel = new __MODULENAME__();        //TODO remove - each questions has a correct model and a user model
+
+    this.questionTypeNum = 0;
+  }
+
+  getActiveQuestionType () { return this.questionTypes [this.questionTypeNum]; }
+  cycleQuestionTypes (inc)
+  {
+    var qNum = this.questionTypeNum;
+    qNum += inc;
+
+    this.questionTypeNum = Math.abs (qNum % this.questionTypes.length);
+  }
+
+  next ()
+  {
+    var question = this.getActiveQuestionType ();
+    if (!question.moveToNext ()) {
+      this.cycleQuestionTypes (1);
+      this.getActiveQuestionType ().setCurQuestion (0);
+    }
+
+    this.refresh ();
+  }
+
+  prev ()
+  {
+    var question = this.getActiveQuestionType ();
+    if (!question.moveToPrev ()) {
+      this.cycleQuestionTypes (-1);
+      this.getActiveQuestionType ().setCurQuestion (-1);
+    }
+
+    this.refresh ();
   }
 
   getQuestionTypes()
@@ -805,6 +939,10 @@ class Exercise {
     return temp;
   }
 
+  refresh ()
+  {
+    this.getActiveQuestionType ().draw ();
+  }
   clear()
   {
     this.questionTypes = [ ];
@@ -826,7 +964,20 @@ class Exercise {
     //if desired, scramble
 
   }
+
+  start ()
+  {
+    // NOTE: start for now just starts the first question .....
+    this.refresh ();
+  }
 }
+
+
+
+
+
+
+
 
 
 
@@ -853,13 +1004,17 @@ class CustomEventHandler {
     this.customEvent = { };
   }
 
-  bind(odsEvent, handlingFunction)
+  bind(odsEvent, handlingFunction, context)
   {
     if (!this.customEvent[odsEvent])      //if this,events doesn't contain event
     {
       this.customEvent[odsEvent] = [];
     }
-    this.customEvent[odsEvent].push(handlingFunction);
+
+    this.customEvent[odsEvent].push({
+      func: handlingFunction,
+      context: context
+    });
   }
 
   unbind(event)
@@ -874,11 +1029,12 @@ class CustomEventHandler {
     {
       for (var i = 0; i < doThis.length; i++) {
         Array.prototype.shift.apply(arguments);         //removing the first element of arguments, which is the event itself (original target)
-        doThis[i].apply(this, arguments);
+        doThis[i].func.apply(doThis[i].context, arguments);
       }
     }
   }
 }
+
 
 
 
@@ -939,6 +1095,38 @@ DOMEventHandler.customEventHandlers = [ ];
 
 
 
+/*jshint esversion: 6 */ 'use strict';
+/* Hey I'm back */
+
+class View {
+  constructor() {
+    this.eventHandlers = [ ];
+
+    $(()=>{
+      this.addEvents ();
+    })
+  }
+
+  register (eh) {
+    DOMEventHandler.registerEventHandler (eh);
+  }
+
+  addEvents () {
+    var nextArrow = $("#nextArrow");
+    var prevArrow = $("#prevArrow");
+    var checkBtn  = $("#checkBtn");
+
+    this.addEvent (nextArrow, {click: "nextExercise"});
+    this.addEvent (prevArrow, {click: "prevExercise"});
+    this.addEvent (checkBtn, {click: "check"});
+  }
+
+  addEvent (elements, events) {
+    this.eventHandlers.push (new DOMEventHandler(elements, events));
+  }
+}
+
+
 
 
 /*jshint esversion: 6 */ 'use strict';
@@ -948,21 +1136,55 @@ class Control {
   {
     this.exercise = new Exercise();
     this.customEventHandler = new CustomEventHandler();
+    this.events = [ ];
+
+    this.view = new View ();
+    this.view.register (this.customEventHandler);
+
     this.setup();
+
+    $(()=>{
+      this.run ();
+    });
   }
 
   setup()
   {
     this.exercise.setup();
+    this.addEvents ();
   }
 
   run()
   {
+    this.exercise.start ();
     //instantiate, scramble, generate answer
+  }
+
+  addEvent (name, handling) {
+    this.customEventHandler.bind (name, handling, this);
+  }
+  addEvents ()
+  {
+    this.addEvent ("nextExercise", this.onNextBtn);
+    this.addEvent ("prevExercise", this.onPrevBtn);
+    this.addEvent ("check", this.onCheckBtn);
   }
 
   onLMBDOWN(domElement){  }
   onLMBUP(domElement){  }
   onMouseOverON(domElement){  }
   onMouseOverOFF(domElement){  }
+
+  onNextBtn (elem, evt) {
+    // move to the next exercise ...
+    this.exercise.next ();
+  };
+  onPrevBtn (elem, evt) {
+    this.exercise.prev ();
+  }
+
+  onCheckBtn (elem, evt) {
+    console.log ("So you want to check if your answer is correct?");
+    console.log ("Let me help you with that. #WRONG");
+  }
 }

@@ -6,13 +6,16 @@ class CustomEventHandler {
     this.customEvent = { };
   }
 
-  bind(odsEvent, handlingFunction)
+  bind(odsEvent, handlingFunction, context)
   {
     if (!this.customEvent[odsEvent])      //if this,events doesn't contain event
     {
       this.customEvent[odsEvent] = [];
     }
-    this.customEvent[odsEvent].push(handlingFunction);
+    this.customEvent[odsEvent].push({
+      func: handlingFunction,
+      context: context
+    });
   }
 
   unbind(event)
@@ -27,7 +30,7 @@ class CustomEventHandler {
     {
       for (var i = 0; i < doThis.length; i++) {
         Array.prototype.shift.apply(arguments);         //removing the first element of arguments, which is the event itself (original target)
-        doThis[i].apply(this, arguments);
+        doThis[i].func.apply(doThis[i].context, arguments);
       }
     }
   }
