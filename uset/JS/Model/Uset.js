@@ -102,7 +102,7 @@ class Uset extends Model {
     var myText = this.toString ();
     var input  = $(".modelEntry", div);
 
-    $(input).val (myText)
+    $(input).val (myText);
   }
 
   // TODO: Remove this. This is bad.

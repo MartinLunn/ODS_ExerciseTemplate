@@ -19,7 +19,7 @@ class Exercise {
       return false;
     } else if (param >= this.questionTypes.length)
     {
-      console.error("From inside setCurrQuestionType, param is too high.")
+      console.error("From inside setCurrQuestionType, param is too high.");
       return false;
     }
 
@@ -55,9 +55,9 @@ class Exercise {
 
   convertQuestionNumberTo2d(questionNumber)
   {
-    if (questionNumber <= 0)
+    if (questionNumber < 0)
     {
-      console.error("From inside convertQuestionNumberTo2d, questionNumber is negative.")
+      console.error("From inside convertQuestionNumberTo2d, questionNumber is negative.");
       return false;
     }
 
@@ -67,7 +67,7 @@ class Exercise {
     {
       if (this.questionTypes[questionType].containsQuestionNum(questionNumber) )
       {
-        toReturn["1d"] = questionType;
+        toReturn["1d"] = parseInt(questionType);
         break;
       }
       questionNumber = questionNumber - this.questionTypes[questionType].size();
@@ -79,14 +79,14 @@ class Exercise {
       return false;
     }
 
-    toReturn["2d"] = questionNumber;
+    toReturn["2d"] = parseInt(questionNumber);
 
     return toReturn;
   }
 
   goToQuestion(questionNumber)
   {
-    var questionNumber2d = convertQuestionNumberTo2d(questionNumber);
+    var questionNumber2d = this.convertQuestionNumberTo2d(questionNumber);
     //(questionNumber2d = convertQuestionNumberTo2d(questionNumber)) ? questionNumber2d : console.error("how dare you turn this house into a house of lies"); return false;
     //cool syntax, but not readable
 
@@ -98,7 +98,9 @@ class Exercise {
 
     this.setCurrQuestionType(questionNumber2d["1d"]);
 
-    this.getCurrentQuestionType().setCurrQuestion(questionNumber2d["2d"]);
+    this.getCurrQuestionType().setCurrQuestion(questionNumber2d["2d"]);
+
+    this.setAbsQNum (questionNumber);
 
     this.refresh();
   }

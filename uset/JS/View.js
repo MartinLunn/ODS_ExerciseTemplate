@@ -4,25 +4,24 @@
 class View {
   constructor() {
     this.eventHandlers = [ ];
-
-    this.addEvents ();
   }
 
-  register (eh) {
+  register (eh)
+  {
     DOMEventHandler.registerEventHandler (eh);
   }
 
-  addEvents () {
-    var nextArrow = $("#nextArrow");
-    var prevArrow = $("#prevArrow");
-    var checkBtn  = $("#checkBtn");
+  addDOMEvent (event) {
+    var triggerMap = { };
 
-    this.addEvent (nextArrow, {click: "nextExercise"});
-    this.addEvent (prevArrow, {click: "prevExercise"});
-    this.addEvent (checkBtn, {click: "check"});
-  }
+    var currData = null;
 
-  addEvent (elements, events) {
-    this.eventHandlers.push (new DOMEventHandler(elements, events));
+    for (var evt in event.evtsArr)
+    {
+      currData = event.evtsArr[evt];
+      triggerMap[currData.domEvtName] = currData.customEvtName;
+    }
+
+    this.eventHandlers.push (new DOMEventHandler(event.elem, triggerMap));
   }
 }

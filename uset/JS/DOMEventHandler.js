@@ -1,6 +1,6 @@
 /*jshint esversion: 6 */ 'use strict';
 
-class DOMEventHandler {
+class DOMEventHandler {   //we have one instance of a domeventhandler for each dom element that has events associated with it
   static registerEventHandler (h) {
     this.customEventHandlers.push (h);
   }
@@ -41,7 +41,7 @@ class DOMEventHandler {
     var elem   = event.target;
 
     for (var i in events)
-      events[i].trigger (type, elem, event);
+      events[i].trigger (type, elem, event);  //intentionally mismatching parameters in call and function definition.
     }
 
 }

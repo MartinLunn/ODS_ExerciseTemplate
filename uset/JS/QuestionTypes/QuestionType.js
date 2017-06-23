@@ -31,7 +31,7 @@ class QuestionType {
 
     if (curr >= this.questions.length)
     {
-      console.error("From inside setCurrQuestion, curr is too high.")
+      console.error("From inside setCurrQuestion, curr is too high.");
       return false;
     }
 

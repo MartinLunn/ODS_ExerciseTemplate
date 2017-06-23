@@ -1,7 +1,7 @@
 /*jshint esversion: 6 */ 'use strict';
 
 class Remove extends Question {
-  static generateParameters()
+  generateParameters()
   {
     return ODSRandom.getRandomIntInclusive(__removeMinParam__, __removeMaxParam__);
   }

@@ -453,18 +453,12 @@
       this.questions = [ ];
       this.setup(questionData, numQuestionsArr, answerTypesClassName);
 
-      this.curQuestion = 0;
+      this.currQuestion = 0;
     }
 
-    getQuestions()
-    {
-      return this.questions;
-    }
+    getQuestions() { return this.questions; }
 
-    size ()
-    {
-      return this.questions.length;
-    }
+    size () { return this.questions.length; }
 
     setNumQuestionRequired(n)
     {
@@ -473,24 +467,32 @@
       return temp;
     }
 
-    getCurrentQuestion () { return this.questions [this.curQuestion]; }
+    getCurrentQuestion () { return this.questions [this.currQuestion]; }
 
-    setCurQuestion (curr) {
-      // NOTE: If c is less than 0, works as size - c
+    setCurrQuestion (curr) {
       if (curr < 0)
-        curr = this.size () + curr;
+      {
+        console.error("From inside setCurrQuestion, curr is negative.");
+        return false;
+      }
 
-      var temp = this.curQuestion ;
-      this.curQuestion = c;
+      if (curr >= this.questions.length)
+      {
+        console.error("From inside setCurrQuestion, curr is too high.")
+        return false;
+      }
+
+      var temp = this.currQuestion ;
+      this.currQuestion = curr;
       return temp;
     }
 
     //TODO
     moveToNext ()
     {
-      this.curQuestion ++;
-      if (this.curQuestion >= this.size()){
-        this.curQuestion = 0;
+      this.currQuestion ++;
+      if (this.currQuestion >= this.size()){
+        this.currQuestion = 0;
         return false;
       }
 
@@ -499,9 +501,9 @@
 
     moveToPrev ()
     {
-      this.curQuestion --;
-      if (this.curQuestion < 0){
-        this.curQuestion = this.size() - 1;
+      this.currQuestion --;
+      if (this.currQuestion < 0){
+        this.currQuestion = this.size() - 1;
         return false;
       }
 
@@ -530,6 +532,8 @@
 
       var x;  //used to hold prev answer
 
+      //TODO if desired to have a prebuilt data structure DOO ITT HERE
+
       for (let i = 0; i < this.questions.length; i++)
       {
         this.questions [i].generateModel (x);
@@ -544,6 +548,7 @@
       this.questions = ODSRandom.scramble (this.questions);
     }
 
+    containsQuestionNum(questionNumber) { return this.questions.length > questionNumber; }
 
     draw ()
     {
@@ -557,6 +562,7 @@
       return currentQuestion.check (userAnswer);
     }
   }
+
 
 
 
@@ -647,7 +653,7 @@
     constructor(questionData, answerTypesClassName)
     {
       questionData = questionData || { };
-      this.parameters = this.constructor.generateParameters() || { };
+      this.parameters = this.generateParameters();
       this.instructions = !!questionData.instructionsText ? new Instructions(questionData.instructionsText) : null;     //!! converts truthy to true
       this.id = questionData.id || Question.nextId++;
       this.div = null;
@@ -719,12 +725,17 @@
       return temp;
     }
 
-
+    generateParameters()
+    {
+      console.error("From inside question's generateParameters, generate parameters was not overloaded from this question subclass.");
+      console.log(this);
+      return false;
+    }
 
 
     display(div)
     {
-      var div = div || this.getDiv() || $(".questionBody") || null;
+      div = div || this.getDiv() || $(".questionBody") || null;
 
       if (!div) { console.error("From question.display() div is null."); return; }
 
@@ -812,10 +823,11 @@
 
 
 
+
   /*jshint esversion: 6 */ 'use strict';
 
   class Add extends Question {
-    static generateParameters()
+    generateParameters()
     {
       return ODSRandom.getRandomIntInclusive(__addMinParam__, __addMaxParam__);
     }
@@ -838,7 +850,7 @@
   /*jshint esversion: 6 */ 'use strict';
 
   class Remove extends Question {
-    static generateParameters()
+    generateParameters()
     {
       return ODSRandom.getRandomIntInclusive(__removeMinParam__, __removeMaxParam__);
     }
@@ -869,7 +881,7 @@
   /*jshint esversion: 6 */ 'use strict';
 
   class Find extends Question {
-    static generateParameters()
+    generateParameters()
     {
       return ODSRandom.getRandomIntInclusive(__findMinParam__, __findMaxParam__);
     }
@@ -951,9 +963,96 @@
 
 
 
+  function onNextBtnClick (elem, evt) {
+    // move to the next exercise ...
+    this.exercise.next();
+  }
+
+  function onPrevBtnClick (elem, evt) {
+    this.exercise.prev ();
+  }
+
+  //TODO
+  function onCheckBtnClick (elem, evt) {
+    console.log ("Checking your answer .... ");
+    if (this.exercise.check ()) {
+      console.log ("Ha ha ha, hacker");
+      onNextBtnClick.apply(this, arguments);
+    } else {
+      console.log ("lol.... #wrong");
+    }
+  }
+
+var control = null;
+var eventData = null;
+$( ()=>
+{
+  //must be loaded after page body loads
 
 
+  //[{elem: , customEventName: , handlingFunction: },{},{}]
 
+  /*var events =
+  [
+    {
+      elem: $("#myId"),
+      evtsArr: [
+        {
+          handlingFunction: function,
+          customEvtName: string,
+          domEvtName: string
+        },
+        {
+          handlingFunction: function,
+          customEvtName:string,
+          domEvtName: string
+        }
+      }
+      }
+      ]
+
+    }
+    },
+
+  ];*/
+
+  eventData =
+  [
+    {
+      elem: $("#prevArrow"),
+      evtsArr: [
+        {
+          handlingFunction: onPrevBtnClick,
+          customEvtName: "prevBtnClick",
+          domEvtName: "click"
+        }
+      ]
+    },
+    {
+      elem: $("#nextArrow"),
+      evtsArr: [
+        {
+          handlingFunction: onNextBtnClick,
+          customEvtName: "nextBtnClick",
+          domEvtName: "click"
+        }
+      ]
+    },
+    {
+      elem: $("#checkBtn"),
+      evtsArr: [
+        {
+          handlingFunction: onCheckBtnClick,
+          customEvtName: "checkBtnClick",
+          domEvtName: "click"
+        }
+      ]
+    }
+  ];
+
+
+  control = new Control();
+});
 
 
 
@@ -971,10 +1070,28 @@
     {
       //array of question types
       this.questionTypes = [ ];
-      this.currentQuestionIndex = 0;   //index into questionTpes, representing the
+      this.currQTypeIndex = 0;   //index into questionTpes, representing the current question type
+      this.absQNum = 0;       //this is the question number from the user's side. For example if you have three question types, each with 10 questions, 26 would be stored here for the 26th question, not [2][6]
     }
 
-    getCurrQuestionType () { return this.questionTypes [this.currentQuestionIndex]; }
+    getCurrQuestionType () { return this.questionTypes [this.currQTypeIndex]; }
+
+    setCurrQuestionType(param)
+    {
+      if (param < 0)
+      {
+        console.error("From inside setCurrQuestionType, param is negative.");
+        return false;
+      } else if (param >= this.questionTypes.length)
+      {
+        console.error("From inside setCurrQuestionType, param is too high.")
+        return false;
+      }
+
+      var temp = this.currQTypeIndex;
+      this.currQTypeIndex = param;
+      return temp;
+    }
 
     getQuestionTypes() { return this.questionTypes; }
 
@@ -985,38 +1102,85 @@
       return temp;
     }
 
-    //TODO refactor to goToQuestion(number? id?)
+    getAbsQNum() { return this.absQNum; }
 
-    cycleQuestionTypes (increment)
+    setAbsQNum(param)
     {
-      var questionNum = this.currentQuestionIndex;
-      questionNum += increment;
+      if (param < 0)
+      {
+        console.error("From Inside setAbsQNum, param is less than 0.");
+      }
 
-      this.currentQuestionIndex = Math.abs (questionNum % this.questionTypes.length);
+      //TODO maybe check upper bound?
+
+      var temp = this.absQNum;
+      this.absQNum = param;
+      return temp;
     }
+
+    convertQuestionNumberTo2d(questionNumber)
+    {
+      if (questionNumber < 0)
+      {
+        console.error("From inside convertQuestionNumberTo2d, questionNumber is negative.")
+        return false;
+      }
+
+      var toReturn = {"1d": -1, "2d": -1};
+
+      for (var questionType in this.questionTypes)
+      {
+        if (this.questionTypes[questionType].containsQuestionNum(questionNumber) )
+        {
+          toReturn["1d"] = parseInt(questionType);
+          break;
+        }
+        questionNumber = questionNumber - this.questionTypes[questionType].size();
+      }
+
+      if (toReturn["1d"] === -1)
+      {
+        console.error("From inside convertQuestionNumberTo2d, questionNumber is out of bounds (too high).");
+        return false;
+      }
+
+      toReturn["2d"] = parseInt(questionNumber);
+
+      return toReturn;
+    }
+
+    goToQuestion(questionNumber)
+    {
+      var questionNumber2d = this.convertQuestionNumberTo2d(questionNumber);
+      //(questionNumber2d = convertQuestionNumberTo2d(questionNumber)) ? questionNumber2d : console.error("how dare you turn this house into a house of lies"); return false;
+      //cool syntax, but not readable
+
+      if (!questionNumber2d)
+      {
+        console.error("From inside goToQuestion, convertQuestionNumberTo2d returned false.");
+        return false;
+      }
+
+      this.setCurrQuestionType(questionNumber2d["1d"]);
+
+      this.getCurrQuestionType().setCurrQuestion(questionNumber2d["2d"]);
+
+      this.setAbsQNum (questionNumber);
+
+      this.refresh();
+    }
+
+    //TODO refactor to goToQuestion(number? id?)
 
     next ()
     {
-      var question = this.getCurrQuestionType ();
-      if (!question.moveToNext ()) {
-        this.cycleQuestionTypes (1);
-        this.getCurrQuestionType ().setCurQuestion (0);
-      }
-
-      this.refresh ();
+      this.goToQuestion(this.getAbsQNum() + 1);
     }
 
     prev ()
     {
-      var question = this.getCurrQuestionType ();
-      if (!question.moveToPrev ()) {
-        this.cycleQuestionTypes (-1);
-        this.getCurrQuestionType ().setCurQuestion (-1);
-      }
-
-      this.refresh ();
+      this.goToQuestion(this.getAbsQNum() - 1);
     }
-
 
 
     clear()
@@ -1040,6 +1204,9 @@
       //if desired, scramble
     }
 
+
+
+    //TODO refactor
     check ()
     {
       var qType = this.getCurrQuestionType ();
@@ -1051,12 +1218,17 @@
     {
       // NOTE: start for now just starts the first question .....
       this.refresh ();
+      //might want to build stuff
     }
+
     refresh ()
     {
       this.getCurrQuestionType ().draw ();
     }
   }
+
+
+
 
 
 
@@ -1188,31 +1360,27 @@
   class View {
     constructor() {
       this.eventHandlers = [ ];
-
-      $(()=>{
-        this.addEvents ();
-      })
     }
 
-    register (eh) {
+    register (eh)
+    {
       DOMEventHandler.registerEventHandler (eh);
     }
 
-    addEvents () {
-      var nextArrow = $("#nextArrow");
-      var prevArrow = $("#prevArrow");
-      var checkBtn  = $("#checkBtn");
+    addDOMEvent (event) {
+      var triggerMap = { };
 
-      this.addEvent (nextArrow, {click: "nextExercise"});
-      this.addEvent (prevArrow, {click: "prevExercise"});
-      this.addEvent (checkBtn, {click: "check"});
-    }
+      var currData = null;
 
-    addEvent (elements, events) {
-      this.eventHandlers.push (new DOMEventHandler(elements, events));
+      for (var evt in event.evtsArr)
+      {
+        currData = event.evtsArr[evt];
+        triggerMap[currData.domEvtName] = currData.customEvtName;
+      }
+
+      this.eventHandlers.push (new DOMEventHandler(event.elem, triggerMap));
     }
   }
-
 
 
 
@@ -1222,55 +1390,43 @@
     constructor()
     {
       this.exercise = new Exercise();
-      this.customEventHandler = new CustomEventHandler();
-      this.events = [ ];
-
-      this.view = new View ();
-      this.view.register (this.customEventHandler);
 
       this.exercise.setup();
+
+      this.customEventHandler = new CustomEventHandler();
+
+      this.view = new View ();
+
       this.addEvents ();
 
-      $(()=>{
-        this.exercise.start ();     //TODO rename ?? maybe
-      });
+      this.view.register (this.customEventHandler);
+
+      this.exercise.start ();     //TODO rename ?? maybe
     }
 
-    addEvent (name, handling) {
+    addCustomEvent (name, handling)
+    {
       this.customEventHandler.bind (name, handling, this);
     }
 
     addEvents ()
     {
-      this.addEvent ("nextExercise", this.onNextBtn);
-      this.addEvent ("prevExercise", this.onPrevBtn);
-      this.addEvent ("check", this.onCheckBtn);
-    }
+      var events = undefined;
 
-    onLMBDOWN(domElement){  }
-    onLMBUP(domElement){  }
-    onMouseOverON(domElement){  }
-    onMouseOverOFF(domElement){  }
+      for (var element of eventData)
+      {
+        this.view.addDOMEvent(element);
 
-    onNextBtn (elem, evt) {
-      // move to the next exercise ...
-      this.exercise.next ();
-    };
-    onPrevBtn (elem, evt) {
-      this.exercise.prev ();
-    }
+        events = element.evtsArr;
 
-    //TODO
-    onCheckBtn (elem, evt) {
-      console.log ("Checking your answer .... ");
-      if (this.exercise.check ()) {
-        console.log ("Ha ha ha, hacker");
-        this.onNextBtn ();
-      } else {
-        console.log ("lol.... #wrong");
+        for (var event of events)
+        {
+          this.addCustomEvent(event.customEvtName, event.handlingFunction);
+        }
       }
     }
   }
+
 
 
 

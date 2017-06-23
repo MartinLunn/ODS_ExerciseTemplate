@@ -5,7 +5,7 @@ class Question {
   constructor(questionData, answerTypesClassName)
   {
     questionData = questionData || { };
-    this.parameters = this.constructor.generateParameters() || { };
+    this.parameters = this.generateParameters();
     this.instructions = !!questionData.instructionsText ? new Instructions(questionData.instructionsText) : null;     //!! converts truthy to true
     this.id = questionData.id || Question.nextId++;
     this.div = null;
@@ -77,12 +77,17 @@ class Question {
     return temp;
   }
 
-
+  generateParameters()
+  {
+    console.error("From inside question's generateParameters, generate parameters was not overloaded from this question subclass.");
+    console.log(this);
+    return false;
+  }
 
 
   display(div)
   {
-    var div = div || this.getDiv() || $(".questionBody") || null;
+    div = div || this.getDiv() || $(".questionBody") || null;
 
     if (!div) { console.error("From question.display() div is null."); return; }
 

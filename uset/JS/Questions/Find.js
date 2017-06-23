@@ -1,7 +1,7 @@
 /*jshint esversion: 6 */ 'use strict';
 
 class Find extends Question {
-  static generateParameters()
+  generateParameters()
   {
     return ODSRandom.getRandomIntInclusive(__findMinParam__, __findMaxParam__);
   }

@@ -4,53 +4,39 @@ class Control {
   constructor()
   {
     this.exercise = new Exercise();
-    this.customEventHandler = new CustomEventHandler();
-
-    this.view = new View ();
-    this.view.register (this.customEventHandler);
 
     this.exercise.setup();
 
+    this.customEventHandler = new CustomEventHandler();
+
+    this.view = new View ();
+
     this.addEvents ();
+
+    this.view.register (this.customEventHandler);
+
     this.exercise.start ();     //TODO rename ?? maybe
   }
 
-  addEvent (name, handling) {
+  addCustomEvent (name, handling)
+  {
     this.customEventHandler.bind (name, handling, this);
   }
 
   addEvents ()
   {
-    this.addEvent ("nextExercise", this.onNextBtn);
-    this.addEvent ("prevExercise", this.onPrevBtn);
-    this.addEvent ("check", this.onCheckBtn);
-  }
+    var events = null;
 
-  /*
-  onLMBDOWN(domElement){  }
-  onLMBUP(domElement){  }
-  onMouseOverON(domElement){  }
-  onMouseOverOFF(domElement){  }
-  //TODO
-  */
+    for (var element of eventData)
+    {
+      this.view.addDOMEvent(element);
 
-  onNextBtn (elem, evt) {
-    // move to the next exercise ...
-    this.exercise.next();
-  }
+      events = element.evtsArr;
 
-  onPrevBtn (elem, evt) {
-    this.exercise.prev ();
-  }
-
-  //TODO
-  onCheckBtn (elem, evt) {
-    console.log ("Checking your answer .... ");
-    if (this.exercise.check ()) {
-      console.log ("Ha ha ha, hacker");
-      this.onNextBtn ();
-    } else {
-      console.log ("lol.... #wrong");
+      for (var event of events)
+      {
+        this.addCustomEvent(event.customEvtName, event.handlingFunction);
+      }
     }
   }
 }

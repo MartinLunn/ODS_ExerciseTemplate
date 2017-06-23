@@ -38,7 +38,9 @@
        "__findMinParam__" : true,
        "__findMaxParam__" : true,
        "__removeMinParam__" : true,
-       "__removeMaxParam__" : true
+       "__removeMaxParam__" : true,
+       "eventData": true,
+       "DOMEventHandler": true
   },
   "strict": "global"
 }

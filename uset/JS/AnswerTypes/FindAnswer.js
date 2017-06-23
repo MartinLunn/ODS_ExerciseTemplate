@@ -14,6 +14,6 @@ class FindAnswer extends AnswerType {
 
   display(div)      //TODO replace with production version
   {
-    $(".answer", div).text
+    $(".answer", div).text(this.data);
   }
 }
