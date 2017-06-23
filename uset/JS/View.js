@@ -5,9 +5,7 @@ class View {
   constructor() {
     this.eventHandlers = [ ];
 
-    $(()=>{
-      this.addEvents ();
-    })
+    this.addEvents ();
   }
 
   register (eh) {

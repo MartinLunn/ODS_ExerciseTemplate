@@ -5,11 +5,11 @@ class Exercise {
   {
     //array of question types
     this.questionTypes = [ ];
-    this.currentQuestionTypeIndex = 0;   //index into questionTpes, representing the
-    this.currentQuestionNumber = 0;       //this is the question number from the user's side. For example if you have three question types, each with 10 questions, #26 would be stored here for the 26th question
+    this.currQTypeIndex = 0;   //index into questionTpes, representing the current question type
+    this.absQNum = 0;       //this is the question number from the user's side. For example if you have three question types, each with 10 questions, 26 would be stored here for the 26th question, not [2][6]
   }
 
-  getCurrQuestionType () { return this.questionTypes [this.currentQuestionTypeIndex]; }
+  getCurrQuestionType () { return this.questionTypes [this.currQTypeIndex]; }
 
   setCurrQuestionType(param)
   {
@@ -23,8 +23,8 @@ class Exercise {
       return false;
     }
 
-    var temp = this.currentQuestionTypeIndex;
-    this.currentQuestionTypeIndex = param;
+    var temp = this.currQTypeIndex;
+    this.currQTypeIndex = param;
     return temp;
   }
 
@@ -37,34 +37,20 @@ class Exercise {
     return temp;
   }
 
-  getCurrentQuestionNumber() { return this.currentQuestionNumber; }
+  getAbsQNum() { return this.absQNum; }
 
-  setCurrentQuestionNumber(param)
+  setAbsQNum(param)
   {
     if (param < 0)
     {
-      console.error("From Inside setCurrentQuestionNumber, param is less than 0.");
+      console.error("From Inside setAbsQNum, param is less than 0.");
     }
 
     //TODO maybe check upper bound?
 
-    var temp = this.currentQuestionNumber;
-    this.currentQuestionNumber = param;
+    var temp = this.absQNum;
+    this.absQNum = param;
     return temp;
-  }
-
-  goToQuestion(questionNumber)
-  {
-    var questionNumber2d = convertQuestionNumberTo2d(questionNumber);
-
-    this.setCurrQuestionType(questionNumber2d["1d"]);
-
-    this.getCurrentQuestionType().setCurrQuestion(questionNumber2d["2d"]);
-
-
-
-    //refresh
-    this.refresh();
   }
 
   convertQuestionNumberTo2d(questionNumber)
@@ -98,38 +84,36 @@ class Exercise {
     return toReturn;
   }
 
-  //TODO refactor to goToQuestion(number? id?)
-
-  cycleQuestionTypes (increment)
+  goToQuestion(questionNumber)
   {
-    var questionNum = this.currentQuestionTypeIndex;
-    questionNum += increment;
+    var questionNumber2d = convertQuestionNumberTo2d(questionNumber);
+    //(questionNumber2d = convertQuestionNumberTo2d(questionNumber)) ? questionNumber2d : console.error("how dare you turn this house into a house of lies"); return false;
+    //cool syntax, but not readable
 
-    this.currentQuestionTypeIndex = Math.abs (questionNum % this.questionTypes.length);
+    if (!questionNumber2d)
+    {
+      console.error("From inside goToQuestion, convertQuestionNumberTo2d returned false.");
+      return false;
+    }
+
+    this.setCurrQuestionType(questionNumber2d["1d"]);
+
+    this.getCurrentQuestionType().setCurrQuestion(questionNumber2d["2d"]);
+
+    this.refresh();
   }
+
+  //TODO refactor to goToQuestion(number? id?)
 
   next ()
   {
-    var question = this.getCurrQuestionType ();
-    if (!question.moveToNext ()) {
-      this.cycleQuestionTypes (1);
-      this.getCurrQuestionType ().setCurQuestion (0);
-    }
-
-    this.refresh ();
+    this.goToQuestion(this.getAbsQNum() + 1);
   }
 
   prev ()
   {
-    var question = this.getCurrQuestionType ();
-    if (!question.moveToPrev ()) {
-      this.cycleQuestionTypes (-1);
-      this.getCurrQuestionType ().setCurQuestion (-1);
-    }
-
-    this.refresh ();
+    this.goToQuestion(this.getAbsQNum() - 1);
   }
-
 
 
   clear()
@@ -153,6 +137,9 @@ class Exercise {
     //if desired, scramble
   }
 
+
+
+  //TODO refactor
   check ()
   {
     var qType = this.getCurrQuestionType ();
@@ -164,7 +151,9 @@ class Exercise {
   {
     // NOTE: start for now just starts the first question .....
     this.refresh ();
+    //might want to build stuff
   }
+
   refresh ()
   {
     this.getCurrQuestionType ().draw ();

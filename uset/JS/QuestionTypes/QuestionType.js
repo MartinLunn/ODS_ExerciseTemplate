@@ -9,15 +9,9 @@ class QuestionType {
     this.currQuestion = 0;
   }
 
-  getQuestions()
-  {
-    return this.questions;
-  }
+  getQuestions() { return this.questions; }
 
-  size ()
-  {
-    return this.questions.length;
-  }
+  size () { return this.questions.length; }
 
   setNumQuestionRequired(n)
   {
@@ -90,6 +84,8 @@ class QuestionType {
     //would scramble here if desired using scramble question order
 
     var x;  //used to hold prev answer
+
+    //TODO if desired to have a prebuilt data structure DOO ITT HERE
 
     for (let i = 0; i < this.questions.length; i++)
     {

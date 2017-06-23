@@ -10,11 +10,9 @@ class Control {
     this.view.register (this.customEventHandler);
 
     this.exercise.setup();
-    this.addEvents ();
 
-    $(()=>{
-      this.exercise.start ();     //TODO rename ?? maybe
-    });
+    this.addEvents ();
+    this.exercise.start ();     //TODO rename ?? maybe
   }
 
   addEvent (name, handling) {
@@ -28,15 +26,19 @@ class Control {
     this.addEvent ("check", this.onCheckBtn);
   }
 
+  /*
   onLMBDOWN(domElement){  }
   onLMBUP(domElement){  }
   onMouseOverON(domElement){  }
   onMouseOverOFF(domElement){  }
+  //TODO
+  */
 
   onNextBtn (elem, evt) {
     // move to the next exercise ...
-    this.exercise.next ();
-  };
+    this.exercise.next();
+  }
+
   onPrevBtn (elem, evt) {
     this.exercise.prev ();
   }
