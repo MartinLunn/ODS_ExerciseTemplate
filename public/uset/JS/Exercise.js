@@ -142,6 +142,11 @@ class Exercise {
 
 
   //TODO refactor
+  getAnswer ()
+  {
+    return this.getCurrQuestionType ().getAnswer ();
+  }
+  
   check ()
   {
     var qType = this.getCurrQuestionType ();

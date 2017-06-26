@@ -142,6 +142,11 @@ class Question {
     this.setModel (prevAnswer.getModel ());
   }
 
+  getAnswer ()
+  {
+    return this.answer.getModel ();
+  }
+
   getParametersString()       //must overload if parameters is an object
   {
     return String(this.parameters);

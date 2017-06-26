@@ -101,6 +101,7 @@ class Uset extends Model {
     // TODO: This should be an actual thing.
     var myText = this.toString ();
     var input  = $(".modelEntry", div);
+    if (input.length===0) input=div;
 
     $(input).val (myText);
   }

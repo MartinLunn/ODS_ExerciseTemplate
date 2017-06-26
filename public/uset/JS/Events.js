@@ -20,6 +20,17 @@ function onCheckBtnClick (elem, evt) {
   }
 }
 
+function onShowBtnClick (elem, evt) {
+  var answer = this.exercise.getAnswer ();
+  var div    = $(".modelEntry");
+
+  if (!answer || typeof (answer) !== "object"){
+    if (!answer) answer = "null";
+    div.val (answer);
+  } else
+    answer.draw (div);
+}
+
 var eventData = null;
 
   //must be loaded after page body loads (this refers to eventData, not these handling functions above)
@@ -78,6 +89,16 @@ $ (()=> {
         {
           handlingFunction: onCheckBtnClick,
           customEvtName: "checkBtnClick",
+          domEvtName: "click"
+        }
+      ]
+    },
+    {
+      elem: $("#showAnswerBtn"),
+      evtsArr: [
+        {
+          handlingFunction: onShowBtnClick,
+          customEvtName: "showBtnClick",
           domEvtName: "click"
         }
       ]

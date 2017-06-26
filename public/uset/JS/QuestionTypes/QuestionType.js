@@ -97,6 +97,11 @@ class QuestionType {
   }
 
 
+  getAnswer ()
+  {
+    return this.getCurrentQuestion ().getAnswer ();
+  }
+  
   check (userAnswer)
   {
     var currentQuestion = this.getCurrentQuestion ();
