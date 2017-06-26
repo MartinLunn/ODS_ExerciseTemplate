@@ -20,7 +20,7 @@ function onCheckBtnClick (elem, evt) {
   }
 }
 
-function onShowBtnClick (elem, evt) {
+function onShowAnsBtnClick (elem, evt) {
   var answer = this.exercise.getAnswer ();
   var div    = $(".modelEntry");
 
@@ -97,8 +97,8 @@ $ (()=> {
       elem: $("#showAnswerBtn"),
       evtsArr: [
         {
-          handlingFunction: onShowBtnClick,
-          customEvtName: "showBtnClick",
+          handlingFunction: onShowAnsBtnClick,
+          customEvtName: "showAnsBtnClick",
           domEvtName: "click"
         }
       ]
