@@ -6,7 +6,7 @@ https://storage.googleapis.com/supplemental_media/udacityu/2872198569/mock3-port
 */
 
 * {
-  border: 1px solid red !important;
+  border: 1px soalid red !important;
 
   text-align: center;
 
@@ -24,9 +24,31 @@ https://storage.googleapis.com/supplemental_media/udacityu/2872198569/mock3-port
   box-sizing: border-box;
 }
 
+a {
+  text-decoration: none;
+  color: grey;
+}
+
+a:hover {
+  color: silver;
+}
+
+.modelEntry{
+  height: 90vh;
+  min-height: 300px;
+}
+
+.questionButtons {
+  display:flex;
+  align-items:center;
+}
+
+.checkAndShowDiv {
+  margin: 0px;
+}
+
 .arrow {
   font-size: 16pt;
-  color: blue;
 }
 
 .grid {
