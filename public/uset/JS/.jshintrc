@@ -5,6 +5,7 @@
       "$": true,
       "CustomEventHandler" : true,
       "View" : true,
+      "Control" : true,
       "keys" : true,
       "questions" : true,
       "ODSRandom" : true,
@@ -40,7 +41,8 @@
        "__removeMinParam__" : true,
        "__removeMaxParam__" : true,
        "eventData": true,
-       "DOMEventHandler": true
+       "DOMEventHandler": true,
+       "start": true
   },
   "strict": "global"
 }
