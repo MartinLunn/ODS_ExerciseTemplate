@@ -63,7 +63,7 @@ class Uset extends Model {
 
     for (var key in this.set)
     {
-      if (this.find(key) !== other.find(key))
+      if (this.find(key) != other.find(key))
       {
         return false;
       }
