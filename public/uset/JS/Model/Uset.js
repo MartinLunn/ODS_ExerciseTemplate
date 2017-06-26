@@ -19,7 +19,8 @@ class Uset extends Model {
     {
       return false;
     }
-    this.set[x] = x;
+    this.set[x] = x.toString();       //we want everything the same type, so strings.
+    //REQUIRES OVERLOADED TOSTRING FOR OBJECTS
     this.n = this.n + 1;
     return true;
   }
@@ -63,6 +64,10 @@ class Uset extends Model {
 
     for (var key in this.set)
     {
+      /* Alludes to larger issue for templates, we're storing data in our data structures,
+      and it would be nice if they're all the same type, however they can't all be objects, 
+      because in JS that's dangerous, because despite having a falsy value, if typeof Object returns true, 
+      it'll be coerced to truthy. For now we're going with strings.*/
       if (this.find(key) !== other.find(key))
       {
         return false;
@@ -101,6 +106,7 @@ class Uset extends Model {
     // TODO: This should be an actual thing.
     var myText = this.toString ();
     var input  = $(".modelEntry", div);
+    if (input.length===0) input=div;
 
     $(input).val (myText);
   }

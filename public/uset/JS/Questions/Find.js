@@ -10,4 +10,9 @@ class Find extends Question {
   {
     return this.answer.getModel().find(this.parameters);
   }
+
+  getAnswer ()
+  {
+    return this.answer.getData ();
+  }
 }

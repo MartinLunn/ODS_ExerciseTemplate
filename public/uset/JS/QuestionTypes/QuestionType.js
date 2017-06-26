@@ -43,24 +43,12 @@ class QuestionType {
   //TODO
   moveToNext ()
   {
-    this.currQuestion ++;
-    if (this.currQuestion >= this.size()){
-      this.currQuestion = 0;
-      return false;
-    }
-
-    return true;
+    this.setCurrQuestion (this.currQuestion + 1);
   }
 
   moveToPrev ()
   {
-    this.currQuestion --;
-    if (this.currQuestion < 0){
-      this.currQuestion = this.size() - 1;
-      return false;
-    }
-
-    return true;
+    this.setCurrQuestion (this.currQuestion - 1);
   }
 
   //if you want to modify this behavior, for example to scramble question order, override this method in the subclass, copying it, except add scramble or whatever extra functionality
@@ -109,6 +97,11 @@ class QuestionType {
   }
 
 
+  getAnswer ()
+  {
+    return this.getCurrentQuestion ().getAnswer ();
+  }
+  
   check (userAnswer)
   {
     var currentQuestion = this.getCurrentQuestion ();

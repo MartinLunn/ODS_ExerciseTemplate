@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <script type="text/javascript" src="/uset/JS/lib/jquery-3.2.1.js"> </script>
+  <script type="text/javascript" src="/uset/JS/lib/jsplumb.js"> </script>
+  <script type="text/javascript" src="/uset/JS/Array.js"> </script>
+  <script type="text/javascript" src="/uset/JS/Random.js"> </script>
+  <script type="text/javascript" src="/uset/JS/Model/Model.js"> </script>
+  <script type="text/javascript" src="/uset/JS/Model/Uset.js"> </script>
+  <script type="text/javascript" src="/uset/JS/AnswerTypes/AnswerType.js"></script>
+  <script type="text/javascript" src="/uset/JS/AnswerTypes/AddAnswer.js"></script>
+  <script type="text/javascript" src="/uset/JS/AnswerTypes/FindAnswer.js"></script>
+  <script type="text/javascript" src="/uset/JS/AnswerTypes/RemoveAnswer.js"></script>
+  <script type="text/javascript" src="/uset/JS/Questions/Instructions.js"> </script>
+  <script type="text/javascript" src="/uset/JS/Questions/Question.js"> </script>
+  <script type="text/javascript" src="/uset/JS/Questions/Add.js"> </script>
+  <script type="text/javascript" src="/uset/JS/Questions/Find.js"> </script>
+  <script type="text/javascript" src="/uset/JS/Questions/Remove.js"> </script>
+  <script type="text/javascript" src="/uset/JS/QuestionTypes/QuestionType.js"> </script>
+  <script type="text/javascript" src="/uset/JS/QuestionTypes/Operations.js"> </script>
+  <script type="text/javascript" src="/uset/JS/Defs.js"> </script>
+  <script type="text/javascript" src="/uset/JS/Exercise.js"> </script>
+  <script type="text/javascript" src="/uset/JS/DOMEventHandler.js"> </script>
+  <script type="text/javascript" src="/uset/JS/CustomEventHandler.js"> </script>
+  <script type="text/javascript" src="/uset/JS/View.js"> </script>
+  <script type="text/javascript" src="/uset/JS/Events.js"> </script>
+  <script type="text/javascript" src="/uset/JS/Control.js"> </script>
+  <script type="text/javascript" src="/uset/JS/main.js"> </script>
+
+  <link href="/uset/Views/css/Uset.css" rel="stylesheet" type="text/css">
+
+  <title> MY TITLE </title>
+</head>
+
+<body>
+
+<div class="titlebox grid">
+  <div class="row">
+    <div class="col-12">
+      <h1> Unordered Set </h1>
+    </div>
+  </div>
+
+  <div class="row">
+
+    <div class="col-3">
+      <h3> Menu item </h3>
+    </div>
+
+    <div class="col-3">
+      <h3> Menu item </h3>
+    </div>
+
+    <div class="col-3">
+      <h3> Menu item </h3>
+    </div>
+
+    <div class="col-3">
+      <h3> Menu item </h3>
+    </div>
+
+  </div>
+</div>
+
+<div class="interactiveVideo grid">
+  <div class="row">
+  </div>
+  <img src="http://via.placeholder.com/960x540"></a>
+</div>
+
+
+<!--     <div class="col-3 questionNavigation">
+      <ol>
+        <p> listlisltist </p>
+        <li>
+          <p> listitemlistimtem for every question and replace this text </p>
+        </li>
+      </ol>
+    </div> -->
+
+
+<div class="exercise grid">
+  <div class="row">
+    <div class="col-12 questionFrame">
+      <p> frame </p>
+
+      <div class="questionBody">
+
+        <div class="instructionsBody">
+          <p> instructions </p>
+        </div>
+
+        <div class="parametersBody">
+          <p> params </p>
+        </div>
+
+        <div class="modelBody">
+          <input type="text" class="modelEntry col-12" placeholder="values here, space separated"></input>
+        </div>
+      </div>
+
+      <div class="questionNavigation"> <!-- TODO rename this class -->
+        <a id="prevArrow" class="arrow" href="" onclick="return false;">&larr;</a> <!-- TODO set up event handlers and probably rename this class from arrow-->
+        <a id="checkBtn" class="button arrow" href="" onclick="return false;">Check Answer</a> <!-- TODO change this -->
+        <a id="showAnswerBtn" class="button arrow" href="" onclick="return false;">Show Answer</a> <!-- TODO change this -->
+        <a id="nextArrow" class="arrow" href="" onclick="return false;">&rarr;</a> <!-- TODO set up event handlers -->
+      </div>
+
+    </div>
+  </div>
+</div>
+
+</body>
+
+</html>

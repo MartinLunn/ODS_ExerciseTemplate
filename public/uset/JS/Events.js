@@ -12,12 +12,23 @@ function onPrevBtnClick (elem, evt) {
 //TODO
 function onCheckBtnClick (elem, evt) {
   console.log ("Checking your answer .... ");
-  if (this.exercise.check ()) {
-    console.log ("Ha ha ha, hacker");
+  if (this.exercise.check ()) { //TODO
+    console.log ("That's... What? Jimmity Snicket, that's correct! This... This cannot be!");
     onNextBtnClick.apply(this, arguments);
   } else {
-    console.log ("lol.... #wrong");
+    console.log ("lol.... #wrong"); //TODO
   }
+}
+
+function onShowAnsBtnClick (elem, evt) {
+  var answer = this.exercise.getAnswer ();
+  var div    = $(".modelEntry");
+
+  if (!answer || typeof (answer) !== "object"){
+    if (!answer) answer = "null";
+    div.val (answer);
+  } else
+    answer.draw (div);
 }
 
 var eventData = null;
@@ -81,6 +92,19 @@ $ (()=> {
           domEvtName: "click"
         }
       ]
+    },
+    {
+      elem: $("#showAnswerBtn"),
+      evtsArr: [
+        {
+          handlingFunction: onShowAnsBtnClick,
+          customEvtName: "showAnsBtnClick",
+          domEvtName: "click"
+        }
+      ]
     }
   ];
+
+
+  start ();
 });
