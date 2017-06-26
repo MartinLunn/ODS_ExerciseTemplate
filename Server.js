@@ -9,5 +9,5 @@ app.get ("/uset", function (req, res){
 app.use (express.static ("./public"));
 
 app.listen (2402, function(){
-  console.log ("Still, you feed us lies from the tablecloth");
+  console.log ("Still, you feed us lies from the tablecloth"); //TODO
 });
