@@ -13,7 +13,7 @@ function onPrevBtnClick (elem, evt) {
 function onCheckBtnClick (elem, evt) {
   console.log ("Checking your answer .... ");
   if (this.exercise.check ()) {
-    console.log ("Ha ha ha, hacker");
+    console.log ("That's... What? Jimmity Snicket, that's correct! This... This cannot be!");
     onNextBtnClick.apply(this, arguments);
   } else {
     console.log ("lol.... #wrong");
