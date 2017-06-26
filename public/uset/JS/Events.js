@@ -12,11 +12,11 @@ function onPrevBtnClick (elem, evt) {
 //TODO
 function onCheckBtnClick (elem, evt) {
   console.log ("Checking your answer .... ");
-  if (this.exercise.check ()) {
+  if (this.exercise.check ()) { //TODO
     console.log ("That's... What? Jimmity Snicket, that's correct! This... This cannot be!");
     onNextBtnClick.apply(this, arguments);
   } else {
-    console.log ("lol.... #wrong");
+    console.log ("lol.... #wrong"); //TODO
   }
 }
 
