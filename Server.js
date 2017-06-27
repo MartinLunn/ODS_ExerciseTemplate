@@ -11,5 +11,5 @@ app.use (express.static ("./public"));
 var PORT = 2402;
 
 app.listen (PORT, function(){
-  console.log ("Templated server running from port ", PORT, ".");
+  console.log ("Templated server running from port", PORT + ".");
 });
