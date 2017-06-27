@@ -117,9 +117,9 @@ H5PServer.prototype.start = function (done) {
     // TODO
   });*/
 
-  app.get("/", function(req, res) {
+  app.get("/:type", function(req, res) {
       res.writeHead(200, {'Content-Type': 'text/html'});
-      var currentContentName = req.query.content;
+      var currentContentName = req.query.content || req.params.type;
 
       var devConfig = self.getDevConfig();
       currentContentName = currentContentName || devConfig.contents[0];
