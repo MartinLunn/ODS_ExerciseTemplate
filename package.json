@@ -23,6 +23,7 @@
     "jshint": "^2.9.4"
   },
   "dependencies": {
-    "express": "^4.15.3"
+    "express": "^4.15.3",
+    "normalize.css": "^7.0.0"
   }
 }

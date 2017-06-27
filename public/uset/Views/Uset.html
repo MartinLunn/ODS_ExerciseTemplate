@@ -4,7 +4,8 @@
 
 <head>
   <meta charset="UTF-8">
-  <script type="text/javascript" src="/uset/JS/lib/jquery-3.2.1.js"> </script>
+  <!-- <script type="text/javascript" src="/uset/JS/lib/jquery-3.2.1.js"> </script>-->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script type="text/javascript" src="/uset/JS/lib/jsplumb.js"> </script>
   <script type="text/javascript" src="/uset/JS/Array.js"> </script>
   <script type="text/javascript" src="/uset/JS/Random.js"> </script>
@@ -89,8 +90,6 @@
 <div class="exercise grid">
   <div class="row">
     <div class="col-12 questionFrame">
-      <p> frame </p>
-
       <div class="questionBody">
 
         <div class="instructionsBody">
@@ -106,11 +105,21 @@
         </div>
       </div>
 
-      <div class="questionNavigation"> <!-- TODO rename this class -->
-        <a id="prevArrow" class="arrow" href="" onclick="return false;">&larr;</a> <!-- TODO set up event handlers and probably rename this class from arrow-->
-        <a id="checkBtn" class="button arrow" href="" onclick="return false;">Check Answer</a> <!-- TODO change this -->
-        <a id="showAnswerBtn" class="button arrow" href="" onclick="return false;">Show Answer</a> <!-- TODO change this -->
-        <a id="nextArrow" class="arrow" href="" onclick="return false;">&rarr;</a> <!-- TODO set up event handlers -->
+      <div class="questionButtons"> <!-- TODO rename this class -->
+        <div class="prevArrowDiv">
+          <a id="prevArrow" class="arrow" href="" onclick="return false;">&larr;</a> <!-- TODO set up event handlers and probably rename this class from arrow-->
+        </div>
+        <div class="checkAndShowDiv">
+          <div class="checkAnswerButton">
+            <a id="checkBtn" class="button arrow" href="" onclick="return false;">Check Answer</a> <!-- TODO change this -->
+          </div>
+          <div class="showAnswerButton">
+            <a id="showAnswerBtn" class="button arrow" href="" onclick="return false;">Show Answer</a> <!-- TODO change this -->
+          </div>
+        </div>
+        <div class="nextArrowDiv">
+          <a id="nextArrow" class="arrow" href="" onclick="return false;">&rarr;</a> <!-- TODO set up event handlers -->
+        </div>
       </div>
 
     </div>
