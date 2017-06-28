@@ -6,6 +6,9 @@
   <meta charset="UTF-8">
   <!-- <script type="text/javascript" src="/uset/JS/lib/jquery-3.2.1.js"> </script>-->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <!-- TODO: Maybe download a copy of this? -->
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+
   <script type="text/javascript" src="/uset/JS/lib/jsplumb.js"> </script>
   <script type="text/javascript" src="/uset/JS/Array.js"> </script>
   <script type="text/javascript" src="/uset/JS/Random.js"> </script>
@@ -106,7 +109,9 @@
         </div>
 
         <div class="modelBody flexCol borderized">
-          <div class="modelDisplay col-10"></div>
+          <div class="modelMain">
+            <div class="modelDisplay col-10"></div>
+          </div>
           <input type="text" class="modelEntry col-12 bottom" placeholder="add new element [ENTER VALUE]"></input>
         </div>
       </div>
@@ -131,13 +136,13 @@
     </div>
 
 
-    <div class="templateContents hidden">
+    <div id="template" class="hidden">
       <!-- For now, stuff inside here is a reference to the HTML that should be used ...
               Anything here will be copied later, inside some code, to make
               new HTML elements. -->
       <div class="element">
         <span class="verticallyCentered">
-          3
+          TEXT
         </span>
       </div>
     </div>

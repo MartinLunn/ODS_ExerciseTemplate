@@ -29,20 +29,27 @@ class DOMEventHandler {   //we have one instance of a domeventhandler for each d
   addTriggerToMap (element) {
     var $e = $(element);
     for (var domEvent in this.triggerMap) {
-          $e.on (domEvent, (event)=>{     //handling function
-            this.fire.call (this, event);
+          $e.on (domEvent, (...args)=>{     //handling function
+            this.fire.apply (this, args);
           });
     }
   }
 
-  fire (event) {
+  fire (event, ...args) {
+    console.log (event);
+
     var events = DOMEventHandler.customEventHandlers;
     var type   = this.triggerMap [event.type];
     var elem   = event.target;
 
+    // TODO: better way to do this?
+    args.unshift (event);
+    args.unshift (elem);
+    args.unshift (type);
+
     for (var i in events)
-      events[i].trigger (type, elem, event);  //intentionally mismatching parameters in call and function definition.
-    }
+      events[i].trigger.apply (events[i], args);
+  }
 
 }
 

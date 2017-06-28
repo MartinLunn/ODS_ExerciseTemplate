@@ -75,13 +75,31 @@ a:hover {
 .modelBody{
   height: 90vh;
   min-height: 300px;
+  width: 100%;
+}
+
+.modelMain{
+  /* Firefox */
+  height: -moz-calc(100% - 21px);
+  /* WebKit */
+  height: -webkit-calc(100% - 21px);
+  /* Opera */
+  height: -o-calc(100% - 21px);
+  /* Standard */
+  height: calc(100% - 21px);
+
+  width: 100%;
+}
+
+.modelEntry{
+  height: 21px;
 }
 
 /* element ... TODO: should show as clickable, draggable. style? */
 .element {
   width: 35px;
   height: 35px;
-  display: relative;
+  display: inline-block;
   border: 1px solid black;
   border-radius: 50%;
 

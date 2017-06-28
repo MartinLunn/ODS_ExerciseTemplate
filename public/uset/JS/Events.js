@@ -1,5 +1,6 @@
 /*jshint esversion: 6 */ 'use strict';
 
+/* Main Events .... These are the buttons independent of the exercise */
 function onNextBtnClick (elem, evt) {
   // move to the next exercise ...
   this.exercise.next();
@@ -32,6 +33,29 @@ function onShowAnsBtnClick (elem, evt) {
 }
 
 var eventData = null;
+
+/*
+  ELEMENT EVENTS. These are specific to Element.js and will be added separately
+   for every new Element div that gets created.
+*/
+function onDragStarted(...args)
+{
+  console.log ("STARTED:",args);
+}
+function onDragStopped (elem, evt, ui)
+{
+  console.log ("STOPPED: ", evt, ui);
+  console.log ("data: ", ui.helper.data ());
+}
+function onElementClicked (...args){
+  console.log ("CLICKED:",args);
+}
+
+const ELEM_EVENTS = {
+  "dragstart": "onDragStarted",
+  "dragstop": "onDragStopped",
+  "click": "onElementClicked"
+};
 
   //must be loaded after page body loads (this refers to eventData, not these handling functions above)
 //[{elem: , customEventName: , handlingFunction: },{},{}]
@@ -101,6 +125,26 @@ $ (()=> {
           customEvtName: "showAnsBtnClick",
           domEvtName: "click"
         }
+      ]
+    },
+    {
+      elem: [ ], // TODO: Make this better? For now, handles connecting for elements
+      evtsArr: [
+        {
+          handlingFunction: onDragStopped,
+          customEvtName: "onDragStopped",
+          domEvtName: "dragstop"
+        },
+        {
+          handlingFunction: onDragStarted,
+          customEvtName: "onDragStarted",
+          domEvtName: "dragstart"
+        },
+        {
+          handlingFunction: onElementClicked,
+          customEvtName: "onElementClicked",
+          domEvtName: "click"
+        },
       ]
     }
   ];
