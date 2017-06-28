@@ -77,6 +77,14 @@ const ELEM_EVENTS = {
   "click": "onElementClicked"
 };
 
+/* TRASH CAN EVENTS. THIS BASICALLY HANDLES DELETING ELEMENTS */
+function droppedOnTrash (element, evt, ui) {
+  var draggable = ui.helper;
+  if (!draggable) return false;
+
+  this.view.removeElement (draggable);
+}
+
   //must be loaded after page body loads (this refers to eventData, not these handling functions above)
 //[{elem: , customEventName: , handlingFunction: },{},{}]
 
@@ -184,6 +192,19 @@ $ (()=> {
           customEvtName: "onElementClicked",
           domEvtName: "click"
         },
+      ]
+    },
+
+
+    /* TRASH CAN EVENTS ----- OCCUR ON THE TRASH CAN. #TRASH */
+    {
+      elem: $("#trash"),
+      evtsArr: [
+        {
+          handlingFunction: droppedOnTrash,
+          customEvtName: "trashyMcTrashTrash",
+          domEvtName: "drop"
+        }
       ]
     }
   ];

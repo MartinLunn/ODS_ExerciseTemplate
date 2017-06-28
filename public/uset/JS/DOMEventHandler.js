@@ -36,8 +36,6 @@ class DOMEventHandler {   //we have one instance of a domeventhandler for each d
   }
 
   fire (event, ...args) {
-    console.log (event);
-
     var events = DOMEventHandler.customEventHandlers;
     var type   = this.triggerMap [event.type];
     var elem   = event.target;

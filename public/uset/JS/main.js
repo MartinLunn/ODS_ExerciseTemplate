@@ -9,6 +9,9 @@ function start ()
 {
 	// TODO: Find a convenient place for this
 	$("#model").droppable ();
+	$("#trash").droppable ({
+		tolerance: "touch"
+	});
 
 	control = new Control ();
 }

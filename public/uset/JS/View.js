@@ -32,6 +32,21 @@ class View {
     this.elements [newElement.getId ()] = newElement;
   }
 
+  removeElementById (id) {
+    var element = this.elements [id];
+    if (!element) return false;
+
+    element.remove ();
+    this.elements[id] = null;
+
+    return element;
+  }
+
+  removeElement (elem) {
+    var id = $(elem).data ("id");
+    return this.removeElementById (id);
+  }
+
   getElementById (id) {
     return this.elements [id];
   }
