@@ -8,6 +8,8 @@ app.get ("/uset", function (req, res){
 
 app.use (express.static ("./public"));
 
-app.listen (80, "192.168.123.173", function(){
-  console.log ("Still, you feed us lies from the tablecloth"); //TODO
+var PORT = 2402;
+
+app.listen (PORT, function(){
+  console.log ("Templated server running from port", PORT + ".");
 });

@@ -167,7 +167,6 @@ H5PServer.prototype.start = function (done) {
 
   var server = app.listen(this.config.port, this.config.host, function () {
     console.log('--> H5P development server listening at http://%s:%s', self.config.host, self.config.port);
-    console.log("why do they keep putting me in jail??? come on, not like i murdered seventeen people.... oh, right... nvm"); //TODO
     if (done) {
       done('http://' + self.config.host + ':' + self.config.port);
     }

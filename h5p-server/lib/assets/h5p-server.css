@@ -1,7 +1,7 @@
 html,
 body,
 .h5p-dev-h5p {
-  /*width: 100%;*/
+  width: 100%;
   margin: 0;
   font-size: 14px;
 }
@@ -57,7 +57,7 @@ body,
   margin-left: 0;
   width: 100%;
 }
-.h5p-dev-header:before {
+.h5p-dev-header:before {  margin-left: 20%;
   background: url(/assets/h5p.png) no-repeat;
   content: " ";
   width: 3rem;
@@ -177,8 +177,6 @@ body,
 .h5p-dev-h5p {
   display: inline-block;
   position: absolute;
-  left: 0;
-  top: 3rem;
   width: 100%;
   box-sizing: border-box;
   -webkit-transition: all 0.5s;
