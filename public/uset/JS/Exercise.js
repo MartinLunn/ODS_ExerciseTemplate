@@ -146,12 +146,10 @@ class Exercise {
   {
     return this.getCurrQuestionType ().getAnswer ();
   }
-  
-  check ()
+
+  check (user)
   {
-    var qType = this.getCurrQuestionType ();
-    var user  = Uset.fromUserInput (); // TODO: BAD
-    return qType.check (user);
+    return this.getCurrQuestionType ().check (user);
   }
 
   start ()

@@ -13,7 +13,7 @@ function onPrevBtnClick (elem, evt) {
 //TODO
 function onCheckBtnClick (elem, evt) {
   console.log ("Checking your answer .... ");
-  if (this.exercise.check ()) { //TODO
+  if (this.exercise.check (this.userModel)) { //TODO
     console.log ("That's... What? Jimmity Snicket, that's correct! This... This cannot be!");
     onNextBtnClick.apply(this, arguments);
   } else {
@@ -38,7 +38,6 @@ var eventData = null;
   USET EVENTS. THESE OCCUR WHEN AN ELEMENT IS DROPPED ONTO / OFF OF THE USET DIV
 */
 function elementOver (element, evt, ui) {
-  console.log (ui.draggable);
   $(ui.draggable).data ("over", true);
 }
 function elementOff (element, evt, ui) {

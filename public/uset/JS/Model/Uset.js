@@ -111,7 +111,7 @@ class Uset extends Model {
   //  $(input).val (myText);
   }
 
-  // TODO: Remove this. This is bad.
+/*  // TODO: Remove this. This is bad.
   static fromUserInput (div)
   {
     var newSet = new Uset ();
@@ -124,5 +124,5 @@ class Uset extends Model {
     }
 
     return newSet;
-  }
+  }*/
 }

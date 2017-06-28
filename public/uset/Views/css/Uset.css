@@ -87,8 +87,6 @@ a:hover {
   height: -o-calc(100% - 21px);
   /* Standard */
   height: calc(100% - 21px);
-
-  width: 100%;
 }
 
 .modelEntry{
