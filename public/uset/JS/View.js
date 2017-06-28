@@ -4,6 +4,7 @@
 class View {
   constructor() {
     this.eventHandlers = [ ];
+    this.elements = { };
   }
 
   register (eh)
@@ -23,5 +24,21 @@ class View {
     }
 
     this.eventHandlers.push (new DOMEventHandler(event.elem, triggerMap));
+  }
+
+  addElement (value) {
+    // add the element & push it into the elements object
+    var newElement = new Element (value);
+    this.elements [newElement.getId ()] = newElement;
+  }
+
+  getElementById (id) {
+    return this.elements [id];
+  }
+
+  getValueFromElementDiv (e) {
+    var id = $(e).data ("id");
+    var elem = this.getElementById (id);
+    return elem && elem.getValue ();
   }
 }

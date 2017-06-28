@@ -3,8 +3,9 @@
 class Control {
   constructor()
   {
-    this.exercise = new Exercise();
+    this.userModel = new __MODULENAME__ ();
 
+    this.exercise = new Exercise();
     this.exercise.setup();
 
     this.customEventHandler = new CustomEventHandler();

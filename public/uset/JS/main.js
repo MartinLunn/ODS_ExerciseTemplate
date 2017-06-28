@@ -7,5 +7,8 @@
 var control;
 function start ()
 {
+	// TODO: Find a convenient place for this
+	$("#model").droppable ();
+
 	control = new Control ();
 }
