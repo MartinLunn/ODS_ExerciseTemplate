@@ -74,6 +74,6 @@ class View {
       this.activeElement.setActive (false);
 
     this.activeElement = element;
-    element.setActive (true);
+    if (element) element.setActive (true);
   }
 }

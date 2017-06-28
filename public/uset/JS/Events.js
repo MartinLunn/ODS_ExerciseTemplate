@@ -13,10 +13,16 @@ function isNullCharacter (element) {
 function onNextBtnClick (elem, evt) {
   // move to the next exercise ...
   this.exercise.next();
+
+  // set active to null
+  this.setActiveElement (null);
 }
 
 function onPrevBtnClick (elem, evt) {
   this.exercise.prev ();
+
+  // set active to null
+  this.setActiveElement (null);
 }
 
 //TODO
