@@ -22,7 +22,7 @@ function onPrevBtnClick (elem, evt) {
 //TODO
 function onCheckBtnClick (elem, evt) {
   console.log ("Checking your answer .... ");
-  if (this.exercise.check (this.userModel)) { //TODO
+  if (this.exercise.check (this.userModel, this.activeElement)) { //TODO
     console.log ("That's... What? Jimmity Snicket, that's correct! This... This cannot be!");
     onNextBtnClick.apply(this, arguments);
   } else {
@@ -93,10 +93,9 @@ function onDragStopped (elem, evt, ui)
 
 function onElementClicked (elem, ...args){
   var element = this.view.getElement (elem);
-  console.log (element, elem);
   if (!element) return;
+  if (!this.canSetActive ()) return; // TODO: ???
 
-  console.log ("setting active");
   this.setActiveElement (element);
 }
 

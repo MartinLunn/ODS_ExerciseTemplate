@@ -67,4 +67,6 @@ class Control {
     this.activeElement = element;
     this.view.setActive (element);
   }
+
+  canSetActive () { return this.exercise.canSetActive (); }
 }

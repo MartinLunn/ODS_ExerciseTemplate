@@ -102,10 +102,10 @@ class QuestionType {
     return this.getCurrentQuestion ().getAnswer ();
   }
 
-  check (userAnswer)
+  check (userAnswer, active)
   {
     var currentQuestion = this.getCurrentQuestion ();
-    return currentQuestion.check (userAnswer);
+    return currentQuestion.check (userAnswer, active);
   }
 
 
@@ -113,5 +113,11 @@ class QuestionType {
   isInputValid (input)
   {
     return this.getCurrentQuestion ().isValidInput (input);
+  }
+
+  // setting active
+  canSetActive ()
+  {
+    return this.getCurrentQuestion ().canSetActive ();
   }
 }

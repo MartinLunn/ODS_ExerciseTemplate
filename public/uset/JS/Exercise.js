@@ -146,15 +146,20 @@ class Exercise {
       return this.getCurrQuestionType ().isInputValid (input);
   }
 
+  // active check
+  canSetActive(){
+    return this.getCurrQuestionType ().canSetActive ();
+  }
+
   //TODO refactor
   getAnswer ()
   {
     return this.getCurrQuestionType ().getAnswer ();
   }
 
-  check (user)
+  check (user, active)
   {
-    return this.getCurrQuestionType ().check (user);
+    return this.getCurrQuestionType ().check (user, active);
   }
 
   start ()

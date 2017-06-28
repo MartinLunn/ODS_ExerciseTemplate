@@ -162,6 +162,9 @@ class Question {
   {
     return false;
   }
+
+  // setting active
+  canSetActive(){ return false; }
   
   //static generateParameters()
 }

@@ -16,6 +16,30 @@ class Find extends Question {
     return this.answer.getData ();
   }
 
+  // check answer ...
+  parseActiveElementValue (activeElem)
+  {
+      var val = activeElem && activeElem.getValue ();
+      if (!val) return false;
+
+      if (val === "\\0") return null; // the null element
+      return val;
+  }
+
+  check (userModel, activeElem)
+  {
+    // for find, two things must be the same:
+    //   1) The models should be the same
+    //   2) The return values should match.
+    // That is, should find the element without messing with the set.
+    if (!this.answer.getModel ().equals (userModel))
+      return false;
+
+    return (this.answer.getData () === this.parseActiveElementValue (activeElem))
+  }
+
+  // setting active
+  canSetActive(){ return true; }
 
   // input: no input needed for find
 }
