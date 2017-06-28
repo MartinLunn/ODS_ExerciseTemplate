@@ -101,6 +101,10 @@ class QuestionType {
   {
     return this.getCurrentQuestion ().getAnswer ();
   }
+  showAnswer (div)
+  {
+    this.getCurrentQuestion ().displayAnswer (div);
+  }
 
   check (userAnswer, active)
   {

@@ -68,5 +68,10 @@ class Control {
     this.view.setActive (element);
   }
 
+  // find an element
+  find (value) {
+    return this.view.findByValue (value);
+  }
+
   canSetActive () { return this.exercise.canSetActive (); }
 }

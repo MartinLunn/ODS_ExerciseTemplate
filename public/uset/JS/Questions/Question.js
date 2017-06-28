@@ -98,7 +98,7 @@ class Question {
 
   displayAnswer(div)
   {
-    var answerDiv = $(".modelBody", div);
+    var answerDiv = $(".modelMain", div);
     this.answer.display(answerDiv);
   }
 
@@ -165,7 +165,7 @@ class Question {
 
   // setting active
   canSetActive(){ return false; }
-  
+
   //static generateParameters()
 }
 

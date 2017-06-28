@@ -1,4 +1,5 @@
 /*jshint esversion: 6 */ 'use strict';
+const NULL_CHARACTER = "\\0";
 
 var DEBUG = true;
 var instructionsId = "instructions";

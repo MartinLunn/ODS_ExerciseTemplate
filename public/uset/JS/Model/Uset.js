@@ -45,11 +45,6 @@ class Uset extends Model {
     return toReturn;
   }
 
-  get()
-  {
-    return this.arr;
-  }
-
   equals(other)
   {
     if (!(other instanceof Uset))
@@ -111,6 +106,13 @@ class Uset extends Model {
   //  $(input).val (myText);
   }
 
+
+  // TODO - This is bad
+  getObject ()
+  {
+      return this.set;
+  };
+  
 /*  // TODO: Remove this. This is bad.
   static fromUserInput (div)
   {

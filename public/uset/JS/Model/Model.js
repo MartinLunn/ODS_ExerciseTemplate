@@ -4,7 +4,7 @@ class Model {
   constructor()
   {
   }
-
+  
   //equals = null;
   //draw = null;
 }

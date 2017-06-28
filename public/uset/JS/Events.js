@@ -1,12 +1,12 @@
 /*jshint esversion: 6 */ 'use strict';
 
-/* helpers ... TODO */
+/* helpers ... TODO global functions are bad */
 function parseInput (input) {
   return input.trim ();
 }
 
 function isNullCharacter (element) {
-  return $(element).text ().trim () === "\\0";
+  return $(element).text ().trim () === NULL_CHARACTER;
 }
 
 /* Main Events .... These are the buttons independent of the exercise */
@@ -37,14 +37,8 @@ function onCheckBtnClick (elem, evt) {
 }
 
 function onShowAnsBtnClick (elem, evt) {
-  var answer = this.exercise.getAnswer ();
-  var div    = $(".modelEntry");
-
-  if (!answer || typeof (answer) !== "object"){
-    if (!answer) answer = "null";
-    div.val (answer);
-  } else
-    answer.draw (div);
+  var div    = $(".modelBody");
+  this.exercise.showAnswer (div);
 }
 
 /* INPUT BOX EVENTS */

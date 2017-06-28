@@ -156,6 +156,10 @@ class Exercise {
   {
     return this.getCurrQuestionType ().getAnswer ();
   }
+  showAnswer (div)
+  {
+    this.getCurrQuestionType ().showAnswer (div);
+  }
 
   check (user, active)
   {

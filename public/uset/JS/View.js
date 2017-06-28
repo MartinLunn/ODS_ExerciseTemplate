@@ -5,8 +5,9 @@ class View {
   constructor() {
     this.eventHandlers = [ ];
     this.elements = { };
+    this.elementsByValue = { };
 
-    this.addElement ("\\0"); // null character !!!
+    this.addElement (NULL_CHARACTER);
   }
 
   register (eh)
@@ -34,7 +35,8 @@ class View {
   addElement (value) {
     // add the element & push it into the elements object
     var newElement = new Element (value);
-    this.elements [newElement.getId ()] = newElement;
+    this.elements [newElement.getId ()]           = newElement;
+    this.elementsByValue [newElement.getValue ()] = newElement;
   }
 
   // remove an element
@@ -42,8 +44,10 @@ class View {
     var element = this.elements [id];
     if (!element) return false;
 
+    this.elementsByValue [element.getValue()] = null;
+    this.elements[id]                         = null;
+
     element.remove ();
-    this.elements[id] = null;
 
     return element;
   }
@@ -66,6 +70,12 @@ class View {
   getValueFromElementDiv (e) {
     var elem = this.getElement (e);
     return elem && elem.getValue ();
+  }
+
+  // find an element
+  findByValue (value)
+  {
+    return this.elementsByValue [value];
   }
 
   // set active element
