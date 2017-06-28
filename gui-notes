@@ -14,7 +14,7 @@ IF DOING TEXT INPUT
 		- Droppable.
 		- When an element is dropped over the trash can, element is removed
 			- div destroyed
-	
+
 
 	PROBABLY REUSABLE:
 		- Element Div
@@ -28,3 +28,13 @@ IF DOING TEXT INPUT
 		- Droppable ?
 		- fromUserInput () ?
 		- ..
+
+
+.... here's some notes.
+	Drawing a model over the other model:
+	 	   Take the User Model.
+		   For every element that's not in the user model:
+					Add the element
+					Position it randomly, somewhere within the USet div
+			 Take a nap
+			 
