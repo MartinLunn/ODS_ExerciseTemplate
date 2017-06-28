@@ -5,6 +5,10 @@ function parseInput (input) {
   return input.trim ();
 }
 
+function isNullCharacter (element) {
+  return $(element).text ().trim () === "\\0";
+}
+
 /* Main Events .... These are the buttons independent of the exercise */
 function onNextBtnClick (elem, evt) {
   // move to the next exercise ...
@@ -38,6 +42,8 @@ function onShowAnsBtnClick (elem, evt) {
 }
 
 /* INPUT BOX EVENTS */
+// TODO: This only works with keyboards. Find a way to make this usable
+//       on other devices (touch)
 function checkEnter (element, evt) {
   if (evt.keyCode !== 13) return;
 
@@ -45,7 +51,7 @@ function checkEnter (element, evt) {
 
   // TODO: Fix this. This is hacky.
   input = parseInput (input);
-  if (!this.validInput (input)) return false;
+  if (!this.validInput (input)) return;
 
   this.view.addElement (input);
 }
@@ -70,6 +76,8 @@ function onDragStarted(...args)
 
 function onDragStopped (elem, evt, ui)
 {
+  if (isNullCharacter (elem)) return;
+
   var over = $(elem).data ("over");
   var data = this.view.getValueFromElementDiv (elem);
   if (!data) return;
@@ -83,8 +91,13 @@ function onDragStopped (elem, evt, ui)
     this.userModel.remove (data);
 }
 
-function onElementClicked (...args){
-  console.log ("CLICKED:",args);
+function onElementClicked (elem, ...args){
+  var element = this.view.getElement (elem);
+  console.log (element, elem);
+  if (!element) return;
+
+  console.log ("setting active");
+  this.setActiveElement (element);
 }
 
 const ELEM_EVENTS = {
@@ -97,6 +110,8 @@ const ELEM_EVENTS = {
 function droppedOnTrash (element, evt, ui) {
   var draggable = ui.helper;
   if (!draggable) return false;
+
+  if (isNullCharacter (draggable)) return false;
 
   this.removeElement (draggable);
 }

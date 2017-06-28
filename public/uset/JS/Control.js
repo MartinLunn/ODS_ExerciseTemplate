@@ -61,4 +61,10 @@ class Control {
     // remove from the dom
     this.view.removeElement (e);
   }
+
+  // set active element
+  setActiveElement (element) {
+    this.activeElement = element;
+    this.view.setActive (element);
+  }
 }

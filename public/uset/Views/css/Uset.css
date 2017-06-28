@@ -56,6 +56,10 @@ a:hover {
   line-height: normal;
 }
 
+.active {
+  background-color: #ff8401 !important;
+}
+
 /* element styling */
 .interactiveVideoFrame {
   height: 630px;
@@ -64,7 +68,7 @@ a:hover {
 }
 
 .modelDisplay {
-  height: 35%;
+  height: 65%;
   border: 2px solid darkgray;
   margin-left: auto;
   margin-top: 15px;
