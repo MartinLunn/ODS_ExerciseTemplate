@@ -1,5 +1,10 @@
 /*jshint esversion: 6 */ 'use strict';
 
+/* helpers ... TODO */
+function parseInput (input) {
+  return input.trim ();
+}
+
 /* Main Events .... These are the buttons independent of the exercise */
 function onNextBtnClick (elem, evt) {
   // move to the next exercise ...
@@ -32,7 +37,18 @@ function onShowAnsBtnClick (elem, evt) {
     answer.draw (div);
 }
 
-var eventData = null;
+/* INPUT BOX EVENTS */
+function checkEnter (element, evt) {
+  if (evt.keyCode !== 13) return;
+
+  var input = $(element).val ();
+
+  // TODO: Fix this. This is hacky.
+  input = parseInput (input);
+  if (!this.validInput (input)) return false;
+
+  this.view.addElement (input);
+}
 
 /*
   USET EVENTS. THESE OCCUR WHEN AN ELEMENT IS DROPPED ONTO / OFF OF THE USET DIV
@@ -82,7 +98,7 @@ function droppedOnTrash (element, evt, ui) {
   var draggable = ui.helper;
   if (!draggable) return false;
 
-  this.view.removeElement (draggable);
+  this.removeElement (draggable);
 }
 
   //must be loaded after page body loads (this refers to eventData, not these handling functions above)
@@ -112,6 +128,7 @@ function droppedOnTrash (element, evt, ui) {
 ];*/
 
 
+var eventData = null;
 $ (()=> {
   eventData =
   [
@@ -156,18 +173,30 @@ $ (()=> {
       ]
     },
 
+    /* INPUT TEXT AREA */
+    {
+        elem: $(".modelEntry"),
+        evtsArr: [
+          {
+            handlingFunction: checkEnter,
+            customEvtName: "checkEnterButton",
+            domEvtName: "keyup"
+          }
+        ]
+    },
+
     /* USET EVENTS ---- OCCUR ON THE MAIN MODEL DISPLAY */
     {
       elem: $("#model"),
       evtsArr: [
         {
           handlingFunction: elementOver,
-          customEvtName: "overTopOfTheSpatula",
+          customEvtName: "overTopOfTheSpatula", //TODO
           domEvtName: "dropover"
         },
         {
           handlingFunction: elementOff,
-          customEvtName: "goodbyeMrSpatula",
+          customEvtName: "goodbyeMrSpatula", //TODO
           domEvtName: "dropout" // aww, poor guy. was a college dropout.
         }
       ]
@@ -202,7 +231,7 @@ $ (()=> {
       evtsArr: [
         {
           handlingFunction: droppedOnTrash,
-          customEvtName: "trashyMcTrashTrash",
+          customEvtName: "trashyMcTrashTrash", //TODO although I like this name
           domEvtName: "drop"
         }
       ]

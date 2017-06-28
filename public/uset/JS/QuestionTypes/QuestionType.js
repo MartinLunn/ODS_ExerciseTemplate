@@ -101,10 +101,17 @@ class QuestionType {
   {
     return this.getCurrentQuestion ().getAnswer ();
   }
-  
+
   check (userAnswer)
   {
     var currentQuestion = this.getCurrentQuestion ();
     return currentQuestion.check (userAnswer);
+  }
+
+
+  // input
+  isInputValid (input)
+  {
+    return this.getCurrentQuestion ().isValidInput (input);
   }
 }

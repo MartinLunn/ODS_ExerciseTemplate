@@ -19,6 +19,14 @@ class Control {
     this.exercise.start ();     //TODO rename ?? maybe
   }
 
+
+  // input
+  validInput (input)
+  {
+    return this.exercise.isInputValid (input);
+  }
+
+  // event handling
   addCustomEvent (name, handling)
   {
     this.customEventHandler.bind (name, handling, this);
@@ -39,5 +47,18 @@ class Control {
         this.addCustomEvent(event.customEvtName, event.handlingFunction);
       }
     }
+  }
+
+
+  // remove an element
+  removeElement (e)
+  {
+    var value = this.view.getValueFromElementDiv (e);
+
+    // remove from the user model
+    this.userModel.remove (value);
+
+    // remove from the dom
+    this.view.removeElement (e);
   }
 }

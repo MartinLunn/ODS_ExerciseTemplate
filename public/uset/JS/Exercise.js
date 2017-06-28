@@ -140,6 +140,11 @@ class Exercise {
   }
 
 
+  // INPUT
+  isInputValid (input)
+  {
+      return this.getCurrQuestionType ().isInputValid (input);
+  }
 
   //TODO refactor
   getAnswer ()

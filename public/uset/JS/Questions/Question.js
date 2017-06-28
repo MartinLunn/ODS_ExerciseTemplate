@@ -157,6 +157,12 @@ class Question {
     return this.answer.check(userAnswer);
   }
 
+  // input
+  isValidInput (input)
+  {
+    return false;
+  }
+  
   //static generateParameters()
 }
 

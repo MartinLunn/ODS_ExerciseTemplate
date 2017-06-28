@@ -15,4 +15,7 @@ class Find extends Question {
   {
     return this.answer.getData ();
   }
+
+
+  // input: no input needed for find
 }
