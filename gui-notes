@@ -1,0 +1,30 @@
+IF DOING TEXT INPUT
+	- Check valid. Should have a way to determine if, for the current question, a given input is valid.
+		ex. add (3) is valid. add (<img>) is not.
+	- When text is entered:
+		Add a new div containing the given text.
+		Div should be positioned outside of the set.
+	- Element Div:
+		- Clickable. Mainly for find () operations.
+		- Draggable. For dragging into, out of set.
+		- Should show that can be dragged & clicked. Will have to figure out a way to do this
+	- Uset.fromUserInput ():
+		- Reads every value within the set, takes values, creates set from values.
+	- Trash Can:
+		- Droppable.
+		- When an element is dropped over the trash can, element is removed
+			- div destroyed
+	
+
+	PROBABLY REUSABLE:
+		- Element Div
+			- Would have clicking, dragging that can be enabled, disabled.
+			- Value
+			- Event Handling:
+				- onClick
+				- onDragStop
+				- onDragStart
+				- ???
+		- Droppable ?
+		- fromUserInput () ?
+		- ..
