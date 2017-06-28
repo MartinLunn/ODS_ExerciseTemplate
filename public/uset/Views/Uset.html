@@ -105,8 +105,9 @@
           <p> params </p>
         </div>
 
-        <div class="modelBody">
-          <input type="text" class="modelEntry col-12" placeholder="values here, space separated"></input>
+        <div class="modelBody flexCol borderized">
+          <div class="modelDisplay col-10"></div>
+          <input type="text" class="modelEntry col-12 bottom" placeholder="add new element [ENTER VALUE]"></input>
         </div>
       </div>
 
@@ -127,6 +128,18 @@
         </div>
       </div>
 
+    </div>
+
+
+    <div class="templateContents hidden">
+      <!-- For now, stuff inside here is a reference to the HTML that should be used ...
+              Anything here will be copied later, inside some code, to make
+              new HTML elements. -->
+      <div class="element">
+        <span class="verticallyCentered">
+          3
+        </span>
+      </div>
     </div>
   </div>
 </div>

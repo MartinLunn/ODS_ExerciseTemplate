@@ -33,16 +33,61 @@ a:hover {
   color: silver;
 }
 
+/* additional styling that's probably useful */
+.borderized {
+  border: 1px solid lightgray;
+}
+
+.hidden{
+  display: none;
+}
+
+.flexCol{
+  display: flex;
+  flex-direction: column;
+}
+
+.bottom{
+  margin-top: auto;
+}
+
+.verticallyCentered {
+  vertical-align: middle;
+  line-height: normal;
+}
+
+/* element styling */
 .interactiveVideoFrame {
   height: 630px;
   width: 960px;
   border: none;
 }
 
-.modelEntry{
+.modelDisplay {
+  height: 35%;
+  border: 2px solid darkgray;
+  margin-left: auto;
+  margin-top: 15px;
+}
+
+
+/* using on the model body. defines the main div */
+.modelBody{
   height: 90vh;
   min-height: 300px;
 }
+
+/* element ... TODO: should show as clickable, draggable. style? */
+.element {
+  width: 35px;
+  height: 35px;
+  display: relative;
+  border: 1px solid black;
+  border-radius: 50%;
+
+  line-height: 30px; /* needs this for vertically centered text */
+}
+
 
 .questionButtons {
   display:flex;

@@ -1,6 +1,6 @@
 {
-  "host": "192.168.123.173",
-  "port": 9090,
+  "host": "localhost",
+  "port": 8080,
   "libraryDir": "h5p-libs",
   "mainLibraryDir": "H5P.InteractiveVideo-1.16",
   "contentDir": "h5p-content/InteractiveVideo"
