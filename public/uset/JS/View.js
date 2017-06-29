@@ -34,7 +34,7 @@ class View {
   // add a new element
   addElement (value) {
     // add the element & push it into the elements object
-    var newElement = new Element (value);
+    var newElement                                = new Element (value);
     this.elements [newElement.getId ()]           = newElement;
     this.elementsByValue [newElement.getValue ()] = newElement;
   }
