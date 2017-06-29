@@ -12,9 +12,8 @@
 
 class Element {
   static nextId () {
-    return this.currentId ++;
-    //TODO should not refer to "this" in static context. Should be an error.
-    //Structure is off as well. I'll talk to Sean, and then fix it
+    return Element.currentId ++;
+    //TODO changed this to Element. Check this.
   }
 
   constructor (value) {
