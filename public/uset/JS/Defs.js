@@ -2,6 +2,7 @@
 const NULL_CHARACTER = "∅";
 
 //TODO check if this null char works http://www.fileformat.info/info/unicode/char/2205/index.htm
+//UPDATE: tested, works
 
 var DEBUG = true;
 var instructionsId = "instructions";
