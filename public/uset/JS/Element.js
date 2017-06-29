@@ -19,7 +19,7 @@ class Element {
     this.value = value;
     this.id = Element.nextId ();
 
-    this.element = this.draw ();
+    this.element = this.draw ();    //change name to generate??
     this.DomEvents = this.addEvents ();
 
   }
@@ -50,7 +50,7 @@ class Element {
   }
 
   // Draw the element into the DOM
-  draw () {
+  draw () {     //change name to generate??
     // TODO HARDCODING IS BAD. MAYBE MOVE SELECTORS TO DEFS?
     var elementDiv = $("#template > .element").clone ();
     var model      = $(".modelDisplay");
