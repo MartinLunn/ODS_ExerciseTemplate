@@ -63,6 +63,7 @@ class Control {
   }
 
     //TODO test multiple active elements, feature or bug
+    // UPDATE: Tested this. It takes whichever div is on top, so this won't cause any issues.
   // set active element
   setActiveElement (element) {
     this.activeElement = element;
