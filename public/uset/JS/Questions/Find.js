@@ -17,6 +17,7 @@ class Find extends Question {
   }
 
   // check answer ...
+  //TODO I don't think this should be here, but I probably don't fully understand it.
   parseActiveElementValue (activeElem)
   {
       var val = activeElem && activeElem.getValue ();
