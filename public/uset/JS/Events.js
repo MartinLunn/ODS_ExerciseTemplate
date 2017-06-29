@@ -85,6 +85,8 @@ function onDragStopped (elem, evt, ui)
   // TODO: If an element is added several times,
   //       Display will show multiple, Uset will have one.
   //       This will cause issues. Fix this.
+  
+  //everytime an element is added or removed, clear uset, add everything that's currently in there.
   if (over)
     this.userModel.add (data);
   else
