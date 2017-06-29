@@ -35,7 +35,7 @@ var numberOfQuestionsRequired = [[numAddQuestions, numFindQuestions, numRemoveQu
 
 var __addMinParam__ = 1;
 var __addMaxParam__ = 8;
-var __findMinParam__ = 0;
+var __findMinParam__ = 1;
 var __findMaxParam__ = 16;
 var __removeMinParam__ = 1;
 var __removeMaxParam__ = 8;
