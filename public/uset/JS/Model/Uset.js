@@ -98,12 +98,9 @@ class Uset extends Model {
 
   draw (div)
   {
-    // TODO: This should be an actual thing.
-    var myText = this.toString ();
-    var input  = $(".modelEntry", div);
-    if (input.length===0) input=div;
-
-  //  $(input).val (myText);
+    // TODO bad code
+    for (var i in this.set)
+      control.view.addElement (this.set [i], {withinModel: true});
   }
 
 
@@ -112,7 +109,7 @@ class Uset extends Model {
   {
       return this.set;
   };
-  
+
 /*  // TODO: Remove this. This is bad.
   static fromUserInput (div)
   {

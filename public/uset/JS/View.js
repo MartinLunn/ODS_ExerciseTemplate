@@ -13,6 +13,8 @@ class View {
     this.elementsByValue = { };
 
     this.addElement (NULL_CHARACTER);
+
+    this.modelDivHelper = new Div ($("#model")); // #TODO
   }
 
   register (eh)
@@ -47,11 +49,16 @@ class View {
   /* ---- ELEMENTS ----- */
 
   // add a new element
-  addElement (value) {
+  addElement (value, options) {
+    if (!options) options={};
+
     // add the element & push it into the elements object
     var newElement                                = new Element (value);
     this.elements [newElement.getId ()]           = newElement;
     this.elementsByValue [newElement.getValue ()] = newElement;
+
+    if (options.withinModel)
+      this.drawWithinModel (newElement);
   }
 
   // remove an element
@@ -91,6 +98,12 @@ class View {
   findByValue (value)
   {
     return this.elementsByValue [value];
+  }
+
+  // draw an element within the model
+  drawWithinModel (element) {
+    var pos = this.modelDivHelper.randomPosition ();
+    element.moveTo (pos);
   }
 
   // set active element

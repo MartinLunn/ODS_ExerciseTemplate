@@ -1,5 +1,8 @@
 /*jshint esversion: 6 */ 'use strict';
 
+// TODO Clicking show answer button multiple times is immensely fun.
+//      For the end user, having fun is bad. We should probably fix this.
+
 /* helpers ... TODO global functions are bad */
 function parseInput (input) {
   return input.trim ();
@@ -90,6 +93,9 @@ function onDragStopped (elem, evt, ui)
   var over = $(elem).data ("over");
   var data = this.view.getValueFromElementDiv (elem);
   if (!data) return;
+
+  var os = ui.offset;
+  console.log (Div.intersectsRound (os.left, os.top, $("#model")));
 
   // TODO: If an element is added several times,
   //       Display will show multiple, Uset will have one.

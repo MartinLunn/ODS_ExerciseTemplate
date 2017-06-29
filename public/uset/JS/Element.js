@@ -77,6 +77,10 @@ class Element {
     return elementDiv;
   }
 
+  moveTo (os) {
+    $ (this.element).offset (os);
+  }
+  
   // Remove the element from the DOM
   remove () {
     $(this.element).remove ();
