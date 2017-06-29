@@ -5,6 +5,10 @@
 class View {
   constructor() {
     this.eventHandlers = [ ];
+    this.eventsById    = { };
+      // this maps DomEventHandlers by ID : Handler. This is only added to when
+      // id is specified.
+
     this.elements = { };
     this.elementsByValue = { };
 
@@ -27,7 +31,17 @@ class View {
       triggerMap[currData.domEvtName] = currData.customEvtName;
     }
 
-    this.eventHandlers.push (new DOMEventHandler(event.elem, triggerMap));
+    var newHandler = new DOMEventHandler (event.elem, triggerMap);
+    this.eventHandlers.push (newHandler);
+
+    // Handlers by ID
+    if (event.id)
+      this.eventsById[event.id] = newHandler;
+  }
+
+  /* ---- EVENT HANDLERS ---- */
+  getEventHandler (id) {
+    return this.eventsById [id];
   }
 
   /* ---- ELEMENTS ----- */

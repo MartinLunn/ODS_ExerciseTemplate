@@ -17,16 +17,19 @@ class DOMEventHandler {   //we have one instance of a domeventhandler for each d
 
   setup () {
     $(this.elements).each ((index, element) => {
-      this.addTriggerToMap (element);
+      this.addTriggerElement (element);
     });
   }
 
   push (element) {
     this.elements.push (element);
-    this.addTriggerToMap (element);
+    this.addTriggerElement (element);
   }
 
-  addTriggerToMap (element) {
+  // TODO - not really todo but anyway.
+  // Changed the name here. It's not adding triggers, it's adding
+  //   elements that will be recorded for the trigger.
+  addTriggerElement (element) {
     var $e = $(element);
     for (var domEvent in this.triggerMap) {
           $e.on (domEvent, (...args)=>{     //handling function

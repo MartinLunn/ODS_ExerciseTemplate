@@ -31,7 +31,7 @@ function onCheckBtnClick (elem, evt) {
   if (this.exercise.check (this.userModel, this.activeElement)) {
     //TODO
     //Maybe make custom event that checks?
-    console.log ("tHaT's CoRrEcT");
+    console.log ("yep :/");
     onNextBtnClick.apply(this, arguments);
   } else {
     console.log ("lozzzzzer"); //TODO
@@ -261,7 +261,8 @@ $ (()=> {
           customEvtName: "onElementClicked",
           domEvtName: "click"
         },
-      ]
+      ],
+      id: ELEM_EVENTS_ID // so it can be found later. take a look at the view
     },
 
 

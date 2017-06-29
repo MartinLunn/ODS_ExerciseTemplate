@@ -49,6 +49,10 @@ class Control {
     }
   }
 
+  // find by id
+  getDomEventHandler (id) {
+    return this.view.getEventHandler (id);
+  }
 
   // remove an element
   removeElement (e)
