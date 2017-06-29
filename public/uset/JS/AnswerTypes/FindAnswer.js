@@ -12,7 +12,7 @@ class FindAnswer extends AnswerType {
     return this.data === userAnswer;
   }
 
-  display(div)      //TODO replace with production version
+  display()      //TODO replace with production version
   {
     // TODO SHOULD NOT BE USING CONTROL CHANGE THIS
     var elem = control.find (this.data)
