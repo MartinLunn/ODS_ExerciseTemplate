@@ -87,6 +87,8 @@ function onDragStopped (elem, evt, ui)
   //       This will cause issues. Fix this.
   
   //everytime an element is added or removed, clear uset, add everything that's currently in there.
+  //on drag stop
+  //check if over ? in = true : in false;
   if (over)
     this.userModel.add (data);
   else
