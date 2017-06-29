@@ -94,9 +94,6 @@ function onDragStopped (elem, evt, ui)
   var data = this.view.getValueFromElementDiv (elem);
   if (!data) return;
 
-  var os = ui.offset;
-  console.log (Div.intersectsRound (os.left, os.top, $("#model")));
-
   // TODO: If an element is added several times,
   //       Display will show multiple, Uset will have one.
   //       This will cause issues. Fix this.
