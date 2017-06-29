@@ -2,9 +2,6 @@
 const NULL_CHARACTER = "∅";
 const ELEM_EVENTS_ID = "elementEvents";
 
-//TODO check if this null char works http://www.fileformat.info/info/unicode/char/2205/index.htm
-//UPDATE: tested, works
-
 var DEBUG = true;
 var instructionsId = "instructions";
 var questionId = "questions";

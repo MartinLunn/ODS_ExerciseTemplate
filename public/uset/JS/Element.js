@@ -13,15 +13,14 @@
 class Element {
   static nextId () {
     return Element.currentId ++;
-    //TODO changed this to Element. Check this.
   }
 
   constructor (value) {
     this.value = value;
     this.id = Element.nextId ();
 
-    this.element = this.draw ();
-    this.DomEvents = this.addEvents ();
+    this.element = this.draw ();    //change name to generate??
+    this.DomEvents = this.addEvents (); //will be moved into view
 
   }
 
@@ -43,7 +42,7 @@ class Element {
   }
 
   // add draggable ...
-  addControls (e) {
+  addControls (e) { //make draggable
     if (!e) e = this.element;
     $ (e).draggable ({
       containment: "parent"
@@ -61,7 +60,7 @@ class Element {
   }
 
   // Draw the element into the DOM
-  draw () {
+  draw () {     //change name to generate?? also need to redo
     // TODO HARDCODING IS BAD. MAYBE MOVE SELECTORS TO DEFS?
     var elementDiv = $("#template > .element").clone ();
     var model      = $(".modelDisplay");

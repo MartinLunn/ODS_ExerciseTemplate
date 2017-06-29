@@ -76,7 +76,6 @@ class Control {
 
   // find an element
   find (value) {
-    console.trace ();
     return this.view.findByValue (value);
   }
 
