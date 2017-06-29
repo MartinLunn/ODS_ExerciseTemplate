@@ -46,17 +46,21 @@ function onShowAnsBtnClick (elem, evt) {
 /* INPUT BOX EVENTS */
 // TODO: This only works with keyboards. Find a way to make this usable
 //       on other devices (touch)
-function checkEnter (element, evt) {
-  if (evt.keyCode !== 13) return;
-
-  var input = $(element).val ();
-
-  //TODO make this a custom event. let dom events do dom eventy stuffs, and custom events do custom eventy stuff
-  // TODO: Fix this. This is hacky.
+function onSubmitInput (element, evt) {
+  // TODO added custom event. Check this for spiders. I'm not personally going to go over it; spiders are scary. But you go ahead
+  var input = this.view.getValueFromElementDiv (element);
+  
   input = parseInput (input);
   if (!this.validInput (input)) return;
 
   this.view.addElement (input);
+};
+
+function checkEnter (element, evt) {
+  if (evt.keyCode !== 13) return;
+
+  // TODO remove this entirely
+  onSubmitInput (element, evt);
 }
 
 /*
@@ -97,6 +101,9 @@ function onDragStopped (elem, evt, ui)
     this.userModel.add (data);
   else
     this.userModel.remove (data);
+  
+  // this is the "check if over ? in = true : in false;". simplified
+  $ (elem).data ("in", over);
 }
 
 function onElementClicked (elem, ...args){
@@ -113,6 +120,7 @@ function onElementClicked (elem, ...args){
 
 const ELEM_EVENTS = { //this is analogous to a triggermap
   //should we put this into eventData
+  //needs some way to be found outside of the controller - so we could, but would have to find a way to get it later
   "dragstart": "onDragStarted",
   "dragstop": "onDragStopped",
   "click": "onElementClicked"
