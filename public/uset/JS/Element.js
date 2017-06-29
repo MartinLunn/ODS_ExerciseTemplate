@@ -20,7 +20,7 @@ class Element {
     this.id = Element.nextId ();
 
     this.element = this.draw ();    //change name to generate??
-    this.DomEvents = this.addEvents ();
+    this.DomEvents = this.addEvents (); //will be moved into view
 
   }
 
@@ -32,7 +32,7 @@ class Element {
   }
 
   // add draggable ...
-  addControls (e) {
+  addControls (e) { //make draggable
     if (!e) e = this.element;
     $ (e).draggable ({
       containment: "parent"
@@ -50,7 +50,7 @@ class Element {
   }
 
   // Draw the element into the DOM
-  draw () {     //change name to generate??
+  draw () {     //change name to generate?? also need to redo
     // TODO HARDCODING IS BAD. MAYBE MOVE SELECTORS TO DEFS?
     var elementDiv = $("#template > .element").clone ();
     var model      = $(".modelDisplay");
