@@ -100,8 +100,11 @@
           we actually have that for the divs. I'll make it into an actual class and give it to the div,
           probably have some extra resizing which we can add later. TODO CODE RAINBOW
               UPDATE: Code rainbow actually means riots or a large scale disaster. Probably not code rainbow.
+              UPDATE2: This is done. Probably change width/height
+              UPDATE3: Display works but this has big issues with Jquery. We'd have to check
+                positions to get to work correctly. I'll do this later. TODO
   -->
-  
+
 <div class="exercise grid">
   <div class="row">
     <div class="col-12 questionFrame">
@@ -116,9 +119,9 @@
         </div>
 
         <div class="modelBody flexCol borderized">
-          <div class="modelMain col-12">
+          <div class="modelMain col-12 ">
             <img id="trash" src="/uset/images/trash.jpg" class="trashCan"></img>
-            <div id="model" class="modelDisplay col-10"></div>
+            <div id="model" class="modelDisplay col-10 round"></div>
           </div>
           <input type="text" class="modelEntry col-12 bottom" placeholder="add new element [ENTER VALUE]"></input>
         </div>
@@ -147,7 +150,10 @@
     <div id="template" class="hidden">
       <!-- For now, stuff inside here is a reference to the HTML that should be used ...
               Anything here will be copied later, inside some code, to make
-              new HTML elements. -->
+              new HTML elements.
+
+            TODO made these square. Looks better imo, especially for NULL
+      -->
       <div class="element">
         <span class="verticallyCentered">
           TEXT

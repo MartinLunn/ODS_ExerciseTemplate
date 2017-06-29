@@ -28,13 +28,13 @@ function onPrevBtnClick (elem, evt) {
 //TODO
 function onCheckBtnClick (elem, evt) {
   console.log ("Checking your answer .... ");
-  if (this.exercise.check (this.userModel, this.activeElement)) { 
+  if (this.exercise.check (this.userModel, this.activeElement)) {
     //TODO
     //Maybe make custom event that checks?
-    console.log ("that's correct!");
+    console.log ("tHaT's CoRrEcT");
     onNextBtnClick.apply(this, arguments);
   } else {
-    console.log ("wrong"); //TODO
+    console.log ("lozzzzzer"); //TODO
   }
 }
 
@@ -48,10 +48,11 @@ function onShowAnsBtnClick (elem, evt) {
 //       on other devices (touch)
 function onSubmitInput (element, evt) {
   // TODO added custom event. Check this for spiders. I'm not personally going to go over it; spiders are scary. But you go ahead
-  var input = this.view.getValueFromElementDiv (element);
-  
+  var input = $ (element).val ();
+
   input = parseInput (input);
   if (!this.validInput (input)) return;
+  if (this.view.findByValue (input)) return; // IF THERE'S ALREADY ONE, WE BROK
 
   this.view.addElement (input);
 };
@@ -60,7 +61,7 @@ function checkEnter (element, evt) {
   if (evt.keyCode !== 13) return;
 
   // TODO remove this entirely
-  onSubmitInput (element, evt);
+  onSubmitInput.call (this, element, evt);
 }
 
 /*
@@ -93,7 +94,7 @@ function onDragStopped (elem, evt, ui)
   // TODO: If an element is added several times,
   //       Display will show multiple, Uset will have one.
   //       This will cause issues. Fix this.
-  
+
   //everytime an element is added or removed, clear uset, add everything that's currently in there.
   //on drag stop
   //check if over ? in = true : in false;
@@ -101,7 +102,7 @@ function onDragStopped (elem, evt, ui)
     this.userModel.add (data);
   else
     this.userModel.remove (data);
-  
+
   // this is the "check if over ? in = true : in false;". simplified
   $ (elem).data ("in", over);
 }
@@ -109,10 +110,10 @@ function onDragStopped (elem, evt, ui)
 function onElementClicked (elem, ...args){
   var element = this.view.getElement (elem);
   if (!element) return;
-  if (!this.canSetActive ()) 
-  {  
+  if (!this.canSetActive ())
+  {
     if (DEBUG) console.log("From inside onElementClicked element cannot be set as active.");
-    return; // TODO: ??? 
+    return; // TODO: ???
   }
 
   this.setActiveElement (element);
@@ -129,7 +130,7 @@ const ELEM_EVENTS = { //this is analogous to a triggermap
 /* TRASH CAN EVENTS. THIS BASICALLY HANDLES DELETING ELEMENTS */
 function droppedOnTrash (element, evt, ui) {
   var draggable = ui.draggable;
-  if (!draggable) 
+  if (!draggable)
   {
    console.error("From inside droppedOnTrash, ui does not have draggable.") ;
    return false;

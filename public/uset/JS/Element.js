@@ -75,7 +75,7 @@ class Element {
   // getters
   getId () { return this.id; }
   getValue () { return this.value; }
-  
+
   // note: 'true' value is basically an object version. parses null to null ; empty to undefined; else to itself
   getTrueValue () {
     var val = this.getValue ();
