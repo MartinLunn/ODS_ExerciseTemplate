@@ -13,7 +13,6 @@
 class Element {
   static nextId () {
     return Element.currentId ++;
-    //TODO changed this to Element. Check this.
   }
 
   constructor (value) {
