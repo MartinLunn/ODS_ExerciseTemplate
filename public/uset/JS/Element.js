@@ -26,6 +26,7 @@ class Element {
 
   addEvents () {
     // TODO Make this better ????
+    //TODO refactor into DOM event handlers in view
     var events = ELEM_EVENTS;
     return new DOMEventHandler (this.element, events);
   }
