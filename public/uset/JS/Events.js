@@ -28,11 +28,13 @@ function onPrevBtnClick (elem, evt) {
 //TODO
 function onCheckBtnClick (elem, evt) {
   console.log ("Checking your answer .... ");
-  if (this.exercise.check (this.userModel, this.activeElement)) { //TODO
-    console.log ("That's... What? Jimmity Snicket, that's correct! This... This cannot be!");
+  if (this.exercise.check (this.userModel, this.activeElement)) { 
+    //TODO
+    //Maybe make custom event that checks?
+    console.log ("that's correct!");
     onNextBtnClick.apply(this, arguments);
   } else {
-    console.log ("lol.... #wrong"); //TODO
+    console.log ("wrong"); //TODO
   }
 }
 
@@ -109,7 +111,8 @@ function onElementClicked (elem, ...args){
   this.setActiveElement (element);
 }
 
-const ELEM_EVENTS = {
+const ELEM_EVENTS = { //this is analogous to a triggermap
+  //should we put this into eventData
   "dragstart": "onDragStarted",
   "dragstop": "onDragStopped",
   "click": "onElementClicked"
@@ -156,7 +159,7 @@ function droppedOnTrash (element, evt, ui) {
 ];*/
 
 
-var eventData = null;
+var eventData = null;   //need to do it this way because of scope
 $ (()=> {
   eventData =
   [
