@@ -62,6 +62,7 @@ class Control {
     this.view.removeElement (e);
   }
 
+    //TODO test multiple active elements, feature or bug
   // set active element
   setActiveElement (element) {
     this.activeElement = element;
