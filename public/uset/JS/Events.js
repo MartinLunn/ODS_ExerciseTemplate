@@ -49,6 +49,7 @@ function checkEnter (element, evt) {
 
   var input = $(element).val ();
 
+  //TODO make this a custom event. let dom events do dom eventy stuffs, and custom events do custom eventy stuff
   // TODO: Fix this. This is hacky.
   input = parseInput (input);
   if (!this.validInput (input)) return;
@@ -62,6 +63,7 @@ function checkEnter (element, evt) {
 function elementOver (element, evt, ui) {
   $(ui.draggable).data ("over", true);
 }
+
 function elementOff (element, evt, ui) {
   $(ui.draggable).data ("over", false);
 }
@@ -98,7 +100,11 @@ function onDragStopped (elem, evt, ui)
 function onElementClicked (elem, ...args){
   var element = this.view.getElement (elem);
   if (!element) return;
-  if (!this.canSetActive ()) return; // TODO: ???
+  if (!this.canSetActive ()) 
+  {  
+    if (DEBUG) console.log("From inside onElementClicked element cannot be set as active.");
+    return; // TODO: ??? 
+  }
 
   this.setActiveElement (element);
 }
@@ -111,8 +117,12 @@ const ELEM_EVENTS = {
 
 /* TRASH CAN EVENTS. THIS BASICALLY HANDLES DELETING ELEMENTS */
 function droppedOnTrash (element, evt, ui) {
-  var draggable = ui.helper;
-  if (!draggable) return false;
+  var draggable = ui.draggable;
+  if (!draggable) 
+  {
+   console.error("From inside droppedOnTrash, ui does not have draggable.") ;
+   return false;
+  }
 
   if (isNullCharacter (draggable)) return false;
 
