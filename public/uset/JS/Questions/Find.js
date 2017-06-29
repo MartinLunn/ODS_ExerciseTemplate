@@ -18,14 +18,7 @@ class Find extends Question {
 
   // check answer ...
   //TODO I don't think this should be here, but I probably don't fully understand it.
-  parseActiveElementValue (activeElem)
-  {
-      var val = activeElem && activeElem.getValue ();
-      if (!val) return false;
-
-      if (val === "NULL_CHARACTER") return null; // the null element
-      return val;
-  }
+  // You're right ... belongs inside Element, probably. I'm moving it.
 
   check (userModel, activeElem)
   {
@@ -36,7 +29,7 @@ class Find extends Question {
     if (!this.answer.getModel ().equals (userModel))
       return false;
 
-    return (this.answer.getData () === this.parseActiveElementValue (activeElem))
+    return (this.answer.getData () === activeElem.getTrueValue ()); // TODO better name for this? 
   }
 
   // setting active
