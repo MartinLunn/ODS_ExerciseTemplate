@@ -1,5 +1,7 @@
 /*jshint esversion: 6 */ 'use strict';
-const NULL_CHARACTER = "\\0";
+const NULL_CHARACTER = "∅";
+
+//TODO check if this null char works http://www.fileformat.info/info/unicode/char/2205/index.htm
 
 var DEBUG = true;
 var instructionsId = "instructions";
