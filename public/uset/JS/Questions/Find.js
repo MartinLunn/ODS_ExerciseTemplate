@@ -22,7 +22,7 @@ class Find extends Question {
       var val = activeElem && activeElem.getValue ();
       if (!val) return false;
 
-      if (val === "\\0") return null; // the null element
+      if (val === "NULL_CHARACTER") return null; // the null element
       return val;
   }
 
