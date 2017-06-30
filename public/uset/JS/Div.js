@@ -87,13 +87,18 @@ class Div {
 
   intersects (x, y) {
     if (this.$div.hasClass ("round"))
-      return Div.intersectsRound (this.myDiv);
-    return Div.intersects (this.myDiv);
+      return Div.intersectsRound (x, y, this.myDiv);
+    return Div.intersects (x, y, this.myDiv);
   }
 
   randomPosition () {
     if (this.$div.hasClass ("round"))
       return Div.randomPositionWithinRound (this.myDiv);
     return Div.randomPositionWithin (this.myDiv);
+  }
+
+  elementOver (element) {
+    var pos = $(element).offset ();
+    return this.intersects (pos.left, pos.top);
   }
 }

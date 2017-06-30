@@ -43,7 +43,7 @@ function onCheckBtnClick (elem, evt) {
 
 function onShowAnsBtnClick (elem, evt) {
   var div    = $(".modelBody");
-  this.exercise.showAnswer (div);
+  this.exercise.showAnswer (div); // TODO Change this to refresh so previous gets removed
 }
 
 /* INPUT BOX EVENTS */
@@ -70,6 +70,8 @@ function checkEnter (element, evt) {
 /*
   USET EVENTS. THESE OCCUR WHEN AN ELEMENT IS DROPPED ONTO / OFF OF THE USET DIV
 */
+/*
+// TODO These two can be removed:
 function elementOver (element, evt, ui) {
   $(ui.draggable).data ("over", true);
 }
@@ -77,6 +79,7 @@ function elementOver (element, evt, ui) {
 function elementOff (element, evt, ui) {
   $(ui.draggable).data ("over", false);
 }
+*/
 
 /*
   ELEMENT EVENTS. These are specific to Element.js and will be added separately
@@ -90,9 +93,11 @@ function onDragStopped (elem, evt, ui)
 {
   if (isNullCharacter (elem)) return;
 
-  var over = $(elem).data ("over");
+  var over = this.view.isElementOverModel (elem); // TODO WAFFLES
   var data = this.view.getValueFromElementDiv (elem);
   if (!data) return;
+
+  console.log ("IS ELEMENT OVER??? ", over)
 
   // TODO: If an element is added several times,
   //       Display will show multiple, Uset will have one.
@@ -229,7 +234,7 @@ $ (()=> {
     },
 
     /* USET EVENTS ---- OCCUR ON THE MAIN MODEL DISPLAY */
-    {
+  /*  { // TODO remove
       elem: $("#model"),
       evtsArr: [
         {
@@ -243,7 +248,7 @@ $ (()=> {
           domEvtName: "dropout" // aww, poor guy. was a college dropout.
         }
       ]
-    },
+    },*/
 
     /* ELEMENT EVENTS --- OCCUR ON SPECIFIC ELEMENTS, ADDED LATER */
     {

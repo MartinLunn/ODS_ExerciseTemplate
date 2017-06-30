@@ -106,6 +106,12 @@ class View {
     element.moveTo (pos);
   }
 
+  // is element over top of the model?
+  isElementOverModel (element) {
+    // NTS: Element here is the div
+    return this.modelDivHelper.elementOver (element);
+  }
+
   // set active element
   setActive (element) {
     if (this.activeElement)
