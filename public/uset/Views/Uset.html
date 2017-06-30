@@ -6,9 +6,13 @@
   <meta charset="UTF-8">
   <!-- <script type="text/javascript" src="/uset/JS/lib/jquery-3.2.1.js"> </script>-->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <!-- TODO: Maybe download a copy of this? -->
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+
   <script type="text/javascript" src="/uset/JS/lib/jsplumb.js"> </script>
   <script type="text/javascript" src="/uset/JS/Array.js"> </script>
   <script type="text/javascript" src="/uset/JS/Random.js"> </script>
+  <script type="text/javascript" src="/uset/JS/Div.js"> </script>
   <script type="text/javascript" src="/uset/JS/Model/Model.js"> </script>
   <script type="text/javascript" src="/uset/JS/Model/Uset.js"> </script>
   <script type="text/javascript" src="/uset/JS/AnswerTypes/AnswerType.js"></script>
@@ -26,6 +30,7 @@
   <script type="text/javascript" src="/uset/JS/Exercise.js"> </script>
   <script type="text/javascript" src="/uset/JS/DOMEventHandler.js"> </script>
   <script type="text/javascript" src="/uset/JS/CustomEventHandler.js"> </script>
+  <script type="text/javascript" src="/uset/JS/Element.js"> </script>
   <script type="text/javascript" src="/uset/JS/View.js"> </script>
   <script type="text/javascript" src="/uset/JS/Events.js"> </script>
   <script type="text/javascript" src="/uset/JS/Control.js"> </script>
@@ -73,8 +78,12 @@
     NOTE: We don't have a Uset video, so I'm using List. Because, like, in the reality where I am Dr. Macova and I'm an evil lord bent on world domination
     and killing all humans, Unordered Sets are called USets, which means "You Sets", which means you pick the data structure. Because I'm a dark lord,
     I keep a list of all my targets - and people to kill - for a given day, and, therefore, I use lists.
+
+
+    [TODO]
   -->
   <iframe class="interactiveVideoFrame" src="http://localhost:8080/list" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true"></iframe>
+
 </div>
 
 
@@ -87,6 +96,16 @@
       </ol>
     </div> -->
 
+
+  <!--  make the uset an oval i think TODO https://stackoverflow.com/questions/12972145/how-to-give-a-div-oval-shape
+          we actually have that for the divs. I'll make it into an actual class and give it to the div,
+          probably have some extra resizing which we can add later. TODO CODE RAINBOW
+              UPDATE: Code rainbow actually means riots or a large scale disaster. Probably not code rainbow.
+              UPDATE2: This is done. Probably change width/height
+              UPDATE3: Display works but this has big issues with Jquery. We'd have to check
+                positions to get to work correctly. I'll do this later.
+              UPDATE4: This is done.
+  -->
 
 <div class="exercise grid">
   <div class="row">
@@ -101,8 +120,13 @@
           <p> params </p>
         </div>
 
-        <div class="modelBody">
-          <input type="text" class="modelEntry col-12" placeholder="values here, space separated"></input>
+        <div class="modelBody flexCol borderized">
+          <div class="modelMain col-12 ">
+            <img id="trash" src="/uset/images/trash.jpg" class="trashCan"></img>
+            <div id="model" class="modelDisplay col-10 round"></div>
+          </div>
+			    <input type="text" class="modelEntry col-12 bottom" placeholder="add new element [ENTER VALUE]"></input>
+			    <input type="button" class="col-12 bottom" value="Arrrr, ye're addin' t' th' seas, matey!" id="submitbtn"></input>
         </div>
       </div>
 
@@ -123,6 +147,21 @@
         </div>
       </div>
 
+    </div>
+
+
+    <div id="template" class="hidden">
+      <!-- For now, stuff inside here is a reference to the HTML that should be used ...
+              Anything here will be copied later, inside some code, to make
+              new HTML elements.
+
+            TODO made these square. Looks better imo, especially for NULL
+      -->
+      <div class="element">
+        <span class="verticallyCentered">
+          TEXT
+        </span>
+      </div>
     </div>
   </div>
 </div>

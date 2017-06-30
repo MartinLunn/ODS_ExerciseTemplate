@@ -45,11 +45,6 @@ class Uset extends Model {
     return toReturn;
   }
 
-  get()
-  {
-    return this.arr;
-  }
-
   equals(other)
   {
     if (!(other instanceof Uset))
@@ -65,8 +60,8 @@ class Uset extends Model {
     for (var key in this.set)
     {
       /* Alludes to larger issue for templates, we're storing data in our data structures,
-      and it would be nice if they're all the same type, however they can't all be objects, 
-      because in JS that's dangerous, because despite having a falsy value, if typeof Object returns true, 
+      and it would be nice if they're all the same type, however they can't all be objects,
+      because in JS that's dangerous, because despite having a falsy value, if typeof Object returns true,
       it'll be coerced to truthy. For now we're going with strings.*/
       if (this.find(key) !== other.find(key))
       {
@@ -81,10 +76,9 @@ class Uset extends Model {
   {
     var copy = new Uset();
 
-    for (var element in this.set)
-    {
-      copy.add(parseInt(element));
-    }
+    this.each (function (element) {
+      copy.add(element);
+    });
 
     return copy;
   }
@@ -101,17 +95,37 @@ class Uset extends Model {
     return result;
   }
 
-  draw (div)
+  /* NEEDED FUNCTIONS */
+  each (f)
   {
-    // TODO: This should be an actual thing.
-    var myText = this.toString ();
-    var input  = $(".modelEntry", div);
-    if (input.length===0) input=div;
-
-    $(input).val (myText);
+    for (var i in this.set)
+      f (this.set [i]);
+  }
+  contains (el)
+  {
+    return this.find (el) !== null; // note: null is allowed but ....... TODO
   }
 
-  // TODO: Remove this. This is bad.
+
+  // TODO After refactor, this should probably be gonezo
+  // moved directly into model
+  /*draw (div)
+  {
+    control.setModel (this);
+
+    //// TODO bad code
+    //for (var i in this.set)
+    //  control.view.addElement (this.set [i], {withinModel: true});
+  }*/
+
+
+  // TODO - This is bad
+  getObject ()
+  {
+      return this.set;
+  };
+
+/*  // TODO: Remove this. This is bad.
   static fromUserInput (div)
   {
     var newSet = new Uset ();
@@ -124,5 +138,5 @@ class Uset extends Model {
     }
 
     return newSet;
-  }
+  }*/
 }

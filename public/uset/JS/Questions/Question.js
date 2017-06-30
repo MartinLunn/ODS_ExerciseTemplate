@@ -21,6 +21,15 @@ class Question {
     }
   }
 
+  // name
+  get name () {
+    return this.constructor.name;
+  }
+
+  get fullName () {
+    return this.name.toLowerCase() + "(" + this.getParametersString() + ")";
+  }
+
   getInstructions()
   {
     return this.instructions;
@@ -98,7 +107,7 @@ class Question {
 
   displayAnswer(div)
   {
-    var answerDiv = $(".modelBody", div);
+    var answerDiv = $(".modelMain", div);
     this.answer.display(answerDiv);
   }
 
@@ -110,9 +119,8 @@ class Question {
 
   displayParameters (div)
   {
-      var str = this.getParametersString ();
       var p   = $(".parametersBody", div);
-      p.text (this.constructor.name.toLowerCase() + "(" + str + ")");
+      p.text (this.fullName);
   }
 
   displayInstructions(div)
@@ -156,6 +164,15 @@ class Question {
   {
     return this.answer.check(userAnswer);
   }
+
+  // input
+  isValidInput (input)
+  {
+    return false;
+  }
+
+  // setting active
+  canSetActive(){ return false; }
 
   //static generateParameters()
 }

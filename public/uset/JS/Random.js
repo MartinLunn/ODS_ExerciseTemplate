@@ -11,9 +11,18 @@ class ODSRandom {
     return Math.random();
   }
 
+  static getRandomMinMax (min, max)
+  {
+    return (ODSRandom.getRandom () * (max - min)) + min;
+  }
+
   getRandom()
  {
    return this.addToSavedRNGs(ODSRandom.getRandom());
+ }
+
+ getRandomMinMax (min, max) {
+   return this.addToSavedRNGs (ODSRandom.getRandomMinMax (min, max));
  }
 
   static getRandomArbitrary(min, max)

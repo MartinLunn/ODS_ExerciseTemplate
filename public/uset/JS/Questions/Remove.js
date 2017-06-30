@@ -10,4 +10,7 @@ class Remove extends Question {
   {
     return this.answer.getModel().remove(this.parameters);
   }
+
+
+  // input: no input needed for remove
 }

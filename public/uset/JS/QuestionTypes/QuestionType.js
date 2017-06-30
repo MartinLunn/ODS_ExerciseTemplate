@@ -9,6 +9,11 @@ class QuestionType {
     this.currQuestion = 0;
   }
 
+  // name
+  get name () {
+    return this.constructor.name;
+  }
+
   getQuestions() { return this.questions; }
 
   size () { return this.questions.length; }
@@ -101,10 +106,27 @@ class QuestionType {
   {
     return this.getCurrentQuestion ().getAnswer ();
   }
-  
-  check (userAnswer)
+  showAnswer (div)
+  {
+    this.getCurrentQuestion ().displayAnswer (div);
+  }
+
+  check (userAnswer, active)
   {
     var currentQuestion = this.getCurrentQuestion ();
-    return currentQuestion.check (userAnswer);
+    return currentQuestion.check (userAnswer, active);
+  }
+
+
+  // input
+  isInputValid (input)
+  {
+    return this.getCurrentQuestion ().isValidInput (input);
+  }
+
+  // setting active
+  canSetActive ()
+  {
+    return this.getCurrentQuestion ().canSetActive ();
   }
 }

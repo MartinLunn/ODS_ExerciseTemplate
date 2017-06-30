@@ -140,18 +140,30 @@ class Exercise {
   }
 
 
+  // INPUT
+  isInputValid (input)
+  {
+      return this.getCurrQuestionType ().isInputValid (input);
+  }
+
+  // active check
+  canSetActive(){
+    return this.getCurrQuestionType ().canSetActive ();
+  }
 
   //TODO refactor
   getAnswer ()
   {
     return this.getCurrQuestionType ().getAnswer ();
   }
-  
-  check ()
+  showAnswer (div)
   {
-    var qType = this.getCurrQuestionType ();
-    var user  = Uset.fromUserInput (); // TODO: BAD
-    return qType.check (user);
+    this.getCurrQuestionType ().showAnswer (div);
+  }
+
+  check (user, active)
+  {
+    return this.getCurrQuestionType ().check (user, active);
   }
 
   start ()

@@ -3,8 +3,9 @@
 class Control {
   constructor()
   {
-    this.exercise = new Exercise();
+    this.userModel = new __MODULENAME__ ();
 
+    this.exercise = new Exercise();
     this.exercise.setup();
 
     this.customEventHandler = new CustomEventHandler();
@@ -15,9 +16,18 @@ class Control {
 
     this.view.register (this.customEventHandler);
 
+    this.view.start ();
     this.exercise.start ();     //TODO rename ?? maybe
   }
 
+
+  // input
+  validInput (input)
+  {
+    return this.exercise.isInputValid (input);
+  }
+
+  // event handling
   addCustomEvent (name, handling)
   {
     this.customEventHandler.bind (name, handling, this);
@@ -38,5 +48,45 @@ class Control {
         this.addCustomEvent(event.customEvtName, event.handlingFunction);
       }
     }
+  }
+
+  // find by id
+  getDomEventHandler (id) {
+    return this.view.getEventHandler (id);
+  }
+
+  // remove an element
+  removeElement (e)
+  {
+    var value = this.view.getValueFromElementDiv (e);
+
+    // remove from the user model
+    this.userModel.remove (value);
+
+    // remove from the dom
+    this.view.removeElement (e);
+  }
+
+    //TODO test multiple active elements, feature or bug
+    // UPDATE: Tested this. It takes whichever div is on top, so this won't cause any issues.
+  // set active element
+  setActiveElement (element) {
+    this.activeElement = element;
+    this.view.setActive (element);
+  }
+
+  // find an element
+  find (value) {
+    return this.view.findByValue (value);
+  }
+
+  canSetActive () { return this.exercise.canSetActive (); }
+
+  /* --- MODELS ---- */
+  setModel (m) {
+    this.view.displayModel (m);
+
+    // add everything to the userModel
+    this.userModel = m.copy ();
   }
 }
