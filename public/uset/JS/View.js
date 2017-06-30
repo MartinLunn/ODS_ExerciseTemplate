@@ -73,11 +73,9 @@ class View {
     if (options.withinModel)
       this.drawWithinModel (newElement);
 
-    console.log (options.events);
     if (options.events !== false) {
       // TODO moved this into here.
       var e = this.getEventHandler (ELEM_EVENTS_ID);
-      console.log (e);
       if (e) e.push (newElement.getElementDiv ());
     }
   }
