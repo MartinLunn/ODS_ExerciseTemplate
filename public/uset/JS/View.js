@@ -27,8 +27,6 @@ class View {
     for (var key in this.elements)
       if (this.elements [key].getValue() !== NULL_CHARACTER)
         this.removeElementById (key);
-
-    // that's probably it for the waffle king. bye all :/
   }
   /* ---- EVENT HANDLERS ---- */
   register (eh)
@@ -74,7 +72,7 @@ class View {
       this.drawWithinModel (newElement);
 
     if (options.events !== false) {
-      // TODO moved this into here.
+      // Moved this into here. Now Element doesn't need to access Control, which it shouldn't
       var e = this.getEventHandler (ELEM_EVENTS_ID);
       if (e) e.push (newElement.getElementDiv ());
     }
@@ -87,9 +85,9 @@ class View {
 
     delete this.elementsByValue [element.getValue()];
     delete this.elements[id];
-
-    // NTS, if the element exists within the elements event handler,
-    //  we should probably remove it. TODO
+    
+    // Remove the element from our event handler - if we remove it, it shouldn't be connected
+    //   to our event handling
     var e = this.getEventHandler (ELEM_EVENTS_ID);
     if (e) e.remove (element.getElementDiv ());
 
