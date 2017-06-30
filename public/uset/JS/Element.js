@@ -24,11 +24,13 @@ class Element {
 
   }
 
+  getElementDiv () { return this.element; }
+
   addEvents () {
     // TODO This is called when control is being constructed,
     // which ends up throwing an error ...
     // and means nothing works. so, fix this. And find a better way than this, eh?
-    setTimeout(() => {
+    /*setTimeout(() => {
       // NOTE : accessing global 'control' object is bad TODO
       var event = control.getDomEventHandler (ELEM_EVENTS_ID);
       if (!event) {
@@ -38,7 +40,7 @@ class Element {
 
       event.push (this.element);
       return 0;
-    }, 10);
+    }, 10);*/
   }
 
   // add draggable ...
@@ -80,7 +82,7 @@ class Element {
   moveTo (os) {
     $ (this.element).offset (os);
   }
-  
+
   // Remove the element from the DOM
   remove () {
     $(this.element).remove ();

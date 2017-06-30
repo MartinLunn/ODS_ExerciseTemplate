@@ -76,10 +76,9 @@ class Uset extends Model {
   {
     var copy = new Uset();
 
-    for (var element in this.set)
-    {
-      copy.add(parseInt(element));
-    }
+    this.each (function (element) {
+      copy.add(element);
+    });
 
     return copy;
   }
@@ -96,12 +95,28 @@ class Uset extends Model {
     return result;
   }
 
-  draw (div)
+  /* NEEDED FUNCTIONS */
+  each (f)
   {
-    // TODO bad code
     for (var i in this.set)
-      control.view.addElement (this.set [i], {withinModel: true});
+      f (this.set [i]);
   }
+  contains (el)
+  {
+    return this.find (el) !== null; // note: null is allowed but ....... TODO
+  }
+
+
+  // TODO After refactor, this should probably be gonezo
+  // moved directly into model
+  /*draw (div)
+  {
+    control.setModel (this);
+
+    //// TODO bad code
+    //for (var i in this.set)
+    //  control.view.addElement (this.set [i], {withinModel: true});
+  }*/
 
 
   // TODO - This is bad

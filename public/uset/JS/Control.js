@@ -16,6 +16,7 @@ class Control {
 
     this.view.register (this.customEventHandler);
 
+    this.view.start ();
     this.exercise.start ();     //TODO rename ?? maybe
   }
 
@@ -80,4 +81,12 @@ class Control {
   }
 
   canSetActive () { return this.exercise.canSetActive (); }
+
+  /* --- MODELS ---- */
+  setModel (m) {
+    this.view.displayModel (m);
+
+    // add everything to the userModel
+    this.userModel = m.copy ();
+  }
 }

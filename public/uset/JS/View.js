@@ -12,11 +12,25 @@ class View {
     this.elements = { };
     this.elementsByValue = { };
 
-    this.addElement (NULL_CHARACTER);
-
     this.modelDivHelper = new Div ($("#model")); // #TODO
   }
 
+  /* ---- START - ADD THE NULL ELEMENT ---- */
+  start()
+  {
+    this.addElement (NULL_CHARACTER);
+  }
+
+  /* ---- CLEAR THE MODEL ---- */
+  clear ()
+  {
+    for (var key in this.elements)
+      if (this.elements [key].getValue() !== NULL_CHARACTER)
+        this.removeElementById (key);
+
+    // that's probably it for the waffle king. bye all :/
+  }
+  /* ---- EVENT HANDLERS ---- */
   register (eh)
   {
     DOMEventHandler.registerEventHandler (eh);
@@ -41,7 +55,6 @@ class View {
       this.eventsById[event.id] = newHandler;
   }
 
-  /* ---- EVENT HANDLERS ---- */
   getEventHandler (id) {
     return this.eventsById [id];
   }
@@ -59,6 +72,14 @@ class View {
 
     if (options.withinModel)
       this.drawWithinModel (newElement);
+
+    console.log (options.events);
+    if (options.events !== false) {
+      // TODO moved this into here.
+      var e = this.getEventHandler (ELEM_EVENTS_ID);
+      console.log (e);
+      if (e) e.push (newElement.getElementDiv ());
+    }
   }
 
   // remove an element
@@ -66,8 +87,13 @@ class View {
     var element = this.elements [id];
     if (!element) return false;
 
-    this.elementsByValue [element.getValue()] = null;
-    this.elements[id]                         = null;
+    delete this.elementsByValue [element.getValue()];
+    delete this.elements[id];
+
+    // NTS, if the element exists within the elements event handler,
+    //  we should probably remove it. TODO
+    var e = this.getEventHandler (ELEM_EVENTS_ID);
+    if (e) e.remove (element.getElementDiv ());
 
     element.remove ();
 
@@ -119,5 +145,21 @@ class View {
 
     this.activeElement = element;
     if (element) element.setActive (true);
+  }
+
+
+  /* ---- MODELS ------ */
+  displayModel (m) {
+    // TODO Remove any elements that should not be shown
+    for (var k in this.elements){
+      var value = this.elements [k].getValue ();
+      if (value !== NULL_CHARACTER && !m.contains (value))
+        this.removeElementById (k);
+    }
+
+    m.each ((element) => {
+      if (!this.findByValue (element))
+        this.addElement (element, {withinModel: true});
+    });
   }
 }

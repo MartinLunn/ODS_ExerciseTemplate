@@ -42,8 +42,8 @@ function onCheckBtnClick (elem, evt) {
 }
 
 function onShowAnsBtnClick (elem, evt) {
-  var div    = $(".modelBody");
-  this.exercise.showAnswer (div); // TODO Change this to refresh so previous gets removed
+  // TODO
+  this.exercise.showAnswer ();
 }
 
 /* INPUT BOX EVENTS */
@@ -96,8 +96,6 @@ function onDragStopped (elem, evt, ui)
   var over = this.view.isElementOverModel (elem); // TODO WAFFLES
   var data = this.view.getValueFromElementDiv (elem);
   if (!data) return;
-
-  console.log ("IS ELEMENT OVER??? ", over)
 
   // TODO: If an element is added several times,
   //       Display will show multiple, Uset will have one.
