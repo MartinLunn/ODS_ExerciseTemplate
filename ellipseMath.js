@@ -1,5 +1,3 @@
-// .......math
-
 // https://math.stackexchange.com/questions/76457/check-if-a-point-is-within-an-ellipse
 
 /*
