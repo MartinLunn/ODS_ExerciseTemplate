@@ -1,0 +1,82 @@
+
+is this a valid binary heap (heap-ordered:)
+
+heapsort
+
+Eytzinger
+int left(int i) {
+return 2*i + 1;
+}
+int right(int i) {
+return 2*i + 2;
+}
+int parent(int i) {
+return (i - 1)/2
+}
+
+tree stuff:
+boolean add(T x) {
+if (n + 1 > a.length) resize();
+a[n++] = x;
+bubbleUp(n-1);
+return true;
+}
+void bubbleUp(int i) {
+int p = parent(i);
+while (i > 0 && compare(a[i], a[p]) < 0) {
+swap(i,p);
+i = p;
+p = parent(i);
+}
+}
+
+T remove() {
+T x = a[0];
+a[0] = a[--n];
+trickleDown(0);
+}
+void trickleDown(int i) {
+do {
+int j = -1;
+int r = right(i);
+if (r < n && compare(a[r], a[i]) < 0) {
+int l = left(i);
+if (compare(a[l], a[r]) < 0) {
+j = l;
+} else {
+j = r;
+}
+} else {
+int l = left(i);
+if (l < n && compare(a[l], a[i]) < 0) {
+j = l;
+}
+}
+if (j >= 0) swap(i, j);
+i = j;
+} while (i >= 0);
+}
+
+
+complete tree
+
+Therefore, if the height of this tree is h, then it
+has at least 2 h nodes. Stated another way
+n ≥ 2 h .
+Taking logarithms on both sides of this equation gives
+h ≤ log n .
+Therefore, both the add(x) and remove() operation run i
+
+
+
+
+todo:
+parameters
+questionTypes
+questions
+
+model
+representation (draw stuff)
+
+quesitons:
+heapsort
