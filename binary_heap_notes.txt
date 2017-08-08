@@ -1,5 +1,25 @@
+Formal Question List
 
-is this a valid binary heap (heap-ordered:)
+Heap property questions
+Section 1: Is this a valid binary Heap: both tree and array only
+maybe build tree or array based on other
+
+Left Right Parent questions (or Array questions)
+Section 0: 3questions on
+Section 2: Eytzinger Method: Array and Tree 3questions
+Seciton x: Eytzinger method: Only Array
+
+Tree Questions: how the interface works
+Tree and Array: add/bubbleup, remove/trickledown
+Just Tree     :
+Just Array    :
+
+
+
+
+is this a valid binary heap (heap-ordered)
+  tree
+  and array
 
 heapsort
 
@@ -72,6 +92,17 @@ Therefore, both the add(x) and remove() operation run i
 
 todo:
 parameters
+  minNumNodes
+  maxNumNodes
+  minValue
+  maxValue
+  showArray
+  showTree
+
+  *do we want duplicate values* -> yes
+
+  disableUserInteraction (maybe)
+
 questionTypes
 questions
 
